@@ -240,11 +240,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="Hardcore"><a href="#Hardcore" class="headerlink" title="Hardcore"></a>Hardcore</h3><p>模2同余方程组</p>
+          <h2 id="crypto">crypto</h2>
+<h3 id="hardcore">Hardcore</h3>
+<p>模2同余方程组</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>(<span class="params">l</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> l])</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=np.identity(<span class="number">256</span>,dtype=np.int64)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;ctf.b01lers.com&#x27;</span>,<span class="number">9003</span>)</span><br><span class="line">r.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">s=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">r.recvuntil(<span class="string">&#x27;answer.\n&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="built_in">print</span>(i,s)</span><br><span class="line">    r.sendline(foo(a[i]))</span><br><span class="line">    s+=r.recvline().strip()</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">a=<span class="number">0b0110001001100011011101000110011001111011011001000110111101011111011110010110111101110101010111110110110001101001011010110110010101011111011010000110000101110010011001000110001101101111011100100110010101011111011000110110100001100001011011000111001101111101</span></span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(a))</span><br><span class="line"><span class="comment"># bctf&#123;do_you_like_hardcore_chals&#125;</span></span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -329,7 +329,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="easy-real"><a href="#easy-real" class="headerlink" title="easy_real"></a>easy_real</h3><p>爆破hash，xor密码</p>
+          <h2 id="crypto">crypto</h2>
+<h3 id="easy_real">easy_real</h3>
+<p>爆破hash，xor密码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">h=<span class="string">&#x27;37693cfc748049e45d87b8c7d8b9aacd&#x27;</span></span><br><span class="line">n=<span class="number">4197356622576696564490569060686240088884187113566430134461945130770906825187894394672841467350797015940721560434743086405821584185286177962353341322088523</span></span><br><span class="line">c=<span class="number">3298176862697175389935722420143867000970906723110625484802850810634814647827572034913391972640399446415991848730984820839735665233943600223288991148186397</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">if</span> hashlib.md5(<span class="built_in">str</span>(i).encode()).hexdigest()==h:</span><br><span class="line">        e=i</span><br><span class="line"></span><br><span class="line">p = <span class="number">64310413306776406422334034047152581900365687374336418863191177338901198608319</span></span><br><span class="line">q=n//p</span><br><span class="line"></span><br><span class="line">d=inverse(e,(p-<span class="number">1</span>)*(q-<span class="number">1</span>))</span><br><span class="line">m=<span class="built_in">pow</span>(c,d,n)</span><br><span class="line">m=long_to_bytes(m)</span><br><span class="line">l=<span class="built_in">len</span>(m)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    a=<span class="built_in">bytes</span>([i]*l)</span><br><span class="line">    a=xor(a,m)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;flag&#x27;</span> <span class="keyword">in</span> a:</span><br><span class="line">        <span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
@@ -422,8 +424,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="ezRSA"><a href="#ezRSA" class="headerlink" title="ezRSA"></a>ezRSA</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>p,q的900位以后的高位hb都是一样的，可以先求出来</p>
-<p>设$p&#x3D;hb+y$，那么$q&#x3D;hb+2^{900}-y+z$，z为300位的随机数，可以得到<br>$$<br>p+q&#x3D;2hb+2^{900}+z,\ p-q&#x3D;2y-2^{900}-z<br>$$<br>因为$n&#x3D;pq$，$p+q$的高位（低300位未知）已知，可以由$p-q&#x3D;\sqrt{(p+q)^2-4n}$求出$p-q$的近似值相应的y的近似值也能求出，再用coppersmith求出y的低位从而求出p</p>
+          <h2 id="ezrsa">ezRSA</h2>
+<h3 id="方法1">方法1</h3>
+<p>p,q的900位以后的高位hb都是一样的，可以先求出来</p>
+<p>设<span class="math inline">\(p=hb+y\)</span>，那么<span
+class="math inline">\(q=hb+2^{900}-y+z\)</span>，z为300位的随机数，可以得到
+<span class="math display">\[
+p+q=2hb+2^{900}+z,\ p-q=2y-2^{900}-z
+\]</span> 因为<span class="math inline">\(n=pq\)</span>，<span
+class="math inline">\(p+q\)</span>的高位（低300位未知）已知，可以由<span
+class="math inline">\(p-q=\sqrt{(p+q)^2-4n}\)</span>求出<span
+class="math inline">\(p-q\)</span>的近似值相应的y的近似值也能求出，再用coppersmith求出y的低位从而求出p
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/04/21/CTF-2022-crypto/#more" rel="contents">
@@ -515,10 +526,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="速查"><a href="#速查" class="headerlink" title="速查"></a>速查</h2><h3 id="LLL算法"><a href="#LLL算法" class="headerlink" title="LLL算法"></a>LLL算法</h3><p>$$<br>||v_1|| ≤ ||v_2|| ≤ … ≤ ||v_i|| ≤ 2^{<br>\frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\<br>||v_1|| ≤ 2^{<br>\frac{n−1}{4}}det(L)^{\frac{1}{n}}<br>$$</p>
-<h3 id="CopperSmith算法"><a href="#CopperSmith算法" class="headerlink" title="CopperSmith算法"></a>CopperSmith算法</h3><h4 id="sage自带"><a href="#sage自带" class="headerlink" title="sage自带"></a>sage自带</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">10001</span></span><br><span class="line">P.&lt;x&gt; = PolynomialRing(Zmod(n))</span><br><span class="line">f=x^<span class="number">3</span> + <span class="number">10</span>*x^<span class="number">2</span> + <span class="number">5000</span>*x - <span class="number">222</span></span><br><span class="line">f.small_roots(X=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-<p>参数见 <a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots">sage doc</a></p>
-<h4 id="多元coppersmith脚本"><a href="#多元coppersmith脚本" class="headerlink" title="多元coppersmith脚本"></a>多元coppersmith脚本</h4><p>脚本参考 <a target="_blank" rel="noopener" href="https://github.com/defund/coppersmith">coppersmith</a><br>参数：</p>
+          <h2 id="速查">速查</h2>
+<h3 id="lll算法">LLL算法</h3>
+<p><span class="math display">\[
+||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{
+\frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\
+||v_1|| ≤ 2^{
+\frac{n−1}{4}}det(L)^{\frac{1}{n}}
+\]</span></p>
+<h3 id="coppersmith算法">CopperSmith算法</h3>
+<h4 id="sage自带">sage自带</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">10001</span></span><br><span class="line">P.&lt;x&gt; = PolynomialRing(Zmod(n))</span><br><span class="line">f=x^<span class="number">3</span> + <span class="number">10</span>*x^<span class="number">2</span> + <span class="number">5000</span>*x - <span class="number">222</span></span><br><span class="line">f.small_roots(X=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>参数见 <a
+target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots">sage
+doc</a></p>
+<h4 id="多元coppersmith脚本">多元coppersmith脚本</h4>
+<p>脚本参考 <a
+target="_blank" rel="noopener" href="https://github.com/defund/coppersmith">coppersmith</a> 参数：</p>
 <ul>
 <li>f 函数</li>
 <li>bounds 各变量的上界X组成的元组tuple</li>
@@ -615,7 +639,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="d3factor"><a href="#d3factor" class="headerlink" title="d3factor"></a>d3factor</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>造格子<br>设$\epsilon&#x3D;d_2-d_1$，有<br>$e_1e_2\epsilon +e_2-e_1\equiv0\ mod\ p^6$<br>化为$\epsilon+b&#x3D;kp^6,\ b\equiv(e_1e_2)^{-1}(e_2-e_1)\ mod\ p^6$<br>设$M&#x3D;N^{\frac{1}{2}}$，<br>$L&#x3D;\begin{pmatrix}M&amp;b\\ 0&amp;N\end{pmatrix}$<br>$(pq\ -k)L&#x3D;(pqM\ -pq\epsilon)$</p>
+          <h2 id="d3factor">d3factor</h2>
+<h3 id="方法1">方法1</h3>
+<p>造格子 设<span class="math inline">\(\epsilon=d_2-d_1\)</span>，有
+<span class="math inline">\(e_1e_2\epsilon +e_2-e_1\equiv0\ mod\
+p^6\)</span> 化为<span class="math inline">\(\epsilon+b=kp^6,\
+b\equiv(e_1e_2)^{-1}(e_2-e_1)\ mod\ p^6\)</span> 设<span
+class="math inline">\(M=N^{\frac{1}{2}}\)</span>， <span
+class="math inline">\(L=\begin{pmatrix}M&amp;b\\\\
+0&amp;N\end{pmatrix}\)</span> <span class="math inline">\((pq\
+-k)L=(pqM\ -pq\epsilon)\)</span>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/08/2022-D3ctf%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%8E%B0/#more" rel="contents">
@@ -698,19 +731,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
@@ -764,6 +807,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">

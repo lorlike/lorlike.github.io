@@ -21,12 +21,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="速查LLL算法$$||v_1|| ≤ ||v_2|| ≤ … ≤ ||v_i|| ≤ 2^{\frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\||v_1|| ≤ 2^{\frac{n−1}{4}}det(L)^{\frac{1}{n}}$$ CopperSmith算法sage自带1234n&#x3D;10001P.&lt;x&gt; &#x3D; PolynomialR">
+    <meta name="description" content="速查 LLL算法 \[ ||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{ \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\ ||v_1|| ≤ 2^{ \frac{n−1}{4}}det(L)^{\frac{1}{n}} \] CopperSmith算法 sage自带 1234n&#x3D;10001P.&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coppersmith算法及其应用">
 <meta property="og:url" content="http://example.com/2022/03/09/Coppersmith%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="Lorlike&#39;s Blog">
-<meta property="og:description" content="速查LLL算法$$||v_1|| ≤ ||v_2|| ≤ … ≤ ||v_i|| ≤ 2^{\frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\||v_1|| ≤ 2^{\frac{n−1}{4}}det(L)^{\frac{1}{n}}$$ CopperSmith算法sage自带1234n&#x3D;10001P.&lt;x&gt; &#x3D; PolynomialR">
+<meta property="og:description" content="速查 LLL算法 \[ ||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{ \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\ ||v_1|| ≤ 2^{ \frac{n−1}{4}}det(L)^{\frac{1}{n}} \] CopperSmith算法 sage自带 1234n&#x3D;10001P.&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-09T15:40:00.000Z">
 <meta property="article:modified_time" content="2022-05-29T01:20:32.100Z">
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9F%E6%9F%A5"><span class="nav-number">1.</span> <span class="nav-text">速查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LLL%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">LLL算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CopperSmith%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">CopperSmith算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sage%E8%87%AA%E5%B8%A6"><span class="nav-number">1.2.1.</span> <span class="nav-text">sage自带</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%85%83coppersmith%E8%84%9A%E6%9C%AC"><span class="nav-number">1.2.2.</span> <span class="nav-text">多元coppersmith脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.3.</span> <span class="nav-text">定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%BB%86%E8%8A%82"><span class="nav-number">1.2.4.</span> <span class="nav-text">算法细节</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Howgrave-Graham%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Howgrave-Graham定理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">1.2.4.1.1.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">最终版本</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-1"><span class="nav-number">1.2.4.2.1.</span> <span class="nav-text">证明</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9F%E6%9F%A5"><span class="nav-number">1.</span> <span class="nav-text">速查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lll%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">LLL算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#coppersmith%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">CopperSmith算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sage%E8%87%AA%E5%B8%A6"><span class="nav-number">1.2.1.</span> <span class="nav-text">sage自带</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%85%83coppersmith%E8%84%9A%E6%9C%AC"><span class="nav-number">1.2.2.</span> <span class="nav-text">多元coppersmith脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%BB%86%E8%8A%82"><span class="nav-number">1.2.3.</span> <span class="nav-text">算法细节</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#howgrave-graham%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Howgrave-Graham定理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">1.2.3.1.1.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">最终版本</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-1"><span class="nav-number">1.2.3.2.1.</span> <span class="nav-text">证明</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -253,31 +253,133 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="速查"><a href="#速查" class="headerlink" title="速查"></a>速查</h2><h3 id="LLL算法"><a href="#LLL算法" class="headerlink" title="LLL算法"></a>LLL算法</h3><p>$$<br>||v_1|| ≤ ||v_2|| ≤ … ≤ ||v_i|| ≤ 2^{<br>\frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\<br>||v_1|| ≤ 2^{<br>\frac{n−1}{4}}det(L)^{\frac{1}{n}}<br>$$</p>
-<h3 id="CopperSmith算法"><a href="#CopperSmith算法" class="headerlink" title="CopperSmith算法"></a>CopperSmith算法</h3><h4 id="sage自带"><a href="#sage自带" class="headerlink" title="sage自带"></a>sage自带</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">10001</span></span><br><span class="line">P.&lt;x&gt; = PolynomialRing(Zmod(n))</span><br><span class="line">f=x^<span class="number">3</span> + <span class="number">10</span>*x^<span class="number">2</span> + <span class="number">5000</span>*x - <span class="number">222</span></span><br><span class="line">f.small_roots(X=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-<p>参数见 <a target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots">sage doc</a></p>
-<h4 id="多元coppersmith脚本"><a href="#多元coppersmith脚本" class="headerlink" title="多元coppersmith脚本"></a>多元coppersmith脚本</h4><p>脚本参考 <a target="_blank" rel="noopener" href="https://github.com/defund/coppersmith">coppersmith</a><br>参数：</p>
+        <h2 id="速查">速查</h2>
+<h3 id="lll算法">LLL算法</h3>
+<p><span class="math display">\[
+||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{
+\frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\
+||v_1|| ≤ 2^{
+\frac{n−1}{4}}det(L)^{\frac{1}{n}}
+\]</span></p>
+<h3 id="coppersmith算法">CopperSmith算法</h3>
+<h4 id="sage自带">sage自带</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">10001</span></span><br><span class="line">P.&lt;x&gt; = PolynomialRing(Zmod(n))</span><br><span class="line">f=x^<span class="number">3</span> + <span class="number">10</span>*x^<span class="number">2</span> + <span class="number">5000</span>*x - <span class="number">222</span></span><br><span class="line">f.small_roots(X=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>参数见 <a
+target="_blank" rel="noopener" href="https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_modn_dense_ntl.html#sage.rings.polynomial.polynomial_modn_dense_ntl.small_roots">sage
+doc</a></p>
+<h4 id="多元coppersmith脚本">多元coppersmith脚本</h4>
+<p>脚本参考 <a
+target="_blank" rel="noopener" href="https://github.com/defund/coppersmith">coppersmith</a> 参数：</p>
 <ul>
 <li>f 函数</li>
 <li>bounds 各变量的上界X组成的元组tuple</li>
 <li>m 模的幂</li>
-<li>d variable shifts（多元时要手动设置为f的项的个数）<span id="more"></span>
-<h4 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h4></li>
+<li>d variable shifts（多元时要手动设置为f的项的个数） <span id="more"></span>
+#### 定理</li>
 </ul>
-<p>$$<br>设\ 0 &lt; \epsilon &lt; min{0.18, \frac{1}{d}}.\ 设\ F(x)\ 是模M的d阶首一多项式，且拥有小根x_0，满足\ |x0| &lt;\frac{1}{2}M^{1&#x2F;d−\epsilon}.\\ 则x_0可以在\ d,\ \frac{1}{\epsilon},\ log(M)的多项式时间内找到.<br>$$<br>参考 <a target="_blank" rel="noopener" href="https://www.math.auckland.ac.nz/~sgal018/crypto-book/ch19.pdf">Coppersmith’s Method and Related Applications</a></p>
-<h4 id="算法细节"><a href="#算法细节" class="headerlink" title="算法细节"></a>算法细节</h4><p>设多项式为<br>$$<br>F(x) &#x3D; \sum^d_{i&#x3D;0} a_ix_i \in Z[x]<br>$$<br>设<br>$$<br>x_0\in Z,\ F(x_0)\equiv0\ mod\ M,\ |x_0|&lt;X<br>$$<br>把多项式F用一个行向量表示为<br>$$<br>b_F&#x3D;(a_0,a_1X,a_2X^2,…,a_dX^d)<br>$$</p>
-<h5 id="Howgrave-Graham定理"><a href="#Howgrave-Graham定理" class="headerlink" title="Howgrave-Graham定理"></a>Howgrave-Graham定理</h5><p>$$<br>||b_F||&lt;\frac{M}{\sqrt{d+1}}\Rightarrow F(x_0)&#x3D;0<br>$$</p>
-<h6 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h6><p>由Cauchy-Schwarz不等式，有<br>$$<br>(\sum^n_{i&#x3D;1}x_iy_i)^2\le (\sum^n_{i&#x3D;1}x_i^2)(\sum^n_{i&#x3D;1}y_i^2)\ and\ let\ y_i&#x3D;1\Rightarrow \sum^n_{i&#x3D;1}x_i\le \sqrt{n\sum^n_{i&#x3D;1}x_i^2}<br>$$<br>所以<br>$$<br>|F(x_0)|&#x3D;|\sum^d_{i&#x3D;0}a_ix_i|\le\sum^d_{i&#x3D;0}|a_i||x_i|\le\sum^d_{i&#x3D;0}|a_i|X^i\le\sqrt{d+1}||b_F||&lt;\sqrt{d+1}\frac{M}{\sqrt{d+1}}&#x3D;M\ \Rightarrow\ F(x_0)\in(-M,M)<br>$$<br>所以<br>$$<br>F(x_0)\equiv 0\ mod\ M\ \Rightarrow \ F(x_0)<br>$$<br>考虑这样一个格子<br>$$<br>L&#x3D;\begin{pmatrix}<br>M&amp;0&amp;…&amp;0&amp;0\\<br>0&amp;MX&amp;…&amp;0&amp;0\\<br>\vdots&amp;&amp;&amp;\vdots&amp;\vdots\\<br>0&amp;0&amp;\dots&amp;MX^{d-1}&amp;0\\<br>a_0&amp;a_1X&amp;\dots&amp;d_{d-1}X^{d-1}&amp;X^d<br>\end{pmatrix}<br>$$<br>格子行向量的线性组合与$F(x_0)\equiv0\ mod\ M$同解，$det(L)&#x3D;M^dX^\frac{d(d+1)}{2}$</p>
-<p>运用LLL算法，可以得到约束<br>$$<br>||b_1||\le2^\frac{n-1}{4}det(L)^\frac{1}{n}&#x3D;2^\frac{d}{4}M^\frac{d}{d+1}X^\frac{d}{2}<br>$$<br>再结合一下Howgrave-Graham定理，有<br>$$<br>2^\frac{d}{4}M^\frac{d}{d+1}X^\frac{d}{2}&lt;\frac{M}{\sqrt{d+1}}<br>$$<br>改写一下<br>$$<br>X&lt;c(d)M^\frac{2}{d(d+1)},\ c(d)&#x3D;(d+1)^{-\frac{1}{d}}2^{-\frac{1}{2}}<br>$$<br>上界$M^\frac{2}{d(d+1)}$还是太小了，可以通过x-shift多项式和$F(x)$的幂扩大上界</p>
-<p>x-shift多项式：$xF(x), x^2F(x), … , x^kF(x)$</p>
-<h5 id="最终版本"><a href="#最终版本" class="headerlink" title="最终版本"></a>最终版本</h5><p>$$<br>设\ 0 &lt; \epsilon &lt; min{0.18, \frac{1}{d}}.\ 设\ F(x)\ 是模M的d阶首一多项式，且拥有小根x_0，满足\ |x0| &lt;\frac{1}{2}M^{1&#x2F;d−\epsilon}.\\ 则x_0可以在\ d,\ \frac{1}{\epsilon}和\ log(M)的多项式时间内找到.<br>$$</p>
-<h6 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h6><p>设$h&gt;1$，多项式$G_{i,j}(x) &#x3D; M^{h−1−j}F(x)^jx^i$对于$ 0 ≤ i &lt; d, 0 ≤ j &lt; h$。</p>
-<p>构造格子<br>$$<br>L&#x3D;\begin{pmatrix}<br>G_{0,0}(X)\\<br>G_{1,0}(X)\\<br>\vdots\\<br>G_{d-1,0}(X)\\<br>G_{0,1}(X)\\<br>\vdots\\<br>G_{d-1,h-1}(X)\\<br>\end{pmatrix}<br>$$<br>该格子为下三角矩阵，对角线的元素为$M^{h−1−j}X^{jd+i}$，所以<br>$$<br>det(L) &#x3D; M^\frac{(h−1)hd}{2}X^\frac{(dh−1)dh}{2}<br>$$<br>附上LLL的最短向量条件<br>$$<br>||b_1||\le 2^\frac{dh-1}{2}det(L)^\frac{1}{dh}&#x3D;2^\frac{dh-1}{4}M^\frac{h-1}{2}X^\frac{dh-1}{2}<br>$$<br>再附上Howgrave-Graham定理的约束条件<br>$$<br>2^\frac{dh-1}{4}M^\frac{h-1}{2}X^\frac{dh-1}{2}&lt;\frac{M^{h-1}}{\sqrt{dh}}<br>$$</p>
-<p>$$<br>\sqrt{dh}2^\frac{dh−1}{4}X^\frac{dh−1}{2} &lt; M^\frac{h−1}{2}<br>$$</p>
-<p>令$c(d,h)&#x3D;(\sqrt{dh}2^\frac{dh−1}{4})^\frac{2}{dh&#x3D;1}&#x3D;\sqrt{2}(dh)^\frac{1}{dh−1}$，有$c(d,h)X&lt;M^\frac{h-1}{dh-1}$</p>
-<p>令$\epsilon &#x3D;\frac{d-1}{d(dh-1)}$，有$\frac{h-1}{dh-1}&#x3D;\frac{1}{d}-\frac{d-1}{d(dh-1)}&#x3D;\frac{1}{d}-\epsilon,\ dh&#x3D;1+\frac{d-1}{d\epsilon}$</p>
-<p>所以$c(d,h)&#x3D;\sqrt{2}(1+\frac{d-1}{d\epsilon})^\frac{d\epsilon}{d-1}$<br>$$<br>X&lt;\frac{1}{2}M^{\frac{1}{d}-\epsilon}\Leftarrow\frac{1}{2}\le\frac{1}{c(d,h)}\Leftarrow\frac{d\epsilon}{d-1}\in[0,0.18]<br>$$<br>所以$\epsilon\le 0.18\frac{d-1}{d}&lt;0.18$</p>
-<p>注意到，$dh\approx 1&#x2F;\epsilon$，所以当要求更小的$\epsilon$时，h要更大，也就是要增加格子L的维度，LLL运算量也会相应增大</p>
+<p><span class="math display">\[
+设\ 0 &lt; \epsilon &lt; min\{0.18, \frac{1}{d}\}.\ 设\ F(x)\
+是模M的d阶首一多项式，且拥有小根x_0，满足\ |x0|
+&lt;\frac{1}{2}M^{1/d−\epsilon}.\\\ 则x_0可以在\ d,\
+\frac{1}{\epsilon},\ log(M)的多项式时间内找到.
+\]</span> 参考 <a
+target="_blank" rel="noopener" href="https://www.math.auckland.ac.nz/~sgal018/crypto-book/ch19.pdf">Coppersmith’s
+Method and Related Applications</a></p>
+<h4 id="算法细节">算法细节</h4>
+<p>设多项式为 <span class="math display">\[
+F(x) = \sum^d_{i=0} a_ix_i \in Z[x]
+\]</span> 设 <span class="math display">\[
+x_0\in Z,\ F(x_0)\equiv0\ mod\ M,\ |x_0|&lt;X
+\]</span> 把多项式F用一个行向量表示为 <span class="math display">\[
+b_F=(a_0,a_1X,a_2X^2,...,a_dX^d)
+\]</span></p>
+<h5 id="howgrave-graham定理">Howgrave-Graham定理</h5>
+<p><span class="math display">\[
+||b_F||&lt;\frac{M}{\sqrt{d+1}}\Rightarrow F(x_0)=0
+\]</span></p>
+<h6 id="证明">证明</h6>
+<p>由Cauchy-Schwarz不等式，有 <span class="math display">\[
+(\sum^n_{i=1}x_iy_i)^2\le (\sum^n_{i=1}x_i^2)(\sum^n_{i=1}y_i^2)\ and\
+let\ y_i=1\Rightarrow \sum^n_{i=1}x_i\le \sqrt{n\sum^n_{i=1}x_i^2}
+\]</span> 所以 <span class="math display">\[
+|F(x_0)|=|\sum^d_{i=0}a_ix_i|\le\sum^d_{i=0}|a_i||x_i|\le\sum^d_{i=0}|a_i|X^i\le\sqrt{d+1}||b_F||&lt;\sqrt{d+1}\frac{M}{\sqrt{d+1}}=M\
+\Rightarrow\ F(x_0)\in(-M,M)
+\]</span> 所以 <span class="math display">\[
+F(x_0)\equiv 0\ mod\ M\ \Rightarrow \ F(x_0)
+\]</span> 考虑这样一个格子 <span class="math display">\[
+L=\begin{pmatrix}
+M&amp;0&amp;...&amp;0&amp;0\\\\
+0&amp;MX&amp;...&amp;0&amp;0\\\\
+\vdots&amp;&amp;&amp;\vdots&amp;\vdots\\\\
+0&amp;0&amp;\dots&amp;MX^{d-1}&amp;0\\\\
+a_0&amp;a_1X&amp;\dots&amp;d_{d-1}X^{d-1}&amp;X^d
+\end{pmatrix}
+\]</span> 格子行向量的线性组合与<span
+class="math inline">\(F(x_0)\equiv0\ mod\ M\)</span>同解，<span
+class="math inline">\(det(L)=M^dX^\frac{d(d+1)}{2}\)</span></p>
+<p>运用LLL算法，可以得到约束 <span class="math display">\[
+||b_1||\le2^\frac{n-1}{4}det(L)^\frac{1}{n}=2^\frac{d}{4}M^\frac{d}{d+1}X^\frac{d}{2}
+\]</span> 再结合一下Howgrave-Graham定理，有 <span
+class="math display">\[
+2^\frac{d}{4}M^\frac{d}{d+1}X^\frac{d}{2}&lt;\frac{M}{\sqrt{d+1}}
+\]</span> 改写一下 <span class="math display">\[
+X&lt;c(d)M^\frac{2}{d(d+1)},\ c(d)=(d+1)^{-\frac{1}{d}}2^{-\frac{1}{2}}
+\]</span> 上界<span
+class="math inline">\(M^\frac{2}{d(d+1)}\)</span>还是太小了，可以通过x-shift多项式和<span
+class="math inline">\(F(x)\)</span>的幂扩大上界</p>
+<p>x-shift多项式：<span class="math inline">\(xF(x), x^2F(x), ... ,
+x^kF(x)\)</span></p>
+<h5 id="最终版本">最终版本</h5>
+<p><span class="math display">\[
+设\ 0 &lt; \epsilon &lt; min\{0.18, \frac{1}{d}\}.\ 设\ F(x)\
+是模M的d阶首一多项式，且拥有小根x_0，满足\ |x0|
+&lt;\frac{1}{2}M^{1/d−\epsilon}.\\\ 则x_0可以在\ d,\
+\frac{1}{\epsilon}和\ log(M)的多项式时间内找到.
+\]</span></p>
+<h6 id="证明-1">证明</h6>
+<p>设<span class="math inline">\(h&gt;1\)</span>，多项式<span
+class="math inline">\(G_{i,j}(x) = M^{h−1−j}F(x)^jx^i\)</span>对于$ 0 ≤
+i &lt; d, 0 ≤ j &lt; h$。</p>
+<p>构造格子 <span class="math display">\[
+L=\begin{pmatrix}
+G_{0,0}(X)\\\\
+G_{1,0}(X)\\\\
+\vdots\\\\
+G_{d-1,0}(X)\\\\
+G_{0,1}(X)\\\\
+\vdots\\\\
+G_{d-1,h-1}(X)\\\\
+\end{pmatrix}
+\]</span> 该格子为下三角矩阵，对角线的元素为<span
+class="math inline">\(M^{h−1−j}X^{jd+i}\)</span>，所以 <span
+class="math display">\[
+det(L) = M^\frac{(h−1)hd}{2}X^\frac{(dh−1)dh}{2}
+\]</span> 附上LLL的最短向量条件 <span class="math display">\[
+||b_1||\le
+2^\frac{dh-1}{2}det(L)^\frac{1}{dh}=2^\frac{dh-1}{4}M^\frac{h-1}{2}X^\frac{dh-1}{2}
+\]</span> 再附上Howgrave-Graham定理的约束条件 <span
+class="math display">\[
+2^\frac{dh-1}{4}M^\frac{h-1}{2}X^\frac{dh-1}{2}&lt;\frac{M^{h-1}}{\sqrt{dh}}
+\]</span></p>
+<p><span class="math display">\[
+\sqrt{dh}2^\frac{dh−1}{4}X^\frac{dh−1}{2} &lt; M^\frac{h−1}{2}
+\]</span></p>
+<p>令<span
+class="math inline">\(c(d,h)=(\sqrt{dh}2^\frac{dh−1}{4})^\frac{2}{dh=1}=\sqrt{2}(dh)^\frac{1}{dh−1}\)</span>，有<span
+class="math inline">\(c(d,h)X&lt;M^\frac{h-1}{dh-1}\)</span></p>
+<p>令<span class="math inline">\(\epsilon
+=\frac{d-1}{d(dh-1)}\)</span>，有<span
+class="math inline">\(\frac{h-1}{dh-1}=\frac{1}{d}-\frac{d-1}{d(dh-1)}=\frac{1}{d}-\epsilon,\
+dh=1+\frac{d-1}{d\epsilon}\)</span></p>
+<p>所以<span
+class="math inline">\(c(d,h)=\sqrt{2}(1+\frac{d-1}{d\epsilon})^\frac{d\epsilon}{d-1}\)</span>
+<span class="math display">\[
+X&lt;\frac{1}{2}M^{\frac{1}{d}-\epsilon}\Leftarrow\frac{1}{2}\le\frac{1}{c(d,h)}\Leftarrow\frac{d\epsilon}{d-1}\in[0,0.18]
+\]</span> 所以<span class="math inline">\(\epsilon\le
+0.18\frac{d-1}{d}&lt;0.18\)</span></p>
+<p>注意到，<span class="math inline">\(dh\approx
+1/\epsilon\)</span>，所以当要求更小的<span
+class="math inline">\(\epsilon\)</span>时，h要更大，也就是要增加格子L的维度，LLL运算量也会相应增大</p>
 
     </div>
 
@@ -350,6 +452,12 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
