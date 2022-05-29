@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述 对于\(N&#x3D;pq\)，\(p\) 和 \(q\) 相近并且 \(p-1\) 与 \(q-1\) 有一个大的共因子 \(\beta\) ，那么可以在 \(O(\frac{N^{\frac{1}{4}}}{\beta})\) 时间内分解\(N\) 适用条件 已知 N，β 实现方法 假定 \(p&lt;q&lt;(k-1)p\)，\(p&#x3D;x\beta+1\)，\(q&#x3D;y\beta+1\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种针对RSA较大的gcd(p-1,q-1)&#x3D;β的攻击方法">
+<meta property="og:url" content="http://example.com/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Lorlike&#39;s Blog">
+<meta property="og:description" content="概述 对于\(N&#x3D;pq\)，\(p\) 和 \(q\) 相近并且 \(p-1\) 与 \(q-1\) 有一个大的共因子 \(\beta\) ，那么可以在 \(O(\frac{N^{\frac{1}{4}}}{\beta})\) 时间内分解\(N\) 适用条件 已知 N，β 实现方法 假定 \(p&lt;q&lt;(k-1)p\)，\(p&#x3D;x\beta+1\)，\(q&#x3D;y\beta+1\">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-29T17:12:44.000Z">
+<meta property="article:modified_time" content="2022-05-29T18:26:13.150Z">
+<meta property="article:author" content="Lorlike">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="rsa">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/","path":"2022/05/30/一种针对RSA较大的gcd-p-1-q-1-β的攻击方法/","title":"一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法 | Lorlike's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lorlike's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">适用条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">实现方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lorlike"
+      src="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+  <p class="site-author-name" itemprop="name">Lorlike</p>
+  <div class="site-description" itemprop="description">ctfer/蒟蒻觅马🐶/炼丹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1987356024" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1987356024" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/lorlike" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lorlike" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/lorlike1" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;lorlike1" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法 | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-30 01:12:44 / 修改时间：02:26:13" itemprop="dateCreated datePublished" datetime="2022-05-30T01:12:44+08:00">2022-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="概述">概述</h2>
+<p>对于<span class="math inline">\(N=pq\)</span>，<span
+class="math inline">\(p\)</span> 和 <span
+class="math inline">\(q\)</span> 相近并且 <span
+class="math inline">\(p-1\)</span> 与 <span
+class="math inline">\(q-1\)</span> 有一个大的共因子 <span
+class="math inline">\(\beta\)</span> ，那么可以在 <span
+class="math inline">\(O(\frac{N^{\frac{1}{4}}}{\beta})\)</span>
+时间内分解<span class="math inline">\(N\)</span></p>
+<h2 id="适用条件">适用条件</h2>
+<p>已知 <strong>N，β</strong></p>
+<h2 id="实现方法">实现方法</h2>
+<p>假定 <span class="math inline">\(p&lt;q&lt;(k-1)p\)</span>，<span
+class="math inline">\(p=x\beta+1\)</span>，<span
+class="math inline">\(q=y\beta+1\)</span>，</p>
+<p>则 <span
+class="math inline">\(\lambda(N)=lcm(p-1,q-1)=xy\beta\)</span> ，<span
+class="math inline">\(N=(x\beta+1)(y\beta+1)=xy\beta^2+(x+y)\beta+1\)</span></p>
+<p>设u,v,c满足 <span
+class="math inline">\(\frac{n-1}{\beta}=xy\beta+(x+y)=u\beta+v\)</span>，<span
+class="math inline">\(x+y=v+c\beta&gt;c\beta\)</span></p>
+<p>则有 <span class="math inline">\(xy=u-c\)</span></p>
+<p>c的上界：<span
+class="math inline">\(c&lt;\frac{x+y}{\beta}=\frac{(x+y)\beta}{\beta^2}&lt;\frac{p+q}{\beta^2}&lt;\frac{kp}{\beta^2}&lt;\frac{k\sqrt{N}}{\beta}=C\)</span></p>
+<p><span class="math inline">\(a^{u\beta}\equiv a^{xy\beta+c\beta}\equiv
+a^{c\beta}\ mod\ N\)</span></p>
+<p>令 <span class="math inline">\(b=a^{\beta}\)</span>，则有 <span
+class="math inline">\(b^u\equiv b^c\)</span></p>
+<p>通过已知的b和u利用大步小步法计算c，复杂度为<span
+class="math inline">\(O(\sqrt{C})=O(\frac{N^{\frac{1}{4}}}{\beta})\)</span>.</p>
+<p>比较列表 <span class="math display">\[
+b^0,b^D,b^{2D},...,b^{D^2}\ mod\ N\\
+b^u,b^{u-1},...,b^{u-D}\ mod\ N
+\]</span> 找到 <span class="math inline">\(b^{rD}\equiv
+b^{u-s}\)</span>，则 <span class="math inline">\(c=rD+s\)</span></p>
+<p>解方程组 <span class="math display">\[
+\begin{cases}
+x+y=v+c\beta\\\\
+xy=u-c
+\end{cases}
+\]</span> 得到x,y，再代入计算p,q即可分解</p>
+<h3 id="例子">例子</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>β</th>
+<th>N</th>
+<th>p</th>
+<th>q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bits</td>
+<td>120</td>
+<td>509</td>
+<td>253</td>
+<td>256</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sympy</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> ceil,sqrt</span><br><span class="line"></span><br><span class="line">b=<span class="number">1030171354156433533352122827700292399</span></span><br><span class="line"><span class="comment"># p=12505870070530080678697672848088424168097195458341812337424996871641938654429</span></span><br><span class="line"><span class="comment"># q=75441126738427579187451388538259240503276231725448286652836436830894616746833</span></span><br><span class="line">n=<span class="number">943456928965168065086126085084738745924871133735520520502369372006222199842518030091867111333255306748855469496006289254132995842316571450304625367173357</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">D=<span class="built_in">int</span>(sqrt(sqrt(n))/b)*<span class="number">3</span></span><br><span class="line"></span><br><span class="line">u,v=<span class="built_in">divmod</span>((n-<span class="number">1</span>)//b,b)</span><br><span class="line">a=<span class="built_in">pow</span>(<span class="number">3</span>,b,n)</span><br><span class="line"></span><br><span class="line">l=[<span class="built_in">pow</span>(a,r*D,n) <span class="keyword">for</span> r <span class="keyword">in</span> <span class="built_in">range</span>(D+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> <span class="built_in">range</span>(D+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">pow</span>(a,u-s,n) <span class="keyword">in</span> l:</span><br><span class="line">        r=l.index(<span class="built_in">pow</span>(a,u-s,n))</span><br><span class="line">        c=r*D+s</span><br><span class="line">        x,y=sympy.symbols(<span class="string">&#x27;x,y&#x27;</span>)</span><br><span class="line">        r=sympy.solve([x+y-c*b-v,x*y-u+c])[<span class="number">0</span>]</span><br><span class="line">        x,y=r[x],r[y]</span><br><span class="line">        p,q=<span class="built_in">int</span>(x*b+<span class="number">1</span>),<span class="built_in">int</span>(y*b+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="built_in">print</span>(q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 12505870070530080678697672848088424168097195458341812337424996871641938654429</span></span><br><span class="line"><span class="comment"># 75441126738427579187451388538259240503276231725448286652836436830894616746833</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
+<ul>
+<li>McKee J F, Pinch R G E. Further attacks on server-aided RSA
+cryptosystems[J]. Unpublished manuscript, 1998, 104.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/crypto/" rel="tag"><i class="fa fa-tag"></i> crypto</a>
+              <a href="/tags/rsa/" rel="tag"><i class="fa fa-tag"></i> rsa</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/25/b01lers-CTF/" rel="prev" title="b01lers CTF">
+                  <i class="fa fa-chevron-left"></i> b01lers CTF
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lorlike</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"lorlike","repo":"lorlike.github.io","client_id":"6acca03e9c7b6c3d4edc","client_secret":"7e31b7e4d4e6b9dc0a539efcd935a2aa8f667d26","admin_user":"lorlike","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"e5664c775e2788d30bfa51cdaf0961ba"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
