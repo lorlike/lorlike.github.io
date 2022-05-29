@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="cryptoeasy_real爆破hash，xor密码 1234567891011121314151617181920212223242526from Crypto.Util.number import *import hashlibfrom pwn import *h&#x3D;&amp;#x27;37693cfc748049e45d87b8c7d8b9aacd&amp;#x27;n&#x3D;419735662257669656">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022DASCTF Apr">
+<meta property="og:url" content="http://example.com/2022/04/23/2022DASCTF-Apr/index.html">
+<meta property="og:site_name" content="Lorlike">
+<meta property="og:description" content="cryptoeasy_real爆破hash，xor密码 1234567891011121314151617181920212223242526from Crypto.Util.number import *import hashlibfrom pwn import *h&#x3D;&amp;#x27;37693cfc748049e45d87b8c7d8b9aacd&amp;#x27;n&#x3D;419735662257669656">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-23T02:59:36.000Z">
+<meta property="article:modified_time" content="2022-05-29T01:19:53.274Z">
+<meta property="article:author" content="Lorlike">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="DASCTF">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/04/23/2022DASCTF-Apr/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/04/23/2022DASCTF-Apr/","path":"2022/04/23/2022DASCTF-Apr/","title":"2022DASCTF Apr"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2022DASCTF Apr | Lorlike</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lorlike</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#crypto"><span class="nav-number">1.</span> <span class="nav-text">crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#easy-real"><span class="nav-number">1.1.</span> <span class="nav-text">easy_real</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#special-rsa"><span class="nav-number">1.2.</span> <span class="nav-text">special_rsa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE-OF-RSA"><span class="nav-number">1.3.</span> <span class="nav-text">CVE OF RSA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#misc"><span class="nav-number">2.</span> <span class="nav-text">misc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SimpleFlow"><span class="nav-number">2.1.</span> <span class="nav-text">SimpleFlow</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lorlike"
+      src="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+  <p class="site-author-name" itemprop="name">Lorlike</p>
+  <div class="site-description" itemprop="description">ctfer/蒟蒻觅马🐶/炼丹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1987356024" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1987356024" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/lorlike" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lorlike" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/lorlike1" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;lorlike1" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/23/2022DASCTF-Apr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2022DASCTF Apr | Lorlike">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022DASCTF Apr
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-23 10:59:36" itemprop="dateCreated datePublished" datetime="2022-04-23T10:59:36+08:00">2022-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-29 09:19:53" itemprop="dateModified" datetime="2022-05-29T09:19:53+08:00">2022-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="easy-real"><a href="#easy-real" class="headerlink" title="easy_real"></a>easy_real</h3><p>爆破hash，xor密码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">h=<span class="string">&#x27;37693cfc748049e45d87b8c7d8b9aacd&#x27;</span></span><br><span class="line">n=<span class="number">4197356622576696564490569060686240088884187113566430134461945130770906825187894394672841467350797015940721560434743086405821584185286177962353341322088523</span></span><br><span class="line">c=<span class="number">3298176862697175389935722420143867000970906723110625484802850810634814647827572034913391972640399446415991848730984820839735665233943600223288991148186397</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">if</span> hashlib.md5(<span class="built_in">str</span>(i).encode()).hexdigest()==h:</span><br><span class="line">        e=i</span><br><span class="line"></span><br><span class="line">p = <span class="number">64310413306776406422334034047152581900365687374336418863191177338901198608319</span></span><br><span class="line">q=n//p</span><br><span class="line"></span><br><span class="line">d=inverse(e,(p-<span class="number">1</span>)*(q-<span class="number">1</span>))</span><br><span class="line">m=<span class="built_in">pow</span>(c,d,n)</span><br><span class="line">m=long_to_bytes(m)</span><br><span class="line">l=<span class="built_in">len</span>(m)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    a=<span class="built_in">bytes</span>([i]*l)</span><br><span class="line">    a=xor(a,m)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;flag&#x27;</span> <span class="keyword">in</span> a:</span><br><span class="line">        <span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="special-rsa"><a href="#special-rsa" class="headerlink" title="special_rsa"></a>special_rsa</h3><p>有原题</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/drewd314/WolvSec-CTF-2022-Writeups/blob/main/Crypto/RSA%20Frustration/RSA%20Frustration.md">https://github.com/drewd314/WolvSec-CTF-2022-Writeups/blob/main/Crypto/RSA%20Frustration/RSA%20Frustration.md</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> long_to_bytes</span><br><span class="line"><span class="keyword">from</span> sage.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line">e = <span class="number">113</span></span><br><span class="line">cipher = <span class="number">1028324919038104683475485759234995158466543298184637219012354053883391759172761125802189697762778242175407876548832454351014064525118465877297277847501477586955680645311999174005606833294172830817159</span></span><br><span class="line">N_list = [<span class="number">1134876149917575363176366704410565158549594427794901202977560677131703617</span>, <span class="number">68506321231437453734007374706367120760326482177047006099953454136095248103663</span>, <span class="number">7783503593765446343363083302704731608384677185199537317445372251030064778965500447</span>, <span class="number">1070135687488356161164202697449500843725645617129661751744246979913699130211505096520493</span>, <span class="number">84012402115704505952834528733063574032699054524475028392540927197962976150657887637275643641</span>, <span class="number">4497278582433699034700211877087309784829036823057043402314297478185216205338241432310114079123771</span>, <span class="number">222438508972972285373674471797570608108219830357859030918870564627162064662598790037437036093579139489</span>, <span class="number">19116847751264029874551971240684579996570601026679560309305369168779130317938356692609176166515369250878437</span>, <span class="number">1549903986709797721131070830901667744892392382636347158789834851868638863292232718716074359148785900673192362699</span>, <span class="number">62387766690725996279968636478698222263235233511074646032501495855928095611796694112573478405813305623307157261619643</span>, <span class="number">1496134688150941811618178638810353297864345150241986530472328508974364124440160181353848429438725939837967063441528305921</span>, <span class="number">128744123633657656499069966444992201456797762973822340505291131642660343436783413140023509983315177426811890315424928661125061</span>, <span class="number">6917342652058596217869122177298094984415751234677039849514181349685079073411591975537016273056773954075238307918266361998553646469</span>, <span class="number">1999306851167477770905800721615579416365273707414308684419794311809177595829473632853128686208533753019224536487399393397120864878000113</span>, <span class="number">138594056023048386926766329537127538558164718841925506735112367176642328352257472034381662493666299220910783237918231719166519833124529218331</span>, <span class="number">8397272388904583425531462714999219642572091279898695377838194583995214737828538895164195817973441184775814069396690436662985593377966417476040659</span>, <span class="number">83372889332166088651413254885376085265561130214754686361784964744744711092668473281132249352040520639092871294276293287744276919265091479681667169671</span>, <span class="number">10684953914628370830889219903654707140968094024767031366624595731918523435466123514094659595357231410471738736952266383928737163485550013190959149252435167</span>, <span class="number">428359134899960532964729749713513106760306719712194950954567619156985067322564731294653991204666853689688900339268764469280769569535109069729404621290809120793</span>, <span class="number">24491413133428851306933688733518898516890217803647806829002775935975741568422047344206442746983871735723486865901743352102305801200224958166496937663406627341150101</span>, <span class="number">2247517335600310176909964109060502815240207684510918447209767597511414934626668616704865548059751008841620288545344598917362752622130186820039265603312354963258673860579</span>, <span class="number">157978379942536176944325875241196121764116712487226808271002140500926678942090491383544034591205964958130852055691446362753906164711087278555153881606839791499207025307202087</span>, <span class="number">43938571869497484913682975192955012614794498816057204091016374302341854100775132924321569876797699342959191646206571444845883942305710956894334106963321644724361549027630634869933</span>, <span class="number">2609065298534470914730686454716224905333131812890643378630636043224255484662185236061585264231004975072801053316107165770342161619265243081616632312934742288262985830181883449780965531</span>, <span class="number">222235907202454132555071455958700740228567465616560859711214102245461514428187391909176054661864893645713338391509536653547350134615807194339839952004333949540567943568810413945779642106201</span>, <span class="number">44890472824427626252451120059527486677662371033945481542195354255473403815853320591468917295474578271680865394304946847791535710766947049195816261224382109115684638995528332538466194474846836399</span>, <span class="number">1062789633774349417938788353001516763303743389381120380522262327123099728631034935663418832664265833959487018276693680850987382421521055508477988016246558095545925414048663082368488342633334571240563</span>]</span><br><span class="line">p_list = [<span class="number">1189933229053113361422958527792232151</span>, <span class="number">295185057334340451492588650872876746227</span>, <span class="number">88380889077762105057154017276462714444697</span>, <span class="number">43974782968656404951924524450501283426052127</span>, <span class="number">7832299017937880395583715032476962329929226581</span>, <span class="number">1656848589754467667368312855929759764100120657831</span>, <span class="number">385788223643735590500185001710758495904528462058461</span>, <span class="number">135813272566456906193934636644217527100917542578856697</span>, <span class="number">41680117092754807988080699273322244961911189757589699867</span>, <span class="number">9419832152875820180139633405089278278408407453522978357309</span>, <span class="number">1567597041534155679238655992215022394597376421096298363211067</span>, <span class="number">350121371461894793578110243222665782247737840410076591434903787</span>, <span class="number">103424977238409568447978495499643051307907366367259219393937014631</span>, <span class="number">43449898447639409732732812916430042263570178747794530133229640125923</span>, <span class="number">12445294229358634680867170058509842935273054334385354032543323581223253</span>, <span class="number">3200631836176555526009533059891690177091538103904679780020639896015937897</span>, <span class="number">317277895959173163347650321012213555955385929418622006880521870012130207557</span>, <span class="number">102366458668689911004027849640392002821642295855327735994412634235696717329671</span>, <span class="number">26984206512970181742033712455904984758134288864531714209886622060356697128804201</span>, <span class="number">4479430800690915874719403516331677127806963529247809966024777708496270901092401687</span>, <span class="number">1328165608715012145707239303399129070657427496129541416861187541092152796676371237057</span>, <span class="number">368461902207817023013078031477042541053987571003677386333567043030477451518424731838173</span>, <span class="number">206721456778089912780641186795393376537372828449722520397829606593267585681448641482345737</span>, <span class="number">59471978701477648587546053450213894562580907285714122639903144859545186463681183925646967041</span>, <span class="number">15115713372931874518523751684548940147062395364112500028355694776530968944848166318295947674571</span>, <span class="number">5952590790902091635268726673538951527433355660839816621733964706901441977862333411532558667717227</span>, <span class="number">1086686910531802445146659484012613083647370307628438760118376029969836222533970554565751069314622539</span>]</span><br><span class="line">q_list = [<span class="number">953730950786751671162019537171974567</span>, <span class="number">232079231415308325450092906880606082069</span>, <span class="number">88067722275537586769787599991567203589751</span>, <span class="number">24335212484189159197840692460327461505035059</span>, <span class="number">10726403821316775206273675267109184566904426261</span>, <span class="number">2714357008989072105081411295741540337141142641741</span>, <span class="number">576581905150085393327734090419529952232186498060949</span>, <span class="number">140758317578347635848563045232314610161039815135897421</span>, <span class="number">37185691759470013533730603170661686570987787098353146897</span>, <span class="number">6623023178993627032758350846838617937710601663528839184727</span>, <span class="number">954412804126450754097808991490470782833291028309980575506163</span>, <span class="number">367712839396521757736384350030802803477965822058616833553305103</span>, <span class="number">66882708962198932251728043152245270662769508317424500666902658099</span>, <span class="number">46014074200352892806829193743016415423205917845271691428043440245531</span>, <span class="number">11136261905010083405430254612464029672882837025885682392810368001188527</span>, <span class="number">2623629589005115152329094552749299711026240699896424120660145647226563547</span>, <span class="number">262775599542220820608778738911414710660835549772895468394761119434220071003</span>, <span class="number">104379442774418262390337411577160146519860415840398189010112686742489182665577</span>, <span class="number">15874438801602936764330936047390981280096007684699625987478211613419079727910193</span>, <span class="number">5467527956822382309398095704409409074818664888285375307055715842283183939297839923</span>, <span class="number">1692196606246085729483398884059069884182535824953762329164855466589577530953493347747</span>, <span class="number">428750921047556327595864876619292414694543668237320723518704707914310601565770504401619</span>, <span class="number">212549643149353357950643557614966235999942509894271006476145929120541407503538644651435909</span>, <span class="number">43870497594014737833600078975099212558645315030912084285417550950854483979406797450479252891</span>, <span class="number">14702310219802004876082313481498680940324963613770096574742182597840558294030859405666549879531</span>, <span class="number">7541333580839789645678699855290145212677767915429008863004397257213367753100058966625356835737037</span>, <span class="number">978009050697262759337388871320370165458800566798280419667959552859180906066907114053826258140106617</span>]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">factorize</span>(<span class="params">p,q,N,depth,cip</span>):</span><br><span class="line">    <span class="keyword">assert</span> p * q == N</span><br><span class="line">    p_roots = mod(cip, p).nth_root(e, <span class="built_in">all</span>=<span class="literal">True</span>)</span><br><span class="line">    q_roots = mod(cip, q).nth_root(e, <span class="built_in">all</span>=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">for</span> xp <span class="keyword">in</span> p_roots:</span><br><span class="line">        <span class="keyword">for</span> xq <span class="keyword">in</span> q_roots:</span><br><span class="line">            x = crt([Integer(xp), Integer(xq)], [p,q])</span><br><span class="line">            x = <span class="built_in">int</span>(x)</span><br><span class="line">            flag = long_to_bytes(x)</span><br><span class="line">            <span class="comment">#print(flag)</span></span><br><span class="line">            <span class="keyword">if</span> flag.startswith(<span class="string">b&quot;DAS&quot;</span>):</span><br><span class="line">                <span class="built_in">print</span>(flag.decode())</span><br><span class="line">            <span class="keyword">if</span> depth != <span class="number">26</span>:</span><br><span class="line">                factorize(p_list[<span class="built_in">len</span>(p_list) - <span class="number">1</span> - (depth + <span class="number">1</span>)], q_list[<span class="built_in">len</span>(q_list) - <span class="number">1</span> - (depth + <span class="number">1</span>)], N_list[<span class="built_in">len</span>(q_list) - <span class="number">1</span> - (depth + <span class="number">1</span>)], (depth + <span class="number">1</span>), x)           </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    factorize(p_list[<span class="built_in">len</span>(p_list) - <span class="number">1</span>], q_list[<span class="built_in">len</span>(q_list)-<span class="number">1</span>], N_list[<span class="built_in">len</span>(q_list)-<span class="number">1</span>], <span class="number">0</span>, cipher)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="CVE-OF-RSA"><a href="#CVE-OF-RSA" class="headerlink" title="CVE OF RSA"></a>CVE OF RSA</h3><p>没时间做，理论上可以用共模攻击</p>
+<h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="SimpleFlow"><a href="#SimpleFlow" class="headerlink" title="SimpleFlow"></a>SimpleFlow</h3><p>tcp 第52个流有个zip</p>
+<p>第50个流分析一下流量得到密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a=@eval(@base64_decode($_POST[&#x27;m8f8d9db647ecd&#x27;]));&amp;e57fb9c067c677=o3&amp;g479cf6f058cf8=1DY2QgIi9Vc2Vycy9jaGFuZy9TaXRlcy90ZXN0Ijt6aXAgLVAgUGFTc1ppUFdvckQgZmxhZy56aXAgLi4vZmxhZy50eHQ7ZWNobyBbU107cHdkO2VjaG8gW0Vd&amp;m8f8d9db647ecd=QG......</span><br></pre></td></tr></table></figure>
+
+<p>对字段<strong>g479cf6f058cf8</strong>从第二位开始base64解码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &quot;/Users/chang/Sites/test&quot;;zip -P PaSsZiPWorD flag.zip ../flag.txt;echo [S];pwd;echo [E]</span><br></pre></td></tr></table></figure>
+
+<p>得到密码PaSsZiPWorD</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ctf/" rel="tag"><i class="fa fa-tag"></i> ctf</a>
+              <a href="/tags/DASCTF/" rel="tag"><i class="fa fa-tag"></i> DASCTF</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/21/CTF-2022-crypto/" rel="prev" title="*CTF 2022 crypto">
+                  <i class="fa fa-chevron-left"></i> *CTF 2022 crypto
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/25/b01lers-CTF/" rel="next" title="b01lers CTF">
+                  b01lers CTF <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lorlike</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":null,"repo":"lorlike.github.io","client_id":"6acca03e9c7b6c3d4edc","client_secret":"7e31b7e4d4e6b9dc0a539efcd935a2aa8f667d26","admin_user":"lorlike","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"9050bcd46a055a40383547130636c1e2"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
