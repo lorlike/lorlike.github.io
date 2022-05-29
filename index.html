@@ -218,7 +218,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-30 01:12:44 / 修改时间：02:26:13" itemprop="dateCreated datePublished" datetime="2022-05-30T01:12:44+08:00">2022-05-30</time>
+      <time title="创建时间：2022-05-30 01:12:44 / 修改时间：07:42:06" itemprop="dateCreated datePublished" datetime="2022-05-30T01:12:44+08:00">2022-05-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -249,66 +249,14 @@ class="math inline">\(q-1\)</span> 有一个大的共因子 <span
 class="math inline">\(\beta\)</span> ，那么可以在 <span
 class="math inline">\(O(\frac{N^{\frac{1}{4}}}{\beta})\)</span>
 时间内分解<span class="math inline">\(N\)</span></p>
-<h2 id="适用条件">适用条件</h2>
-<p>已知 <strong>N，β</strong></p>
-<h2 id="实现方法">实现方法</h2>
-<p>假定 <span class="math inline">\(p&lt;q&lt;(k-1)p\)</span>，<span
-class="math inline">\(p=x\beta+1\)</span>，<span
-class="math inline">\(q=y\beta+1\)</span>，</p>
-<p>则 <span
-class="math inline">\(\lambda(N)=lcm(p-1,q-1)=xy\beta\)</span> ，<span
-class="math inline">\(N=(x\beta+1)(y\beta+1)=xy\beta^2+(x+y)\beta+1\)</span></p>
-<p>设u,v,c满足 <span
-class="math inline">\(\frac{n-1}{\beta}=xy\beta+(x+y)=u\beta+v\)</span>，<span
-class="math inline">\(x+y=v+c\beta&gt;c\beta\)</span></p>
-<p>则有 <span class="math inline">\(xy=u-c\)</span></p>
-<p>c的上界：<span
-class="math inline">\(c&lt;\frac{x+y}{\beta}=\frac{(x+y)\beta}{\beta^2}&lt;\frac{p+q}{\beta^2}&lt;\frac{kp}{\beta^2}&lt;\frac{k\sqrt{N}}{\beta}=C\)</span></p>
-<p><span class="math inline">\(a^{u\beta}\equiv a^{xy\beta+c\beta}\equiv
-a^{c\beta}\ mod\ N\)</span></p>
-<p>令 <span class="math inline">\(b=a^{\beta}\)</span>，则有 <span
-class="math inline">\(b^u\equiv b^c\)</span></p>
-<p>通过已知的b和u利用大步小步法计算c，复杂度为<span
-class="math inline">\(O(\sqrt{C})=O(\frac{N^{\frac{1}{4}}}{\beta})\)</span>.</p>
-<p>比较列表 <span class="math display">\[
-b^0,b^D,b^{2D},...,b^{D^2}\ mod\ N\\
-b^u,b^{u-1},...,b^{u-D}\ mod\ N
-\]</span> 找到 <span class="math inline">\(b^{rD}\equiv
-b^{u-s}\)</span>，则 <span class="math inline">\(c=rD+s\)</span></p>
-<p>解方程组 <span class="math display">\[
-\begin{cases}
-x+y=v+c\beta\\\\
-xy=u-c
-\end{cases}
-\]</span> 得到x,y，再代入计算p,q即可分解</p>
-<h3 id="例子">例子</h3>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>β</th>
-<th>N</th>
-<th>p</th>
-<th>q</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>bits</td>
-<td>120</td>
-<td>509</td>
-<td>253</td>
-<td>256</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sympy</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> ceil,sqrt</span><br><span class="line"></span><br><span class="line">b=<span class="number">1030171354156433533352122827700292399</span></span><br><span class="line"><span class="comment"># p=12505870070530080678697672848088424168097195458341812337424996871641938654429</span></span><br><span class="line"><span class="comment"># q=75441126738427579187451388538259240503276231725448286652836436830894616746833</span></span><br><span class="line">n=<span class="number">943456928965168065086126085084738745924871133735520520502369372006222199842518030091867111333255306748855469496006289254132995842316571450304625367173357</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">D=<span class="built_in">int</span>(sqrt(sqrt(n))/b)*<span class="number">3</span></span><br><span class="line"></span><br><span class="line">u,v=<span class="built_in">divmod</span>((n-<span class="number">1</span>)//b,b)</span><br><span class="line">a=<span class="built_in">pow</span>(<span class="number">3</span>,b,n)</span><br><span class="line"></span><br><span class="line">l=[<span class="built_in">pow</span>(a,r*D,n) <span class="keyword">for</span> r <span class="keyword">in</span> <span class="built_in">range</span>(D+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> <span class="built_in">range</span>(D+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">pow</span>(a,u-s,n) <span class="keyword">in</span> l:</span><br><span class="line">        r=l.index(<span class="built_in">pow</span>(a,u-s,n))</span><br><span class="line">        c=r*D+s</span><br><span class="line">        x,y=sympy.symbols(<span class="string">&#x27;x,y&#x27;</span>)</span><br><span class="line">        r=sympy.solve([x+y-c*b-v,x*y-u+c])[<span class="number">0</span>]</span><br><span class="line">        x,y=r[x],r[y]</span><br><span class="line">        p,q=<span class="built_in">int</span>(x*b+<span class="number">1</span>),<span class="built_in">int</span>(y*b+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line"><span class="built_in">print</span>(q)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 12505870070530080678697672848088424168097195458341812337424996871641938654429</span></span><br><span class="line"><span class="comment"># 75441126738427579187451388538259240503276231725448286652836436830894616746833</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="参考">参考</h2>
-<ul>
-<li>McKee J F, Pinch R G E. Further attacks on server-aided RSA
-cryptosystems[J]. Unpublished manuscript, 1998, 104.</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
