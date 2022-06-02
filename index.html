@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -139,7 +139,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -188,6 +188,246 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/31/%E7%BB%99vscode%E9%85%8D%E7%BD%AEphp%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/31/%E7%BB%99vscode%E9%85%8D%E7%BD%AEphp%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">给vscode配置php调试环境</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-31 17:23:59" itemprop="dateCreated datePublished" datetime="2022-05-31T17:23:59+08:00">2022-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-01 21:12:09" itemprop="dateModified" datetime="2022-06-01T21:12:09+08:00">2022-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="使用工具与环境">使用工具与环境</h2>
+<ol type="1">
+<li>windows 10 64位</li>
+<li>vscode</li>
+<li>phpstudy（其他的类似</li>
+</ol>
+<h2 id="phpstudy">phpstudy</h2>
+<h3 id="在php扩展中安装调试工具php-xdebug">在php扩展中安装调试工具php
+xdebug</h3>
+<figure>
+<img src="https://s2.loli.net/2022/06/01/e6OUdIbxaGXESuj.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<h3
+id="对使用的php的配置文件php.ini进行修改">对使用的php的配置文件php.ini进行修改</h3>
+<p>打开Xdebug的远程调试，配置如下</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/01/7wxhIKmCWZyzGrQ.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<blockquote>
+<p>xdebug.remote_enable=1 xdebug.remote_autostart = 1</p>
+</blockquote>
+<p><strong>xdebug.remote_port</strong>是调试端口，默认为9000</p>
+<h2 id="vscode">vscode</h2>
+<p>安装<strong>PHP
+Debug</strong>插件，设置<strong>php</strong>和<strong>xdebug</strong>的路径</p>
+<p><strong>php.validate.executablePath</strong>填写<strong>php.exe</strong>路径，<strong>php.debug.executablePath</strong>填写<strong>php_xdebug.dll</strong>的路径</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/01/JkEuPnRr8dYoLOg.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>打开vscode的工作目录，我选的是<strong>phpstudy</strong>的<strong>WWW</strong>目录，保证调试文件在工作目录下</p>
+<p>开启调试，并生成调试配置文件，保证端口与php.ini中xdebug的<strong>xdebug.remote_port</strong>一致</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/01/LYMP65hoF8vawcG.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/" class="post-title-link" itemprop="url">针对含小CRT私钥不平衡RSA的攻击(ing...</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-30 19:50:11" itemprop="dateCreated datePublished" datetime="2022-05-30T19:50:11+08:00">2022-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-03 00:15:42" itemprop="dateModified" datetime="2022-06-03T00:15:42+08:00">2022-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>不平衡RSA指的是p,q的大小相差很大，并且将假定q&lt;p，q的大小为 <span
+class="math inline">\(N^\beta\)</span>，<span
+class="math inline">\(d_p=d\ mod\ p-1\)</span> ，<span
+class="math inline">\(d_p\)</span> 的大小为 <span
+class="math inline">\(N^\delta\)</span></p>
+<p>本文将按顺序介绍几种方法来分解满足条件的 <span
+class="math inline">\(N\)</span>，随着p,q相差越大，即 <span
+class="math inline">\(\beta\)</span> 越小，可以利用的 <span
+class="math inline">\(d_p\)</span> 的上界也将提高</p>
+<ol type="1">
+<li><span class="math inline">\(3\beta + 2\delta ≤ 1 − log_N
+(4).\)</span></li>
+<li><span class="math inline">\(3\beta − \beta^2 + 2\delta ≤ 1 −
+\epsilon.\)</span></li>
+<li><span class="math inline">\(\frac{5}{3}\beta
++\frac{2}{3}\sqrt{3\beta − 5\beta^2} + \delta ≤ 1 −
+\epsilon\)</span></li>
+</ol>
+<iframe src="https://www.desmos.com/calculator/mr0mq8wguv?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder="0">
+</iframe>
+<blockquote>
+<p>1红色 2蓝色 3绿色</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,9 +456,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-05-30 01:12:44 / 修改时间：07:42:06" itemprop="dateCreated datePublished" datetime="2022-05-30T01:12:44+08:00">2022-05-30</time>
+      <time title="创建时间：2022-05-30 01:12:44" itemprop="dateCreated datePublished" datetime="2022-05-30T01:12:44+08:00">2022-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-02 13:47:01" itemprop="dateModified" datetime="2022-06-02T13:47:01+08:00">2022-06-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,8 +486,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="概述">概述</h2>
-<p>对于<span class="math inline">\(N=pq\)</span>，<span
+          <p>对于<span class="math inline">\(N=pq\)</span>，<span
 class="math inline">\(p\)</span> 和 <span
 class="math inline">\(q\)</span> 相近并且 <span
 class="math inline">\(p-1\)</span> 与 <span
@@ -598,7 +843,7 @@ class="math inline">\(p-q\)</span>的近似值相应的y的近似值也能求出
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-29 09:20:32" itemprop="dateModified" datetime="2022-05-29T09:20:32+08:00">2022-05-29</time>
+      <time title="修改时间：2022-06-01 13:09:53" itemprop="dateModified" datetime="2022-06-01T13:09:53+08:00">2022-06-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -627,7 +872,10 @@ class="math inline">\(p-q\)</span>的近似值相应的y的近似值也能求出
 \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\
 ||v_1|| ≤ 2^{
 \frac{n−1}{4}}det(L)^{\frac{1}{n}}
-\]</span></p>
+\]</span> #### Minkowski定理</p>
+<p>格子<strong>L</strong>存在向量 <span class="math inline">\(v\)</span>
+，满足 <span class="math inline">\(||v||\le \sqrt{n}\
+det(L)^\frac{1}{n}\)</span></p>
 <h3 id="coppersmith算法">CopperSmith算法</h3>
 <h4 id="sage自带">sage自带</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">10001</span></span><br><span class="line">P.&lt;x&gt; = PolynomialRing(Zmod(n))</span><br><span class="line">f=x^<span class="number">3</span> + <span class="number">10</span>*x^<span class="number">2</span> + <span class="number">5000</span>*x - <span class="number">222</span></span><br><span class="line">f.small_roots(X=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>

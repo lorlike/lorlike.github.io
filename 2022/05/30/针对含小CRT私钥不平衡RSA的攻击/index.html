@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="不平衡RSA指的是p,q的大小相差很大，并且将假定q&lt;p，q的大小为 \(N^\beta\)，\(d_p&#x3D;d\ mod\ p-1\) ，\(d_p\) 的大小为 \(N^\delta\) 本文将按顺序介绍几种方法来分解满足条件的 \(N\)，随着p,q相差越大，即 \(\beta\) 越小，可以利用的 \(d_p\) 的上界也将提高  \(3\beta + 2\delta ≤ 1 −">
+<meta property="og:type" content="article">
+<meta property="og:title" content="针对含小CRT私钥不平衡RSA的攻击(ing...">
+<meta property="og:url" content="http://example.com/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/index.html">
+<meta property="og:site_name" content="Lorlike&#39;s Blog">
+<meta property="og:description" content="不平衡RSA指的是p,q的大小相差很大，并且将假定q&lt;p，q的大小为 \(N^\beta\)，\(d_p&#x3D;d\ mod\ p-1\) ，\(d_p\) 的大小为 \(N^\delta\) 本文将按顺序介绍几种方法来分解满足条件的 \(N\)，随着p,q相差越大，即 \(\beta\) 越小，可以利用的 \(d_p\) 的上界也将提高  \(3\beta + 2\delta ≤ 1 −">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-30T11:50:11.000Z">
+<meta property="article:modified_time" content="2022-06-02T16:15:42.184Z">
+<meta property="article:author" content="Lorlike">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="rsa">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/","path":"2022/05/30/针对含小CRT私钥不平衡RSA的攻击/","title":"针对含小CRT私钥不平衡RSA的攻击(ing..."}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>针对含小CRT私钥不平衡RSA的攻击(ing... | Lorlike's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lorlike's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%B9%B3%E8%A1%A1rsa%E7%9A%84%E7%94%9F%E6%88%90%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">不平衡RSA的生成方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">方法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%951"><span class="nav-number">2.1.</span> <span class="nav-text">方法1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%952"><span class="nav-number">2.2.</span> <span class="nav-text">方法2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%953"><span class="nav-number">2.3.</span> <span class="nav-text">方法3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-number">2.4.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lorlike"
+      src="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+  <p class="site-author-name" itemprop="name">Lorlike</p>
+  <div class="site-description" itemprop="description">ctfer/蒟蒻觅马🐶/炼丹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1987356024" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1987356024" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/lorlike" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lorlike" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/lorlike1" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;lorlike1" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="针对含小CRT私钥不平衡RSA的攻击(ing... | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          针对含小CRT私钥不平衡RSA的攻击(ing...
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-30 19:50:11" itemprop="dateCreated datePublished" datetime="2022-05-30T19:50:11+08:00">2022-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-03 00:15:42" itemprop="dateModified" datetime="2022-06-03T00:15:42+08:00">2022-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>不平衡RSA指的是p,q的大小相差很大，并且将假定q&lt;p，q的大小为 <span
+class="math inline">\(N^\beta\)</span>，<span
+class="math inline">\(d_p=d\ mod\ p-1\)</span> ，<span
+class="math inline">\(d_p\)</span> 的大小为 <span
+class="math inline">\(N^\delta\)</span></p>
+<p>本文将按顺序介绍几种方法来分解满足条件的 <span
+class="math inline">\(N\)</span>，随着p,q相差越大，即 <span
+class="math inline">\(\beta\)</span> 越小，可以利用的 <span
+class="math inline">\(d_p\)</span> 的上界也将提高</p>
+<ol type="1">
+<li><span class="math inline">\(3\beta + 2\delta ≤ 1 − log_N
+(4).\)</span></li>
+<li><span class="math inline">\(3\beta − \beta^2 + 2\delta ≤ 1 −
+\epsilon.\)</span></li>
+<li><span class="math inline">\(\frac{5}{3}\beta
++\frac{2}{3}\sqrt{3\beta − 5\beta^2} + \delta ≤ 1 −
+\epsilon\)</span></li>
+</ol>
+<iframe src="https://www.desmos.com/calculator/mr0mq8wguv?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder="0">
+</iframe>
+<blockquote>
+<p>1红色 2蓝色 3绿色</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="不平衡rsa的生成方法">不平衡RSA的生成方法</h2>
+<p>生成p,q 满足 <span class="math inline">\(q&lt;N^\beta,\
+p&gt;N^{1-\beta},\ gcd(p-1,\frac{q-1}{2})=1\)</span> <span
+class="math display">\[
+\begin{cases}
+d\equiv d_p\ mod\ p-1\\
+d\equiv d_q\ mod\ \frac{p-1}{2}
+\end{cases}\\
+e\equiv d^{-1}\ mod\ \frac{\phi(N)}{2}
+\]</span></p>
+<h2 id="方法介绍">方法介绍</h2>
+<h3 id="方法1">方法1</h3>
+<blockquote>
+<p>该方法的时间复杂度为<span
+class="math inline">\(O(log^2(N))\)</span></p>
+</blockquote>
+<p>设 <span class="math inline">\(ed_p+k(p-1)=1\)</span>，则 <span
+class="math inline">\(ed_p-(k+1)\equiv 0\ mod\ p\)</span></p>
+<p>设 <span class="math inline">\(f_p(x,y)=ex-y\)</span> ，则在模p下有解
+<span class="math inline">\((d_p,k+1)\)</span></p>
+<p>因为 <span class="math inline">\(e&lt;\frac{(p-1)(q-1)}{2}\)</span>
+<span class="math display">\[
+d_p&lt;N^\delta,\
+|k+1|&lt;2|k|=2|\frac{ed_p-1}{p-1}|&lt;2\frac{ed_p}{p-1}=(q-1)d_p&lt;N^{\beta+\delta}
+\]</span> 造格子<span class="math inline">\(L_p,\ B_p\)</span>为<span
+class="math inline">\(L_p\)</span>上的一组基，<span
+class="math inline">\(X=N^\delta,\ Y=N^{\beta+\delta}\)</span> <span
+class="math display">\[
+B_p=
+\begin{pmatrix}
+NX\\
+eX&amp;-Y
+\end{pmatrix}
+\]</span> 见我之前写的文章<a href="/2022/03/09/Coppersmith%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" title="Coppersmith算法及其应用">Coppersmith算法及其应用</a></p>
+<p>运用Minkowski定理和Howgrave-Graham定理，得到 <span
+class="math display">\[
+||v||\le
+\sqrt{2det(B_p)}&lt;\frac{N^{1-\beta}}{\sqrt{2}}&lt;\frac{p}{\sqrt{2}}
+\]</span> 计算得 <span class="math display">\[
+3\beta + 2\delta ≤ 1 − log_N (4)
+\]</span> 假设 <span class="math inline">\(||v||=(c_0,c_1)·B_p\)</span>
+是 <span class="math inline">\(L_p\)</span> 上满足 <span
+class="math inline">\(||v||&lt;\frac{p}{\sqrt{2}}\)</span>
+的最短向量，那么 <span class="math inline">\(|c_0|=k,\
+|c_1|=qd_p\)</span></p>
+<p>这是因为 <span class="math display">\[
+f(x_0,y_0)=c_0Nx_0+c_1(ex_0-y_0)=0\Rightarrow c_0qd_p=c_1k
+\]</span> 又因为我们假设 <span class="math inline">\(q\nmid k\)</span>
+，所以 <span class="math inline">\(gcd(qd_p,k)=gcd(d_p,k)\)</span>. 由
+<span class="math inline">\(ed_p+k(p-1)=1\)</span> 得，<span
+class="math inline">\(gcd(d_p,k)=1\)</span>，所以 <span
+class="math display">\[
+c_0=ak\ \ and\ \ c_1=aqd_p
+\]</span> 因为 <span class="math inline">\(v\)</span> 是最小向量，所以
+<span class="math inline">\(gcd(c_0,c_1)=1\ \Rightarrow
+|a|=1\)</span></p>
+<p>所以q可以由 <span class="math inline">\(gcd(c_1,N)=q\)</span>
+得到，从而分解 <span class="math inline">\(N\)</span> ，而 <span
+class="math inline">\(d_p\)</span> 和 <span
+class="math inline">\(k+1\)</span> 也可以根据 <span
+class="math inline">\(c_0,c_1\)</span> 计算得出从而得到 <span
+class="math inline">\(f_p(x,y)\)</span> 的解 <span
+class="math inline">\((d_p,k+1)\)</span></p>
+<h4 id="例子">例子</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> getrandbits,randrange</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    p=getPrime(<span class="built_in">int</span>(<span class="number">2048</span>-<span class="number">512</span>))</span><br><span class="line">    q=getPrime(<span class="built_in">int</span>(<span class="number">512</span>))</span><br><span class="line">    <span class="keyword">if</span> gmpy2.gcd(p-<span class="number">1</span>,(q-<span class="number">1</span>)//<span class="number">2</span>)==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">n=p*q</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    d_p=getrandbits(<span class="built_in">int</span>(<span class="number">200</span>))</span><br><span class="line">    d_q=randrange(<span class="number">0</span>,(q-<span class="number">1</span>)//<span class="number">2</span>)</span><br><span class="line">    d=d_p*inverse((q-<span class="number">1</span>)//<span class="number">2</span>,p-<span class="number">1</span>)*(q-<span class="number">1</span>)//<span class="number">2</span>+d_q*inverse(p-<span class="number">1</span>,(q-<span class="number">1</span>)//<span class="number">2</span>)*(p-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> GCD(d,(p-<span class="number">1</span>)*(q-<span class="number">1</span>)//<span class="number">2</span>)==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">e=inverse(d,(p-<span class="number">1</span>)*(q-<span class="number">1</span>)//<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">X=<span class="number">2</span>**<span class="number">200</span></span><br><span class="line">Y=<span class="number">2</span>**<span class="number">712</span></span><br><span class="line"></span><br><span class="line">L=matrix([[n*X,<span class="number">0</span>],[e*X,-Y]])</span><br><span class="line">c1=<span class="built_in">abs</span>(L.LLL()[<span class="number">0</span>][<span class="number">1</span>])//Y</span><br><span class="line">q=<span class="built_in">int</span>(GCD(c1,n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="number">1</span>&lt;q&lt;n,n%q==<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="方法2">方法2</h3>
+<p>在方法1的基础上使用x-shift多项式</p>
+<p>设 <span class="math inline">\(X=\frac{n+1}{2}N^\delta\ and\
+Y=\frac{n+1}{2}N^{\beta+\delta}\)</span></p>
+<p>设多项式 <span class="math inline">\(g_{m,i,j}(x,y) =
+N^{max(0,m−j)}x^if_p(x,y)^j\)</span>对于$ 0 ≤ j &lt; n，i=n-j-1$</p>
+<p>则 <span class="math inline">\(g_{m,i,j}\)</span> 有非零解 <span
+class="math inline">\((x_0,y_0)=(d_p,k+1)\ mod\ p^m\)</span></p>
+<blockquote>
+<p>m是n的函数，需要进行优化，后面会讲</p>
+</blockquote>
+<p>例如，取n=4和m=2，得到一个4维格子 <span
+class="math inline">\(L_p(4)\)</span> <span class="math display">\[
+B_p(4)=
+\begin{pmatrix}
+N^2X^3\\
+eNX^3&amp;-NX^2Y\\
+e^2X^3&amp;-2eX^2Y&amp;XY^2\\
+e^3X^3&amp;-3e^2X^2Y&amp;3eXY^2&amp;-Y^3
+\end{pmatrix}
+\]</span> 方法1就是m=1，n=2时的特例，即 <span
+class="math inline">\(B_p(2)\)</span></p>
+<p>计算得到 <span class="math display">\[
+det(B_p(n))=N^{\frac{m(m+1)}{2}}(XY)^{\frac{n(n-1)}{2}}=(\frac{n+1}{2})^{n(n-1)}N^{\frac{m(m+1)}{2}+(2\delta+\beta)\frac{n(n-1)}{2}}
+\]</span> 结合LLL算法和Howgrave-Graham定理得 <span
+class="math display">\[
+2^{\frac{n-1}{4}}det(B_p(n))^{\frac{1}{n}}\le
+\frac{N^{(1-\beta)m}}{\sqrt{n}}
+\]</span></p>
+<p><span class="math display">\[
+\Rightarrow N^{\frac{m(m+1)}{2}+(2\delta+\beta)\frac{n(n-1)}{2}}\le
+cN^{(1-\beta)mn},\ c=((2^{-\frac{3}{4}}(n+1))^{n-1}\sqrt{n})^{-n}
+\]</span></p>
+<p>让下面式子左边最小， <span class="math display">\[
+\frac{m(m+1)}{2}+(2\delta+\beta)\frac{n(n-1)}{2}-(1-\beta)mn\le0
+\]</span> 当 <span class="math inline">\(n\rightarrow \infin\)</span>
+可以得到 <span class="math inline">\(m=(1-\beta)n\)</span>，代入再计算得
+<span class="math inline">\(3\beta-\beta^2+2\delta\le 1\)</span></p>
+<p>在<strong>方法1</strong>中，我们通过 <span
+class="math inline">\(k\mid c_1，d_p\mid c_2\)</span>
+求出根。但方法2增加了系数的个数，所以需要使用另一种方法求根</p>
+<p>假设点 <span class="math inline">\((x_0,y_0)\)</span> 是 <span
+class="math inline">\(f_p\)</span> 的根，对任意的整数 <span
+class="math inline">\(a\)</span> ，点 <span
+class="math inline">\((ax_0,ay_0)\)</span> 也是 <span
+class="math inline">\(f_p\)</span> 的根。每一个根 <span
+class="math inline">\((ax_0,ay_0)\)</span> 对于 <span
+class="math inline">\(|a|\le \frac{n+1}{2}\)</span> ，都满足条件 <span
+class="math inline">\(|ax_0|\le X,\ |ay_0|\le Y\)</span>。存在至少 <span
+class="math inline">\(n+1\)</span>
+个根（论文说的，没弄懂），根据Howgrave-Graham定理，<span
+class="math inline">\(f\)</span> 在 <span
+class="math inline">\(Z\)</span> 上包含了这些根</p>
+<p>显然这些根也是多项式 <span class="math inline">\(p(x,y)=y_0x-x_0y\
+\in\ Z[x,y]\)</span> 的根，因为这些根在直线 <span
+class="math inline">\(y=\frac{y_0}{x_0}x\)</span> 上。多项式 <span
+class="math inline">\(p,\ f\)</span>
+分别是1阶和n阶的，因为这两个多项式有至少 <span
+class="math inline">\(n+1\)</span> 个公共点，而 <span
+class="math inline">\(p\)</span> 是不可约多项式，所以 <span
+class="math inline">\(p|f\)</span></p>
+<p>通过分解 <span class="math inline">\(f\)</span> 寻找多项式 <span
+class="math inline">\(p&#39;=(by_0)x-(bx_0)y\)</span> 。因为 <span
+class="math inline">\(ed_p-(k+1)=-kp\)</span> ，所以 <span
+class="math inline">\(gcd(d_p,k+1)|kp\)</span>。但 <span
+class="math inline">\(gcd(d_p,kp)=gcd(d_p,k)=1\)</span>，所以 <span
+class="math inline">\(gcd(x_0,y_0)=gcd(d_p,k+1)=1\)</span></p>
+<p>所以 <span
+class="math inline">\(p=\frac{p&#39;}{b}=\frac{p&#39;}{gcd(by_0,bx_0)}\)</span></p>
+<h3 id="方法3">方法3</h3>
+<p>我们假定 e 拥有与 N 一样的数量级，因为 e 是由 <span
+class="math inline">\(d^{-1}\ mod\ \frac{\phi(N)}{2}\)</span> 生成的</p>
+<p>回顾式子 <span class="math inline">\(ed_p+k(p-1)=1\Rightarrow
+(k+1)(p-1)-p=-ed_p\Rightarrow (k+1)(N-q)-N=-ed_pq\)</span></p>
+<p>这给出多项式 <span
+class="math inline">\(f_e(y,z)=y(N-z)-N\)</span>，在模e下有根 <span
+class="math inline">\((y_0,z_0)=(k+1,q)\)</span></p>
+<p>定义 <span class="math inline">\(Y=N^{\beta+\delta},\
+Z=N^\beta\)</span>，有 <span class="math inline">\(|y_0|\le Y,\ |z_0|\le
+Z\)</span> 。</p>
+<p>类似之前的思路，我们可以定义3维格 <span
+class="math inline">\(L_e\)</span> <span class="math display">\[
+B_e=
+\begin{pmatrix}
+e\\
+&amp;eY\\
+-N&amp;NY&amp;-YZ
+\end{pmatrix}
+\]</span> 运用Howgrave-Graham定理，找到 <span class="math inline">\(v\in
+L_e,\ |v|&lt;\frac{e}{\sqrt{3}}\)</span>，可以得到 <span
+class="math inline">\(3\beta+2\delta\le 1-\epsilon\)</span>
+和方法1类似的结果</p>
+<p>在方法1中，我们使用 <span class="math inline">\(x\)</span>-shifted
+多项式来提高 <span class="math inline">\(\beta\)</span>
+的上界。类似的，现在我们使用 <span
+class="math inline">\(z\)</span>-shifted 多项式来提高 <span
+class="math inline">\(\delta\)</span> 的上界</p>
+<p>定义 <span class="math inline">\(y\)</span>-shifted 多项式和 <span
+class="math inline">\(z\)</span>-shifted 多项式 <span
+class="math display">\[
+\begin{cases}
+g_{i,j}(y,z)=e^{m-i}y^jf_e^i(y,z)\\
+h_{i,j}(y,z)=e^{m-i}z^jf_e^i(y,z)
+\end{cases}
+\]</span> 这些多项式在模 <span class="math inline">\(e^m\)</span>
+都有相同的根 <span
+class="math inline">\((y_0,z_0)\)</span>。利用这些多项式 <span
+class="math inline">\(g_{i,j}(yY,zZ)\)</span> 和 <span
+class="math inline">\(h_{i,j}(yY,zZ)\)</span> 的的系数向量构造格 <span
+class="math inline">\(L_e(m)\)</span>，i,j满足 <span
+class="math inline">\(i+j\le m\)</span> ，对于 <span
+class="math inline">\(g\)</span> 我们取所有可能的i,j，但对于 <span
+class="math inline">\(h\)</span> 我们取所有的i和特定的j</p>
+<p>（好难写，不定期更新</p>
+<h3 id="扩展">扩展</h3>
+<p>在上面的方法中，我们都假定了 <span class="math inline">\(q\nmid
+k\)</span> 。但当 <span class="math inline">\(q\mid k\)</span>
+时，条件会更加宽松</p>
+<p>设 <span class="math inline">\(k=qr\)</span> ，有 <span
+class="math inline">\(ed_p-(k+1)=-kp=-rN\)</span>
+。所以在方法1的基础上，<span class="math inline">\(f_p\)</span>
+不仅在模p下有解，也在模N下有解</p>
+<p>因此有 <span
+class="math inline">\(\sqrt{2det(Bp)}&lt;\frac{N}{\sqrt{2}}\)</span>，计算得
+<span class="math inline">\(\beta+2\delta\le1-log_N(4)\)</span></p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>May A . Cryptanalysis of Unbalanced RSA with Small CRT-Exponent[C]//
+Advances in Cryptology - CRYPTO 2002, 22nd Annual International
+Cryptology Conference, Santa Barbara, California, USA, August 18-22,
+2002, Proceedings. Springer-Verlag, 2002.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/crypto/" rel="tag"><i class="fa fa-tag"></i> crypto</a>
+              <a href="/tags/rsa/" rel="tag"><i class="fa fa-tag"></i> rsa</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/" rel="prev" title="一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法">
+                  <i class="fa fa-chevron-left"></i> 一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/31/%E7%BB%99vscode%E9%85%8D%E7%BD%AEphp%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/" rel="next" title="给vscode配置php调试环境">
+                  给vscode配置php调试环境 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lorlike</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"lorlike","repo":"lorlike.github.io","client_id":"6acca03e9c7b6c3d4edc","client_secret":"7e31b7e4d4e6b9dc0a539efcd935a2aa8f667d26","admin_user":"lorlike","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"e06520b3cca08ec7ea7086e770f706bb"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

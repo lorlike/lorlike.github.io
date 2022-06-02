@@ -21,15 +21,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="速查 LLL算法 \[ ||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{ \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\ ||v_1|| ≤ 2^{ \frac{n−1}{4}}det(L)^{\frac{1}{n}} \] CopperSmith算法 sage自带 1234n&#x3D;10001P.&amp;">
+    <meta name="description" content="速查 LLL算法 \[ ||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{ \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\ ||v_1|| ≤ 2^{ \frac{n−1}{4}}det(L)^{\frac{1}{n}} \] #### Minkowski定理 格子L存在向量 \(v\) ，满足 \">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coppersmith算法及其应用">
 <meta property="og:url" content="http://example.com/2022/03/09/Coppersmith%E7%AE%97%E6%B3%95%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="Lorlike&#39;s Blog">
-<meta property="og:description" content="速查 LLL算法 \[ ||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{ \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\ ||v_1|| ≤ 2^{ \frac{n−1}{4}}det(L)^{\frac{1}{n}} \] CopperSmith算法 sage自带 1234n&#x3D;10001P.&amp;">
+<meta property="og:description" content="速查 LLL算法 \[ ||v_1|| ≤ ||v_2|| ≤ ... ≤ ||v_i|| ≤ 2^{ \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\ ||v_1|| ≤ 2^{ \frac{n−1}{4}}det(L)^{\frac{1}{n}} \] #### Minkowski定理 格子L存在向量 \(v\) ，满足 \">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-09T15:40:00.000Z">
-<meta property="article:modified_time" content="2022-05-29T01:20:32.100Z">
+<meta property="article:modified_time" content="2022-06-01T05:09:53.379Z">
 <meta property="article:author" content="Lorlike">
 <meta property="article:tag" content="crypto">
 <meta property="article:tag" content="ctf">
@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -145,7 +145,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -231,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-29 09:20:32" itemprop="dateModified" datetime="2022-05-29T09:20:32+08:00">2022-05-29</time>
+      <time title="修改时间：2022-06-01 13:09:53" itemprop="dateModified" datetime="2022-06-01T13:09:53+08:00">2022-06-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -260,7 +260,10 @@
 \frac{n(n−1)}{4(n+1−i)}}det(L)^{\frac{1}{n+1−i}}\\
 ||v_1|| ≤ 2^{
 \frac{n−1}{4}}det(L)^{\frac{1}{n}}
-\]</span></p>
+\]</span> #### Minkowski定理</p>
+<p>格子<strong>L</strong>存在向量 <span class="math inline">\(v\)</span>
+，满足 <span class="math inline">\(||v||\le \sqrt{n}\
+det(L)^\frac{1}{n}\)</span></p>
 <h3 id="coppersmith算法">CopperSmith算法</h3>
 <h4 id="sage自带">sage自带</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n=<span class="number">10001</span></span><br><span class="line">P.&lt;x&gt; = PolynomialRing(Zmod(n))</span><br><span class="line">f=x^<span class="number">3</span> + <span class="number">10</span>*x^<span class="number">2</span> + <span class="number">5000</span>*x - <span class="number">222</span></span><br><span class="line">f.small_roots(X=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
@@ -287,7 +290,7 @@ target="_blank" rel="noopener" href="https://www.math.auckland.ac.nz/~sgal018/cr
 Method and Related Applications</a></p>
 <h4 id="算法细节">算法细节</h4>
 <p>设多项式为 <span class="math display">\[
-F(x) = \sum^d_{i=0} a_ix_i \in Z[x]
+F(x) = \sum^d_{i=0} a_ix^i \in Z[x]
 \]</span> 设 <span class="math display">\[
 x_0\in Z,\ F(x_0)\equiv0\ mod\ M,\ |x_0|&lt;X
 \]</span> 把多项式F用一个行向量表示为 <span class="math display">\[
@@ -302,7 +305,7 @@ b_F=(a_0,a_1X,a_2X^2,...,a_dX^d)
 (\sum^n_{i=1}x_iy_i)^2\le (\sum^n_{i=1}x_i^2)(\sum^n_{i=1}y_i^2)\ and\
 let\ y_i=1\Rightarrow \sum^n_{i=1}x_i\le \sqrt{n\sum^n_{i=1}x_i^2}
 \]</span> 所以 <span class="math display">\[
-|F(x_0)|=|\sum^d_{i=0}a_ix_i|\le\sum^d_{i=0}|a_i||x_i|\le\sum^d_{i=0}|a_i|X^i\le\sqrt{d+1}||b_F||&lt;\sqrt{d+1}\frac{M}{\sqrt{d+1}}=M\
+|F(x_0)|=|\sum^d_{i=0}a_ix^i|\le\sum^d_{i=0}|a_i||x^i|\le\sum^d_{i=0}|a_i|X^i\le\sqrt{d+1}||b_F||&lt;\sqrt{d+1}\frac{M}{\sqrt{d+1}}=M\
 \Rightarrow\ F(x_0)\in(-M,M)
 \]</span> 所以 <span class="math display">\[
 F(x_0)\equiv 0\ mod\ M\ \Rightarrow \ F(x_0)
