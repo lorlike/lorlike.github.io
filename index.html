@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -139,7 +139,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -179,6 +179,276 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/25/blockchain%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/25/blockchain%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">blockchain入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-25 01:18:28 / 修改时间：02:29:59" itemprop="dateCreated datePublished" datetime="2022-06-25T01:18:28+08:00">2022-06-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="准备">准备</h1>
+<h2 id="工具">工具</h2>
+<ol type="1">
+<li><p>MetaMask（区块链钱包）</p></li>
+<li><p><a
+target="_blank" rel="noopener" href="https://ropsten.etherscan.io/">etherscan</a>（区块链浏览器）</p></li>
+<li><p><a
+target="_blank" rel="noopener" href="https://remix.ethereum.org/">remix</a>（智能合约IDE）</p></li>
+<li><p>Online Solidity Decompiler（在线智能合约反编译器）</p>
+<blockquote>
+<p>https://ethervm.io/decompile?address=0xabcd&amp;network=ropsten</p>
+<p>address:合约地址，network:网络</p>
+</blockquote></li>
+<li><p><a target="_blank" rel="noopener" href="https://vanity-eth.tk/">VANITY-ETH</a>
+（可以枚举生成带有指定前缀或后缀的账户）</p></li>
+</ol>
+<h2 id="靶场">靶场</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://chainflag.org/">chainflag</a> （国内师傅做的）</li>
+<li><a target="_blank" rel="noopener" href="https://ethernaut.openzeppelin.com/">Ethernaut</a></li>
+</ol>
+<h2 id="水龙头获取-test-ether">水龙头（获取 test ether）</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://faucet.metamask.io/">metamask faucet</a>
+（MetaMask里点购买往下拉，不是很稳定）</li>
+<li><a target="_blank" rel="noopener" href="https://faucet.chainflag.org/">chainflag
+faucet</a>（稳定，一天一个）</li>
+</ol>
+<h1 id="入门greeter">入门（Greeter）</h1>
+<p>接下来使用<strong>chainflag</strong>的签到题<strong>Greeter</strong>来作为入门</p>
+<p>nc上去查看合约源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.8.7;</span><br><span class="line"></span><br><span class="line">contract Greeter &#123;</span><br><span class="line">    string greeting;</span><br><span class="line"></span><br><span class="line">    constructor(string memory _greeting) public &#123;</span><br><span class="line">        greeting = _greeting;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function greet() public view returns (string memory) &#123;</span><br><span class="line">        return greeting;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setGreeting(string memory _greeting) public &#123;</span><br><span class="line">        greeting = _greeting;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isSolved() public view returns (bool) &#123;</span><br><span class="line">        string memory expected = &quot;HelloChainFlag&quot;;</span><br><span class="line">        return keccak256(abi.encodePacked(expected)) == keccak256(abi.encodePacked(greeting));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="思路">思路</h2>
+<p>我们的目标是成功执行<strong>isSolved</strong>函数并返回<strong>true</strong></p>
+<p>我们需要<strong>expected</strong>和<strong>greeting</strong>相同，<strong>expected</strong>是已知的</p>
+<p>所以，我们使用<strong>setGreeting</strong>函数来设置<strong>greeting</strong>与<strong>expected</strong>一致</p>
+<h2 id="操作">操作</h2>
+<p>打开<strong>remix</strong>，新建一个sol文件，把源码写到sol文件里，可根据需要调整代码（保证不报错，包含后面要用到的函数或变量就行）</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/25/gYvs2LNb1aVhc6m.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>按ctrl+s编译，或者也可以在编译栏点击编译（还可以选择编译器版本）</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/25/GYvX7wQgEnt9bDa.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>在这题中，我们需要nc上去创建一个账户并转账使其满足题目条件（转0.001
+test
+ether），记得保存地址和token，这个账户接下来会用于部署合约，而部署合约所花费的gas从我们刚刚的转账里扣，转账功能为在MetaMask里的发送</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/25/SmN6p5MVTau2yiH.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>等待交易完成，如图中显示绿色表示完成，再nc上去用之前的token部署合约，得到一个合约地址和一个交易hash值</p>
+<p>回到<strong>remix</strong>，选择最后一栏（DEPLOY &amp;
+RUN），把<strong>ENVIRONMENT</strong>调成<strong>Inject
+Web3</strong>连接<strong>MetaMask</strong>，在<strong>At
+Address</strong>填入目标合约地址，再点击<strong>At
+Address</strong>与合约交互</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/25/E7CDtp9UwkgceLI.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>接下来按照之前的思路操作（有颜色的是按钮，点击调用函数或获取变量值）</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/25/VhbgAt5NFIoEK2u.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>最后nc上去输入token获取flag</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/24/LFSR%EF%BC%88%E7%BA%BF%E6%80%A7%E5%8F%8D%E9%A6%88%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/24/LFSR%EF%BC%88%E7%BA%BF%E6%80%A7%E5%8F%8D%E9%A6%88%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%89/" class="post-title-link" itemprop="url">LFSR（线性反馈移位寄存器）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-24 13:14:09" itemprop="dateCreated datePublished" datetime="2022-06-24T13:14:09+08:00">2022-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-25 01:15:47" itemprop="dateModified" datetime="2022-06-25T01:15:47+08:00">2022-06-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="生成序列">生成序列</h2>
+<p>LFSR是一种流密码，加密方式</p>
+<p>加密方式如下 <span class="math display">\[
+mask=(c_0,c_1,\dots,c_m)\\
+a_n=c_ma_{n-1}+c_{m-1}a_{n-2}+\dots+c_0a_{n-m-1}\ mod\ 2
+\]</span> 用矩阵表示有 <span class="math display">\[
+\begin{pmatrix}
+&amp;1\\\\
+&amp;&amp;1\\\\
+&amp;&amp;&amp;\ddots&amp;\\\\
+&amp;&amp;&amp;&amp;1\\\\
+c_0&amp;c_{1}&amp;\dots&amp;&amp;c_m
+\end{pmatrix}
+\begin{pmatrix}
+a_{n-m-1}\\\\
+a_{n-m}\\\\
+\vdots\\\\
+a_{n-1}
+\end{pmatrix}=
+\begin{pmatrix}
+a_{n-m}\\\\
+a_{n-m+1}\\\\
+\vdots\\\\
+a_{n}
+\end{pmatrix}
+\]</span>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/24/LFSR%EF%BC%88%E7%BA%BF%E6%80%A7%E5%8F%8D%E9%A6%88%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -814,7 +1084,7 @@ class="math inline">\(p-q\)</span>的近似值相应的y的近似值也能求出
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-01 13:09:53" itemprop="dateModified" datetime="2022-06-01T13:09:53+08:00">2022-06-01</time>
+      <time title="修改时间：2022-06-24 13:18:35" itemprop="dateModified" datetime="2022-06-24T13:18:35+08:00">2022-06-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -822,7 +1092,7 @@ class="math inline">\(p-q\)</span>的近似值相应的y的近似值也能求出
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
         </span>
     </span>
 
@@ -987,104 +1257,9 @@ class="math inline">\(L=\begin{pmatrix}M&amp;b\\\\
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/07/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
-      <meta itemprop="name" content="Lorlike">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lorlike's Blog">
-      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lorlike's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/07/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-07 23:40:00" itemprop="dateCreated datePublished" datetime="2022-03-07T23:40:00+08:00">2022-03-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-28 21:10:30" itemprop="dateModified" datetime="2022-05-28T21:10:30+08:00">2022-05-28</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 </div>
   </main>
