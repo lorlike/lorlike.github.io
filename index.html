@@ -218,7 +218,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-06-26 00:31:30 / 修改时间：18:03:42" itemprop="dateCreated datePublished" datetime="2022-06-26T00:31:30+08:00">2022-06-26</time>
+      <time title="创建时间：2022-06-26 00:31:30 / 修改时间：18:31:30" itemprop="dateCreated datePublished" datetime="2022-06-26T00:31:30+08:00">2022-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -244,22 +244,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncat -klp 10000 -c <span class="string">&#x27;python3 task.py&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>k为启用多次连接，l为监听，p为指定端口</p>
 <p><em>注：这里使用ncat而不用nc是因为nc可能会因为安全问题不能适用</em></p>
-<h2 id="docker">docker</h2>
-<h3 id="拉取父环境">拉取父环境</h3>
-<h4
-id="利用dockerfile制作镜像">利用<strong>Dockerfile</strong>制作镜像</h4>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> sagemath/sagemath</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt-get update</span></span><br><span class="line"><span class="keyword">ARG</span> DEBIAN_FRONTEND=noninteractive</span><br><span class="line"><span class="keyword">ENV</span> TZ=Asia/Shanghai</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt-get install tzdata -y</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sudo apt-get install socat -y</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sage -pip install pycryptodome</span></span><br></pre></td></tr></table></figure>
-<p>在Dockerfile目录下构建镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t image_name .</span><br></pre></td></tr></table></figure>
-<h4 id="直接使用我制作好的">直接使用我制作好的</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/lorlike/crypto:latest</span><br></pre></td></tr></table></figure>
-<h3 id="制作题目容器">制作题目容器</h3>
-<p><strong>Dockerfile</strong></p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> registry.cn-hangzhou.aliyuncs.com/lorlike/crypto:latest</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> task /home/sage/task</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> flag /flag</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">19132</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;socat&quot;</span>, <span class="string">&quot;TCP4-LISTEN:19132,fork&quot;</span>, <span class="string">&quot;EXEC:\&quot;python3 -u /home/sage/task/task.py\&quot;&quot;</span>]</span></span><br><span class="line"><span class="comment"># CMD [&quot;socat&quot;, &quot;TCP4-LISTEN:19132,fork&quot;, &quot;EXEC:\&quot;sudo sage /home/sage/task/task.sage\&quot;&quot;]</span></span><br></pre></td></tr></table></figure>
-<p><strong>目录树</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">problem/</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── flag</span><br><span class="line">├── ...</span><br><span class="line">└── task</span><br><span class="line">    ├── task.py</span><br><span class="line">    ├── ...</span><br><span class="line">    └── task.sage</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t subimage_name .</span><br><span class="line">docker run -d --name problem_name -p 19132:19132 subimage_name</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/26/nc%E9%A2%98%E7%9B%AE%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -315,7 +307,7 @@ id="利用dockerfile制作镜像">利用<strong>Dockerfile</strong>制作镜像<
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-06-26 00:04:18 / 修改时间：03:04:48" itemprop="dateCreated datePublished" datetime="2022-06-26T00:04:18+08:00">2022-06-26</time>
+      <time title="创建时间：2022-06-26 00:04:18 / 修改时间：18:32:18" itemprop="dateCreated datePublished" datetime="2022-06-26T00:04:18+08:00">2022-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -343,23 +335,14 @@ d&lt;\frac{n^\frac{1}{d}}{\sqrt{6}}
 \]</span></p>
 <p>用维纳攻击获取d 现成库<a
 target="_blank" rel="noopener" href="https://github.com/pablocelayes/rsa-wiener-attack">rsa-wiener-attack</a></p>
-<p>hash扩展攻击</p>
-<p>通过hash值和已知后缀，计算相同前缀但不同后缀的后缀数据和hash值</p>
-<p>现成库<a target="_blank" rel="noopener" href="https://github.com/bwall/HashPump">HashPump</a></p>
-<h3 id="exp">exp</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> hashpumpy</span><br><span class="line"><span class="keyword">import</span>  RSAwienerHacker</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;39.104.54.192&#x27;</span>,<span class="number">54731</span>)</span><br><span class="line">r.recvline()</span><br><span class="line">N=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">6</span>:],<span class="number">16</span>)</span><br><span class="line">e=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">6</span>:],<span class="number">16</span>)</span><br><span class="line">d=RSAwienerHacker.hack_RSA(e,N)</span><br><span class="line">r.recvline()</span><br><span class="line">data=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">9</span>:],<span class="number">16</span>)</span><br><span class="line">signature=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">14</span>:],<span class="number">16</span>)</span><br><span class="line">signature=long_to_bytes(<span class="built_in">pow</span>(signature,e,N))</span><br><span class="line">r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">h,data=hashpumpy.hashpump(signature, long_to_bytes(data), <span class="string">b&#x27;\x00&#x27;</span>, <span class="number">16</span>)</span><br><span class="line">m=<span class="built_in">hex</span>(bytes_to_long(data))</span><br><span class="line">sig=<span class="built_in">hex</span>(<span class="built_in">pow</span>(bytes_to_long(h.encode()),d,N))</span><br><span class="line">r.sendline(<span class="string">&#x27;&#123;&#125;,&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(m,sig))</span><br><span class="line">r.interactive()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="strangeecc">strangeecc</h2>
-<p>对于奇异曲线 <span class="math inline">\(E:y^2=x^3\)</span> ,有映射
-<span class="math inline">\(E_d(F)\rightarrow F\)</span> <span
-class="math inline">\((x,y)\rightarrow \frac{x}{y}\)</span>
-，该映射为群同构，把曲线加群映射到有限加群 <span class="math display">\[
-P=d×G\\\\
-g=G.x×G.y^{−1}\ \ (mod\ p),\ \ \ \  y=P.x×P.y^{−1}\ \ (mod\ p)\\\\
-d=g^{-1}×y\ \ (mod\ p)
-\]</span></p>
-<h3 id="exp-1">exp</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">Point = namedtuple(<span class="string">&quot;Point&quot;</span>,<span class="string">&quot;x y&quot;</span>)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;39.104.54.192&#x27;</span>,<span class="number">32867</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;p: &#x27;</span>)</span><br><span class="line">p=<span class="built_in">int</span>(r.recvline().strip())</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line">r.recvuntil(<span class="string">&#x27;a: &#x27;</span>)</span><br><span class="line">r.sendline(<span class="built_in">str</span>(p))</span><br><span class="line">r.recvuntil(<span class="string">&#x27;b: &#x27;</span>)</span><br><span class="line">r.sendline(<span class="built_in">str</span>(p))</span><br><span class="line">P=<span class="built_in">eval</span>(r.recvline().strip())</span><br><span class="line">Q=<span class="built_in">eval</span>(r.recvline().strip())</span><br><span class="line">r.recvuntil(<span class="string">&#x27;guess: &#x27;</span>)</span><br><span class="line"></span><br><span class="line">P=P.x*inverse(P.y,p)%p</span><br><span class="line">Q=Q.x*inverse(Q.y,p)%p</span><br><span class="line">secret=Q*inverse(P,p)%p</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="built_in">str</span>(secret))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/26/2022-CISCN-Crypto/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
