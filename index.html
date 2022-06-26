@@ -396,9 +396,15 @@ target="_blank" rel="noopener" href="https://github.com/pablocelayes/rsa-wiener-
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-06-25 01:18:28 / 修改时间：02:29:59" itemprop="dateCreated datePublished" datetime="2022-06-25T01:18:28+08:00">2022-06-25</time>
+      <time title="创建时间：2022-06-25 01:18:28" itemprop="dateCreated datePublished" datetime="2022-06-25T01:18:28+08:00">2022-06-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-26 18:34:35" itemprop="dateModified" datetime="2022-06-26T18:34:35+08:00">2022-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -436,66 +442,14 @@ target="_blank" rel="noopener" href="https://remix.ethereum.org/">remix</a>（�
 <li><p><a target="_blank" rel="noopener" href="https://vanity-eth.tk/">VANITY-ETH</a>
 （可以枚举生成带有指定前缀或后缀的账户）</p></li>
 </ol>
-<h2 id="靶场">靶场</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://chainflag.org/">chainflag</a> （国内师傅做的）</li>
-<li><a target="_blank" rel="noopener" href="https://ethernaut.openzeppelin.com/">Ethernaut</a></li>
-</ol>
-<h2 id="水龙头获取-test-ether">水龙头（获取 test ether）</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://faucet.metamask.io/">metamask faucet</a>
-（MetaMask里点购买往下拉，不是很稳定）</li>
-<li><a target="_blank" rel="noopener" href="https://faucet.chainflag.org/">chainflag
-faucet</a>（稳定，一天一个）</li>
-</ol>
-<h1 id="入门greeter">入门（Greeter）</h1>
-<p>接下来使用<strong>chainflag</strong>的签到题<strong>Greeter</strong>来作为入门</p>
-<p>nc上去查看合约源码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.8.7;</span><br><span class="line"></span><br><span class="line">contract Greeter &#123;</span><br><span class="line">    string greeting;</span><br><span class="line"></span><br><span class="line">    constructor(string memory _greeting) public &#123;</span><br><span class="line">        greeting = _greeting;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function greet() public view returns (string memory) &#123;</span><br><span class="line">        return greeting;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setGreeting(string memory _greeting) public &#123;</span><br><span class="line">        greeting = _greeting;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isSolved() public view returns (bool) &#123;</span><br><span class="line">        string memory expected = &quot;HelloChainFlag&quot;;</span><br><span class="line">        return keccak256(abi.encodePacked(expected)) == keccak256(abi.encodePacked(greeting));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="思路">思路</h2>
-<p>我们的目标是成功执行<strong>isSolved</strong>函数并返回<strong>true</strong></p>
-<p>我们需要<strong>expected</strong>和<strong>greeting</strong>相同，<strong>expected</strong>是已知的</p>
-<p>所以，我们使用<strong>setGreeting</strong>函数来设置<strong>greeting</strong>与<strong>expected</strong>一致</p>
-<h2 id="操作">操作</h2>
-<p>打开<strong>remix</strong>，新建一个sol文件，把源码写到sol文件里，可根据需要调整代码（保证不报错，包含后面要用到的函数或变量就行）</p>
-<figure>
-<img src="https://s2.loli.net/2022/06/25/gYvs2LNb1aVhc6m.png"
-alt="image.png" />
-<figcaption aria-hidden="true">image.png</figcaption>
-</figure>
-<p>按ctrl+s编译，或者也可以在编译栏点击编译（还可以选择编译器版本）</p>
-<figure>
-<img src="https://s2.loli.net/2022/06/25/GYvX7wQgEnt9bDa.png"
-alt="image.png" />
-<figcaption aria-hidden="true">image.png</figcaption>
-</figure>
-<p>在这题中，我们需要nc上去创建一个账户并转账使其满足题目条件（转0.001
-test
-ether），记得保存地址和token，这个账户接下来会用于部署合约，而部署合约所花费的gas从我们刚刚的转账里扣，转账功能为在MetaMask里的发送</p>
-<figure>
-<img src="https://s2.loli.net/2022/06/25/SmN6p5MVTau2yiH.png"
-alt="image.png" />
-<figcaption aria-hidden="true">image.png</figcaption>
-</figure>
-<p>等待交易完成，如图中显示绿色表示完成，再nc上去用之前的token部署合约，得到一个合约地址和一个交易hash值</p>
-<p>回到<strong>remix</strong>，选择最后一栏（DEPLOY &amp;
-RUN），把<strong>ENVIRONMENT</strong>调成<strong>Inject
-Web3</strong>连接<strong>MetaMask</strong>，在<strong>At
-Address</strong>填入目标合约地址，再点击<strong>At
-Address</strong>与合约交互</p>
-<figure>
-<img src="https://s2.loli.net/2022/06/25/E7CDtp9UwkgceLI.png"
-alt="image.png" />
-<figcaption aria-hidden="true">image.png</figcaption>
-</figure>
-<p>接下来按照之前的思路操作（有颜色的是按钮，点击调用函数或获取变量值）</p>
-<figure>
-<img src="https://s2.loli.net/2022/06/25/VhbgAt5NFIoEK2u.png"
-alt="image.png" />
-<figcaption aria-hidden="true">image.png</figcaption>
-</figure>
-<p>最后nc上去输入token获取flag</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/25/blockchain%E5%85%A5%E9%97%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
