@@ -21,28 +21,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="crypto Hardcore 模2同余方程组 123456789101112131415161718from pwn import *def foo(l):    return &amp;#x27;&amp;#x27;.join([str(i) for i in l])import numpy as npa&#x3D;np.identity(256,dtype&#x3D;np.int64)r&#x3D;remote(&amp;#x27;ctf">
+    <meta name="description" content="rhash \[ d&lt;\frac{n^\frac{1}{d}}{\sqrt{6}} \] 用维纳攻击获取d 现成库rsa-wiener-attack hash扩展攻击 通过hash值和已知后缀，计算相同前缀但不同后缀的后缀数据和hash值 现成库HashPump exp 123456789101112131415161718192021222324from pwn impo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="b01lers CTF">
-<meta property="og:url" content="http://example.com/2022/04/25/b01lers-CTF/index.html">
+<meta property="og:title" content="2022 CISCN Crypto">
+<meta property="og:url" content="http://example.com/2022/06/26/2022-CISCN-Crypto/index.html">
 <meta property="og:site_name" content="Lorlike&#39;s Blog">
-<meta property="og:description" content="crypto Hardcore 模2同余方程组 123456789101112131415161718from pwn import *def foo(l):    return &amp;#x27;&amp;#x27;.join([str(i) for i in l])import numpy as npa&#x3D;np.identity(256,dtype&#x3D;np.int64)r&#x3D;remote(&amp;#x27;ctf">
+<meta property="og:description" content="rhash \[ d&lt;\frac{n^\frac{1}{d}}{\sqrt{6}} \] 用维纳攻击获取d 现成库rsa-wiener-attack hash扩展攻击 通过hash值和已知后缀，计算相同前缀但不同后缀的后缀数据和hash值 现成库HashPump exp 123456789101112131415161718192021222324from pwn impo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-24T18:30:20.000Z">
-<meta property="article:modified_time" content="2022-06-25T16:08:55.316Z">
+<meta property="article:published_time" content="2022-06-25T16:04:18.000Z">
+<meta property="article:modified_time" content="2022-06-25T19:04:48.686Z">
 <meta property="article:author" content="Lorlike">
 <meta property="article:tag" content="crypto">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/04/25/b01lers-CTF/">
+<link rel="canonical" href="http://example.com/2022/06/26/2022-CISCN-Crypto/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/04/25/b01lers-CTF/","path":"2022/04/25/b01lers-CTF/","title":"b01lers CTF"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/06/26/2022-CISCN-Crypto/","path":"2022/06/26/2022-CISCN-Crypto/","title":"2022 CISCN Crypto"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>b01lers CTF | Lorlike's Blog</title>
+<title>2022 CISCN Crypto | Lorlike's Blog</title>
   
 
 
@@ -117,7 +117,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#crypto"><span class="nav-number">1.</span> <span class="nav-text">crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hardcore"><span class="nav-number">1.1.</span> <span class="nav-text">Hardcore</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#rhash"><span class="nav-number">1.</span> <span class="nav-text">rhash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exp"><span class="nav-number">1.1.</span> <span class="nav-text">exp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strangeecc"><span class="nav-number">2.</span> <span class="nav-text">strangeecc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exp-1"><span class="nav-number">2.1.</span> <span class="nav-text">exp</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +193,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/25/b01lers-CTF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/26/2022-CISCN-Crypto/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
@@ -206,12 +206,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="b01lers CTF | Lorlike's Blog">
+      <meta itemprop="name" content="2022 CISCN Crypto | Lorlike's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          b01lers CTF
+          2022 CISCN Crypto
         </h1>
 
         <div class="post-meta-container">
@@ -221,15 +221,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-04-25 02:30:20" itemprop="dateCreated datePublished" datetime="2022-04-25T02:30:20+08:00">2022-04-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-26 00:08:55" itemprop="dateModified" datetime="2022-06-26T00:08:55+08:00">2022-06-26</time>
+      <time title="创建时间：2022-06-26 00:04:18 / 修改时间：03:04:48" itemprop="dateCreated datePublished" datetime="2022-06-26T00:04:18+08:00">2022-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -251,11 +245,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="crypto">crypto</h2>
-<h3 id="hardcore">Hardcore</h3>
-<p>模2同余方程组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>(<span class="params">l</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> l])</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=np.identity(<span class="number">256</span>,dtype=np.int64)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;ctf.b01lers.com&#x27;</span>,<span class="number">9003</span>)</span><br><span class="line">r.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">s=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">r.recvuntil(<span class="string">&#x27;answer.\n&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="built_in">print</span>(i,s)</span><br><span class="line">    r.sendline(foo(a[i]))</span><br><span class="line">    s+=r.recvline().strip()</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">a=<span class="number">0b0110001001100011011101000110011001111011011001000110111101011111011110010110111101110101010111110110110001101001011010110110010101011111011010000110000101110010011001000110001101101111011100100110010101011111011000110110100001100001011011000111001101111101</span></span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(a))</span><br><span class="line"><span class="comment"># bctf&#123;do_you_like_hardcore_chals&#125;</span></span><br></pre></td></tr></table></figure>
+        <h2 id="rhash">rhash</h2>
+<p><span class="math display">\[
+d&lt;\frac{n^\frac{1}{d}}{\sqrt{6}}
+\]</span></p>
+<p>用维纳攻击获取d 现成库<a
+target="_blank" rel="noopener" href="https://github.com/pablocelayes/rsa-wiener-attack">rsa-wiener-attack</a></p>
+<p>hash扩展攻击</p>
+<p>通过hash值和已知后缀，计算相同前缀但不同后缀的后缀数据和hash值</p>
+<p>现成库<a target="_blank" rel="noopener" href="https://github.com/bwall/HashPump">HashPump</a></p>
+<h3 id="exp">exp</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> hashpumpy</span><br><span class="line"><span class="keyword">import</span>  RSAwienerHacker</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;39.104.54.192&#x27;</span>,<span class="number">54731</span>)</span><br><span class="line">r.recvline()</span><br><span class="line">N=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">6</span>:],<span class="number">16</span>)</span><br><span class="line">e=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">6</span>:],<span class="number">16</span>)</span><br><span class="line">d=RSAwienerHacker.hack_RSA(e,N)</span><br><span class="line">r.recvline()</span><br><span class="line">data=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">9</span>:],<span class="number">16</span>)</span><br><span class="line">signature=<span class="built_in">int</span>(r.recvline().strip()[<span class="number">14</span>:],<span class="number">16</span>)</span><br><span class="line">signature=long_to_bytes(<span class="built_in">pow</span>(signature,e,N))</span><br><span class="line">r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">h,data=hashpumpy.hashpump(signature, long_to_bytes(data), <span class="string">b&#x27;\x00&#x27;</span>, <span class="number">16</span>)</span><br><span class="line">m=<span class="built_in">hex</span>(bytes_to_long(data))</span><br><span class="line">sig=<span class="built_in">hex</span>(<span class="built_in">pow</span>(bytes_to_long(h.encode()),d,N))</span><br><span class="line">r.sendline(<span class="string">&#x27;&#123;&#125;,&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(m,sig))</span><br><span class="line">r.interactive()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="strangeecc">strangeecc</h2>
+<p>对于奇异曲线 <span class="math inline">\(E:y^2=x^3\)</span> ,有映射
+<span class="math inline">\(E_d(F)\rightarrow F\)</span> <span
+class="math inline">\((x,y)\rightarrow \frac{x}{y}\)</span>
+，该映射为群同构，把曲线加群映射到有限加群 <span class="math display">\[
+P=d×G\\\\
+g=G.x×G.y^{−1}\ \ (mod\ p),\ \ \ \  y=P.x×P.y^{−1}\ \ (mod\ p)\\\\
+d=g^{-1}×y\ \ (mod\ p)
+\]</span></p>
+<h3 id="exp-1">exp</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">Point = namedtuple(<span class="string">&quot;Point&quot;</span>,<span class="string">&quot;x y&quot;</span>)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;39.104.54.192&#x27;</span>,<span class="number">32867</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;p: &#x27;</span>)</span><br><span class="line">p=<span class="built_in">int</span>(r.recvline().strip())</span><br><span class="line"><span class="built_in">print</span>(p)</span><br><span class="line">r.recvuntil(<span class="string">&#x27;a: &#x27;</span>)</span><br><span class="line">r.sendline(<span class="built_in">str</span>(p))</span><br><span class="line">r.recvuntil(<span class="string">&#x27;b: &#x27;</span>)</span><br><span class="line">r.sendline(<span class="built_in">str</span>(p))</span><br><span class="line">P=<span class="built_in">eval</span>(r.recvline().strip())</span><br><span class="line">Q=<span class="built_in">eval</span>(r.recvline().strip())</span><br><span class="line">r.recvuntil(<span class="string">&#x27;guess: &#x27;</span>)</span><br><span class="line"></span><br><span class="line">P=P.x*inverse(P.y,p)%p</span><br><span class="line">Q=Q.x*inverse(Q.y,p)%p</span><br><span class="line">secret=Q*inverse(P,p)%p</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="built_in">str</span>(secret))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -272,13 +283,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/04/23/2022DASCTF-Apr/" rel="prev" title="2022DASCTF Apr">
-                  <i class="fa fa-chevron-left"></i> 2022DASCTF Apr
+                <a href="/2022/06/25/blockchain%E5%85%A5%E9%97%A8/" rel="prev" title="blockchain入门">
+                  <i class="fa fa-chevron-left"></i> blockchain入门
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/" rel="next" title="一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法">
-                  一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法 <i class="fa fa-chevron-right"></i>
+                <a href="/2022/06/26/nc%E9%A2%98%E7%9B%AE%E8%BF%9C%E7%A8%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="next" title="nc题目远程环境搭建">
+                  nc题目远程环境搭建 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -336,7 +347,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"lorlike","repo":"lorlike.github.io","client_id":"6acca03e9c7b6c3d4edc","client_secret":"7e31b7e4d4e6b9dc0a539efcd935a2aa8f667d26","admin_user":"lorlike","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"1108c416d46ed374f3b4436b04fc8c2f"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"lorlike","repo":"lorlike.github.io","client_id":"6acca03e9c7b6c3d4edc","client_secret":"7e31b7e4d4e6b9dc0a539efcd935a2aa8f667d26","admin_user":"lorlike","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"a00e619d1ed7b220b2093b773e9559b4"}</script>
 <script src="/js/third-party/comments/gitalk.js"></script>
 
 </body>
