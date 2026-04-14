@@ -97,6 +97,13 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: node-tree
+theme_config:
+  header:
+    github:
+      url: 'https://github.com/lorlike'
+  sidebar:
+    usePostTitle: true
+    
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -105,3 +112,5 @@ deploy:
   repo: git@github.com:lorlike/lorlike.github.io.git
   branch: gh-pages
   message: "Deploy from Hexo"
+
+
