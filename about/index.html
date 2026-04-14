@@ -8,6 +8,8 @@
 	
 <title>
     
+        About&nbsp;&nbsp;✦&nbsp;
+    
     Lorlike&#39;s Blog
 </title>
 
@@ -226,38 +228,90 @@
 </div>
 
 	<div id="content">
-		<div id="index">
-	
-	<div class="index-li">
-		<a href="/2026/03/31/Buuctf%E7%BB%83%E4%B9%A0%E5%9C%BApwn%E9%A2%98/">
-			<h2 class="index-title">
-				Buuctf练习场pwn题
-			</h2>
-			<div class="index-brief">
-				Buuctf pwn练习[TOC]
-buu资源文件，特别是libc文件
-test_your_nc连上直接拿shell
+		<h1 id="article-title">
+	About
+</h1>
 
-rip明显的危险函数gets，栈溢出，写入的地址在rbp前15字节里，另外还发现一个后门函数fun
-
-
-看一下保护全关
-
-先打一下试试
-from pwn import *context.gdb_binary=&#x27;pwndbg&#x27;context.arch=&#x27 ...
-			</div>
-		</a>
-		<div class="article-meta">
-			<span>2026-03-31</span>
-			  
-		</div>
-	</div>
-	
-
-	<div id="index-paginator">
+<div class="article-meta">
+	<span> Lorlike </span>
+	<span> 2026-04-15 00:12:31 </span>
+	<div id="article-categories">
+		
 		
 	</div>
 </div>
+
+<div id="article-content">
+	
+	
+</div>
+
+
+    
+
+    
+
+    
+        
+        <script async reload>
+            fetch("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/tokyo-night-dark.css")
+                .then((response) => response.text())
+                .then((cssContent) => {
+                    const style = document.createElement("style");
+                    
+                        cssContent = cssContent
+                            .replace(".hljs-code,", "")
+                            .replaceAll("_", " ")
+                            .replaceAll("hljs-", "hljs .")
+                            .replaceAll(".hljs", " .highlight")
+                            .replaceAll(".built in", ".built_in")
+                            .replaceAll("title.", "");
+                        const figures = document.querySelectorAll("figure.highlight td.gutter");
+                        figures.forEach(figure=>{
+                            figure.classList.add("highlight");
+                        })
+                    
+                    style.innerHTML = cssContent;
+                    document.head.appendChild(style);
+                })
+                .catch((error) => {
+                    console.error("Error loading CSS:", error);
+                });
+        </script>
+    
+
+
+
+
+
+    <script reload>
+        var targets = document.querySelectorAll("figure.highlight, #article-content > pre:not(.highlight,.hljs)");
+        targets.forEach((block) => {
+            const copyBtn = document.createElement("button");
+            copyBtn.innerHTML = `<i class="fa fa-clone" aria-hidden="true"></i>`;
+            copyBtn.className = "code-copy";
+
+            
+                copyBtn.style.color = "#fff";
+            
+
+            copyBtn.addEventListener("click", () => {
+                const text = block.querySelector("td.code")?.textContent || block.querySelector("code")?.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    copyBtn.innerHTML = "Copied!";
+                    setTimeout(() => {
+                        copyBtn.innerHTML = `<i class="fa fa-clone" aria-hidden="true"></i>`;
+                    }, 2000);
+                });
+            });
+            block.appendChild(copyBtn);
+        });
+    </script>
+
+
+
+
+
 
 	</div>
 
