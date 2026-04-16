@@ -8,7 +8,7 @@
 	
 <title>
     
-        Go WEB开发框架gin&nbsp;&nbsp;✦&nbsp;
+        wsl环境搭建&nbsp;&nbsp;✦&nbsp;
     
     Lorlike&#39;s Blog
 </title>
@@ -18,12 +18,20 @@
 
 <meta name="author" content="Lorlike" />
 
-<meta name="keywords" content="Go" />
+<meta name="keywords" content="环境配置,linux" />
 
-<meta name="description" content="安装go get github.com/gin-gonic/gin
+<meta name="description" content="wsl环境搭建我的环境参数Windows 11 家庭中文版 23H2
+任务管理器 -&amp;gt; 性能 -&amp;gt; CPU -&amp;gt; 虚拟化：已启用
+更新时间：2026年3月10日
+打开WSL功能打开设置Win+S快捷键
+系统-&amp;gt;可选功能-&amp;gt;更多Windows功能 勾选3项
+按提示重启电脑
+配置WSL打开
+更新WSLwsl --update
 
-路由HTTP方法常用的GET，POST，PUT，DELETE都支持，还支持一些不常用的方法
-package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic/gin&amp;quot;)func getting(c *gin.Context) &amp;#123;	//使用" />
+查看版本信息wsl --version
+
+设" />
 
 	<!-- favicon -->
 	
@@ -205,7 +213,7 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 							</ul>
 			
 							<ul>
-								<li class="file active">
+								<li class="file">
 									<a href="/2026/03/24/Go-WEB%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6gin/" title="/2026/03/24/Go-WEB开发框架gin">
 									
 										Go WEB开发框架gin
@@ -227,7 +235,7 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 							</ul>
 			
 							<ul>
-								<li class="file">
+								<li class="file active">
 									<a href="/2026/04/16/wsl%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="/2026/04/16/wsl环境搭建">
 									
 										wsl环境搭建
@@ -243,12 +251,12 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 
 	<div id="content">
 		<h1 id="article-title">
-	Go WEB开发框架gin
+	wsl环境搭建
 </h1>
 
 <div class="article-meta">
 	<span> Lorlike </span>
-	<span> 2026-03-24 23:52:29 </span>
+	<span> 2026-04-16 13:23:10 </span>
 	<div id="article-categories">
 		
 			<span>Categories：</span>
@@ -260,8 +268,18 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 				
 					<span>
 						<i class="fa fa-tag" aria-hidden="true">
-							<a href="/tags/Go/">
-								Go
+							<a href="/tags/环境配置/">
+								环境配置
+							</a>
+						</i>
+					</span>
+				
+			
+				
+					<span>
+						<i class="fa fa-tag" aria-hidden="true">
+							<a href="/tags/linux/">
+								linux
 							</a>
 						</i>
 					</span>
@@ -272,11 +290,43 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 </div>
 
 <div id="article-content">
-	<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/gin-gonic/gin</span><br></pre></td></tr></table></figure>
+	<h1 id="wsl环境搭建"><a href="#wsl环境搭建" class="headerlink" title="wsl环境搭建"></a>wsl环境搭建</h1><h2 id="我的环境参数"><a href="#我的环境参数" class="headerlink" title="我的环境参数"></a>我的环境参数</h2><p>Windows 11 家庭中文版 23H2</p>
+<p>任务管理器 -&gt; 性能 -&gt; CPU -&gt; 虚拟化：已启用</p>
+<p>更新时间：2026年3月10日</p>
+<h2 id="打开WSL功能"><a href="#打开WSL功能" class="headerlink" title="打开WSL功能"></a>打开WSL功能</h2><h3 id="打开设置"><a href="#打开设置" class="headerlink" title="打开设置"></a>打开设置</h3><p>Win+S快捷键</p>
+<h3 id="系统-可选功能-更多Windows功能-勾选3项"><a href="#系统-可选功能-更多Windows功能-勾选3项" class="headerlink" title="系统-&gt;可选功能-&gt;更多Windows功能 勾选3项"></a>系统-&gt;可选功能-&gt;更多Windows功能 勾选3项</h3><p><img src="https://files.seeusercontent.com/2026/03/10/n9sH/20260310124527.png" alt="image-20260310124514887"></p>
+<p>按提示重启电脑</p>
+<h2 id="配置WSL"><a href="#配置WSL" class="headerlink" title="配置WSL"></a>配置WSL</h2><p>打开</p>
+<h3 id="更新WSL"><a href="#更新WSL" class="headerlink" title="更新WSL"></a>更新WSL</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--update</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><h3 id="HTTP方法"><a href="#HTTP方法" class="headerlink" title="HTTP方法"></a>HTTP方法</h3><p>常用的GET，POST，PUT，DELETE都支持，还支持一些不常用的方法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getting</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	<span class="comment">//使用gin.H，其实就是一个map映射map[string]any，可以快速创建一个json格式的数据作为响应的结果</span></span><br><span class="line">	c.JSON(http.StatusOK, gin.H&#123;<span class="string">&quot;method&quot;</span>: <span class="string">&quot;GET&quot;</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID   <span class="type">uint</span></span><br><span class="line">	Name <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">posting</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 也可以是一个结构体，也能被转换成json形式作为响应结果</span></span><br><span class="line">	c.JSON(http.StatusOK, User&#123;</span><br><span class="line">		ID:   <span class="number">1</span>,</span><br><span class="line">		Name: <span class="string">&quot;Tom&quot;</span>,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">putting</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.JSON(http.StatusOK, gin.H&#123;<span class="string">&quot;method&quot;</span>: <span class="string">&quot;PUT&quot;</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">deleting</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.JSON(http.StatusOK, gin.H&#123;<span class="string">&quot;method&quot;</span>: <span class="string">&quot;DELETE&quot;</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">patching</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.JSON(http.StatusOK, gin.H&#123;<span class="string">&quot;method&quot;</span>: <span class="string">&quot;PATCH&quot;</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">head</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.Status(http.StatusOK)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">options</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	c.Status(http.StatusOK)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 创建一个默认路由</span></span><br><span class="line">	router := gin.Default()</span><br><span class="line"></span><br><span class="line">	router.GET(<span class="string">&quot;/someGet&quot;</span>, getting)</span><br><span class="line">	router.POST(<span class="string">&quot;/somePost&quot;</span>, posting)</span><br><span class="line">	router.PUT(<span class="string">&quot;/somePut&quot;</span>, putting)</span><br><span class="line">	router.DELETE(<span class="string">&quot;/someDelete&quot;</span>, deleting)</span><br><span class="line">	router.PATCH(<span class="string">&quot;/somePatch&quot;</span>, patching)</span><br><span class="line">	router.HEAD(<span class="string">&quot;/someHead&quot;</span>, head)</span><br><span class="line">	router.OPTIONS(<span class="string">&quot;/someOptions&quot;</span>, options)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 默认监听8080端口</span></span><br><span class="line">	router.Run()</span><br><span class="line">	<span class="comment">// router.Run(&quot;:3000&quot;) 指定端口</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="查看版本信息"><a href="#查看版本信息" class="headerlink" title="查看版本信息"></a>查看版本信息</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="设置默认的WSL默认的Linux分发版本"><a href="#设置默认的WSL默认的Linux分发版本" class="headerlink" title="设置默认的WSL默认的Linux分发版本"></a>设置默认的WSL默认的Linux分发版本</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--set-default-version</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看可用Linux发行版-默认为Ubuntu"><a href="#查看可用Linux发行版-默认为Ubuntu" class="headerlink" title="查看可用Linux发行版(默认为Ubuntu)"></a>查看可用Linux发行版(默认为Ubuntu)</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">-l</span> <span class="literal">-o</span></span><br></pre></td></tr></table></figure>
+
+<p>访问不了可以配置代理或修改hosts使自己能访问github</p>
+<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--install</span> <span class="comment"># 安装默认版本</span></span><br><span class="line">wsl <span class="literal">--install</span> <span class="literal">-d</span> &lt;发行版本&gt; <span class="comment"># 可选选项，安装指定发行版本</span></span><br></pre></td></tr></table></figure>
+
+<p>下载完成会自动启动，配置用户名和密码</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>shell中输入</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置apt包管理器镜像"><a href="#配置apt包管理器镜像" class="headerlink" title="配置apt包管理器镜像"></a>配置apt包管理器镜像</h2><h3 id="备份原来的源"><a href="#备份原来的源" class="headerlink" title="备份原来的源"></a>备份原来的源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.backup</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -r /etc/apt/sources.list.d/ /etc/apt/sources.list.d.backup/</span><br></pre></td></tr></table></figure>
+
+<h3 id="加入阿里云镜像"><a href="#加入阿里云镜像" class="headerlink" title="加入阿里云镜像"></a>加入阿里云镜像</h3><p>打开文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>加入阿里云镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<p>ctrl+X,Y,Enter保存</p>
+<h2 id="WSL管理"><a href="#WSL管理" class="headerlink" title="WSL管理"></a>WSL管理</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">-l</span> <span class="literal">--running</span> <span class="comment"># 查看运行中的Linux，访问bash和linux的文件就会自动启动，退出后自动关闭</span></span><br><span class="line"><span class="comment"># 创建备份当快照用</span></span><br><span class="line">wsl <span class="literal">--export</span> &lt;Linux版本&gt; &lt;存放路径&gt; <span class="comment"># 导出备份</span></span><br><span class="line">wsl <span class="literal">--unregister</span> &lt;Linux版本&gt; <span class="comment"># 删除系统</span></span><br><span class="line">wsl <span class="literal">--import</span> &lt;Linux版本&gt; &lt;存放路径&gt; &lt;备份路径&gt; <span class="comment"># 恢复备份</span></span><br><span class="line">wsl <span class="literal">--shutdown</span> <span class="comment"># 关闭所有运行中的Linux</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/mnt # linux-&gt;Windows</span><br><span class="line">\\wsl$\&lt;Linux版本&gt; # Windows-&gt;linux	</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置默认终端"><a href="#设置默认终端" class="headerlink" title="设置默认终端"></a>设置默认终端</h2><p>Win+I搜索终端</p>
+<p>终端里把<strong>让Windows决定</strong>改为<strong>Windows终端</strong></p>
 
 	
     <div class="copyright-box">
@@ -284,9 +334,9 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 			<div class="license-header">
 				
 				<div class="license-title">
-					Go WEB开发框架gin
+					wsl环境搭建
 				</div>
-				<div class="license-subTitle">http://lorlike.github.io/2026/03/24/Go-WEB开发框架gin/index.html</div>
+				<div class="license-subTitle">http://lorlike.github.io/2026/04/16/wsl环境搭建/index.html</div>
 			</div>
 			<div class="license-meta">
 				
@@ -302,7 +352,7 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 				
 					<div class="license-meta-item license-meta-date">
 					<div>Posted on</div>
-					<div>March 24, 2026</div>
+					<div>April 16, 2026</div>
 					</div>
 				
 				
@@ -398,18 +448,13 @@ package mainimport (	&amp;quot;net/http&amp;quot;	&amp;quot;github.com/gin-gonic
 <div class="post-guide">
 	<div class="item left">
 	
-		<a href="/2026/03/24/Go%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5embed/">
+		<a href="/2026/03/31/Buuctf%E7%BB%83%E4%B9%A0%E5%9C%BApwn%E9%A2%98/">
 			<i class="fa fa-angle-left" aria-hidden="true"></i>
-			Go文件嵌入embed
+			Buuctf练习场pwn题
 		</a>
 	
 	</div>
 	<div class="item right">
-		
-		<a href="/2026/03/31/Buuctf%E7%BB%83%E4%B9%A0%E5%9C%BApwn%E9%A2%98/">
-			Buuctf练习场pwn题
-			<i class="fa fa-angle-right" aria-hidden="true"></i>
-		</a>
 		
 	</div>
 </div>
