@@ -1,0 +1,36 @@
+{
+  "name": "vitepress-theme-minimalism",
+  "version": "1.0.0",
+  "description": "A minimal, content-first blog theme/template for VitePress.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Lorlike <lorlike.me@gmail.com>",
+  "homepage": "https://github.com/lorlike/vitepress-theme-minimalism",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorlike/vitepress-theme-minimalism.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lorlike/vitepress-theme-minimalism/issues"
+  },
+  "keywords": [
+    "vitepress",
+    "blog",
+    "theme",
+    "template",
+    "vue",
+    "markdown",
+    "minimal"
+  ],
+  "packageManager": "pnpm@11.13.1",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "new:post": "node scripts/new-post.mjs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.41"
+  }
+}

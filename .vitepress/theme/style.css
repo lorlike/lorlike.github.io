@@ -1,0 +1,422 @@
+/* ============================================================
+   极简博客主题 · 设计令牌
+   纯白极简：白底黑字 + 单一蓝色点缀，明暗双模式
+   ============================================================ */
+
+:root {
+  /* 颜色 */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-soft: #fafafa;
+  --vp-c-bg-mute: #f5f5f5;
+  --vp-c-bg-alt: #f6f6f7;
+  --vp-c-divider: #ececec;
+  --vp-c-divider-light: rgba(60, 60, 67, 0.08);
+  --vp-c-divider-dark: rgba(84, 84, 88, 0.24);
+  --vp-c-text-1: #1a1a1a;
+  --vp-c-text-2: #6b7280;
+  --vp-c-text-3: #9ca3af;
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #1d4ed8;
+  --vp-c-brand-3: #1e40af;
+  --vp-c-brand-soft: rgba(37, 99, 235, 0.1);
+
+  /* 导航 */
+  --vp-nav-bg-color: #ffffff;
+  --vp-nav-scroll-shadow: 0 0 0 transparent;
+  --vp-nav-height: 60px;
+
+  /* 字体 */
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue',
+    Arial, sans-serif;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo,
+    Consolas, 'Liberation Mono', monospace;
+}
+
+.dark {
+  --vp-c-bg: #0f1115;
+  --vp-c-bg-soft: #17191f;
+  --vp-c-bg-mute: #1c1f26;
+  --vp-c-bg-alt: #121418;
+  --vp-c-divider: #26272b;
+  --vp-c-divider-light: rgba(128, 128, 128, 0.1);
+  --vp-c-divider-dark: rgba(128, 128, 128, 0.2);
+  --vp-c-text-1: #e5e7eb;
+  --vp-c-text-2: #9ca3af;
+  --vp-c-text-3: #6b7280;
+  --vp-c-brand-1: #60a5fa;
+  --vp-c-brand-2: #93c5fd;
+  --vp-c-brand-3: #3b82f6;
+  --vp-c-brand-soft: rgba(96, 165, 250, 0.14);
+
+  --vp-nav-bg-color: #0f1115;
+}
+
+/* 选中色 */
+::selection {
+  background: rgba(37, 99, 235, 0.14);
+}
+.dark ::selection {
+  background: rgba(96, 165, 250, 0.22);
+}
+
+/* ============================================================
+   导航栏：去阴影，只留底部细边线
+   ============================================================ */
+
+.VPNavBar {
+  box-shadow: none;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+/* ============================================================
+   正文阅读宽度与排版
+   ============================================================ */
+
+/* 正文阅读宽度沿用 VitePress 默认 688px，极简博客足够舒适 */
+
+.vp-doc {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--vp-c-text-1);
+}
+
+.vp-doc h1 {
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+.vp-doc h2 {
+  letter-spacing: -0.01em;
+}
+
+/* 右侧大纲 */
+.VPDocAsideOutline .outline-link {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   自定义页面通用容器
+   ============================================================ */
+
+.blog-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+.blog-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+  margin: 0;
+}
+
+.blog-subtitle {
+  margin: 10px 0 0;
+  font-size: 15px;
+  color: var(--vp-c-text-2);
+}
+
+/* ============================================================
+   首页
+   ============================================================ */
+
+.blog-section-title {
+  margin: 44px 0 0;
+  padding-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.blog-more {
+  margin-top: 24px;
+}
+
+.blog-more-link {
+  font-size: 14px;
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+}
+
+.blog-more-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   文章列表
+   ============================================================ */
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-item {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.post-item-date {
+  flex-shrink: 0;
+  width: 104px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--vp-font-family-mono);
+}
+
+.post-item-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.post-item-title {
+  display: inline;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+
+.post-item-title:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.post-item-category {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  vertical-align: 2px;
+}
+
+.post-item-title:hover .post-item-category {
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+}
+
+.post-item-summary {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--vp-c-text-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-item-summary p {
+  margin: 0;
+}
+
+.post-list-empty {
+  margin: 24px 0;
+  font-size: 14px;
+  color: var(--vp-c-text-3);
+}
+
+/* ============================================================
+   分类 / 标签：chips 与分组
+   ============================================================ */
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 28px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.chip:hover {
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+}
+
+.chip-count {
+  margin-left: 6px;
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+}
+
+.blog-group {
+  margin-top: 48px;
+  scroll-margin-top: 88px;
+}
+
+.blog-group-title {
+  margin: 0 0 4px;
+  padding-bottom: 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.blog-group-count {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--vp-c-text-3);
+}
+
+/* ============================================================
+   文章页头部：元信息行（日期 · 分类 · 标签）+ 标题
+   ============================================================ */
+
+.post-header {
+  margin-bottom: 28px;
+}
+
+.post-header.is-about {
+  margin-bottom: 24px;
+}
+
+.post-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+}
+
+.post-meta {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--vp-c-text-2);
+}
+
+.post-meta-sep {
+  margin: 0 8px;
+  color: var(--vp-c-text-3);
+}
+
+.post-meta-category,
+.post-meta-tag {
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+}
+
+.post-meta-category:hover,
+.post-meta-tag:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.post-meta-tag + .post-meta-tag {
+  margin-left: 6px;
+}
+
+/* ============================================================
+   文章页底部：上一篇 / 下一篇
+   ============================================================ */
+
+.post-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.post-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 48%;
+  text-decoration: none;
+}
+
+.post-pager-link.is-prev {
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
+}
+
+.post-pager-label {
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+}
+
+.post-pager-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--vp-c-text-1);
+}
+
+.post-pager-link:hover .post-pager-title {
+  color: var(--vp-c-brand-1);
+}
+
+@media (max-width: 600px) {
+  .post-pager-link {
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   文章页顶部阅读进度条
+   ============================================================ */
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--vp-c-brand-1);
+  z-index: 1000;
+}
+
+/* ============================================================
+   移动端
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .blog-page {
+    padding: 32px 20px 64px;
+  }
+
+  .post-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .post-item-date {
+    width: auto;
+  }
+
+  .blog-group {
+    scroll-margin-top: 76px;
+  }
+}
