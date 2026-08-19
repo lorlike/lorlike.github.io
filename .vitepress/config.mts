@@ -3,12 +3,13 @@ import { defineConfig } from 'vitepress'
 // 站点名称与描述在首页简介与导航品牌处展示，按需修改
 const siteTitle = '简记'
 const siteDescription = '记录代码与生活的点点滴滴'
+const base = '/vitepress-theme-minimalism/' // 部署时的路径前缀
 
 export default defineConfig({
   lang: 'zh-CN',
   title: siteTitle,
   description: siteDescription,
-  base: '/vitepress-theme-minimalism/',  // 部署时的路径前缀
+  base,
   cleanUrls: true,
 
   // 仓库 README 只给 GitHub 用，不参与站点构建
@@ -19,7 +20,7 @@ export default defineConfig({
     'pages/:rest': ':rest',
   },
 
-  head: [['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }]],
+  head: [['link', { rel: 'icon', href: `${base}favicon.svg`, type: 'image/svg+xml' }]],
 
   themeConfig: {
     // 站点品牌名（导航左上角）
