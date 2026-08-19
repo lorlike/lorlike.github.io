@@ -11,7 +11,10 @@ export default defineConfig({
   base: '/vitepress-theme-minimalism/',  // 部署时的路径前缀
   cleanUrls: true,
 
-  // 五个页面 md 统一放在 pages/ 文件夹，通过 rewrite 保持路由不变
+  // 仓库 README 只给 GitHub 用，不参与站点构建
+  srcExclude: ['README.md', 'README.zh-CN.md'],
+
+  // 页面 md 统一放在 pages/ 文件夹，通过 rewrite 保持路由不变
   rewrites: {
     'pages/:rest': ':rest',
   },
