@@ -1,5 +1,6 @@
 posts/
 .vitepress/config.mts
-.github
+.github/
 .syncignore
 README*.md
+CONTRIBUTING.md
