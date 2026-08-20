@@ -27,9 +27,11 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "new:post": "node scripts/new-post.mjs"
+    "new:post": "node scripts/new-post.mjs",
+    "theme:sync": "yakad-sync -r https://github.com/lorlike/vitepress-theme-minimalism -v"
   },
   "devDependencies": {
+    "@yakad/sync": "^1.0.6",
     "vitepress": "^1.6.4",
     "vue": "^3.5.41"
   }

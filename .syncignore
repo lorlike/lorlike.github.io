@@ -1,0 +1,4 @@
+posts/
+.vitepress/config.mts
+.github/workflows/
+.syncignore

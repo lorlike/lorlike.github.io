@@ -121,6 +121,22 @@ The nav, footer copyright, and outline label are in `themeConfig` below. Replace
 | `pnpm build`       | Build static site to `.vitepress/dist` |
 | `pnpm preview`     | Preview the built site locally         |
 | `pnpm new:post`    | Scaffold a new post (interactive or CLI) |
+| `pnpm theme:sync`  | Pull latest theme files from the upstream template repo |
+
+### `pnpm theme:sync` — Sync theme updates
+
+Clones (or updates) the upstream template repository [`lorlike/vitepress-theme-minimalism`](https://github.com/lorlike/vitepress-theme-minimalism) via [`@yakad/sync`](https://www.npmjs.com/package/@yakad/sync) and copies its files into your project, so your fork picks up theme/layout/component fixes without losing your own content.
+
+Files and directories listed in [.syncignore](./.syncignore) are skipped during the copy, so your personal posts and config are preserved:
+
+```
+posts/                       # your writing
+.vitepress/config.mts       # your site config
+.github/workflows/          # your CI
+.syncignore                  # this file itself
+```
+
+Verbose output is enabled by default (`-v`), so every copied file is printed. To protect more paths, just append them to `.syncignore` (same syntax as `.gitignore`).
 
 ## Deployment
 

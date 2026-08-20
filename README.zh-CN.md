@@ -121,6 +121,22 @@ const siteDescription = '你的站点描述'
 | `pnpm build`       | 构建静态站点到 `.vitepress/dist`          |
 | `pnpm preview`     | 本地预览构建产物                          |
 | `pnpm new:post`    | 新建文章（交互式或命令行参数）            |
+| `pnpm theme:sync`  | 从上游模板仓库拉取最新主题文件           |
+
+### `pnpm theme:sync` —— 同步主题更新
+
+通过 [`@yakad/sync`](https://www.npmjs.com/package/@yakad/sync) 克隆（或更新）上游模板仓库 [`lorlike/vitepress-theme-minimalism`](https://github.com/lorlike/vitepress-theme-minimalism)，并把其中的文件复制到你的项目中，让你的 fork 能拿到主题 / 布局 / 组件的修复，同时不丢失你自己的内容。
+
+[.syncignore](./.syncignore) 中列出的文件和目录在复制时会被跳过，保护你的文章与配置不被覆盖：
+
+```
+posts/                       # 你的文章
+.vitepress/config.mts       # 你的站点配置
+.github/workflows/          # 你的 CI
+.syncignore                  # 本文件自身
+```
+
+默认开启详细输出（`-v`），每个被复制的文件都会打印出来。要保护更多路径，往 `.syncignore` 追加即可（语法同 `.gitignore`）。
 
 ## 部署
 
