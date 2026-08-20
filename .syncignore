@@ -1,4 +1,5 @@
 posts/
 .vitepress/config.mts
-.github/workflows/
+.github
 .syncignore
+README*.md

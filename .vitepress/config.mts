@@ -1,9 +1,9 @@
 import { defineConfig } from 'vitepress'
 
 // 站点名称与描述在首页简介与导航品牌处展示，按需修改
-const siteTitle = '简记'
+const siteTitle = "Lorlike's Blog"
 const siteDescription = '记录代码与生活的点点滴滴'
-const base = '/vitepress-theme-minimalism/' // 部署时的路径前缀
+const base = '/' 
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -34,13 +34,13 @@ export default defineConfig({
       { text: '关于', link: '/about' },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/lorlike/vitepress-theme-minimalism' },
+      { icon: 'github', link: 'https://github.com/lorlike' },
     ],
 
     // 文章大纲（右侧目录）
     outline: {
       level: [2, 3],
-      label: '本页目录',
+      label: '目录',
     },
 
     docFooter: {
@@ -56,8 +56,8 @@ export default defineConfig({
     },
 
     footer: {
-      message: 'Powered by VitePress',
-      copyright: '© 2026-present Minimalism Theme',
+      message: 'Powered by VitePress Theme Minimalism',
+      copyright: "© 2026-present Lorlike's Blog",
     },
   },
 })
