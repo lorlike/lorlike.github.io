@@ -11,7 +11,7 @@ tags:
 
 ### 创建 npm 账号
 
-先去[npm官网](www.npmjs.com/)创建一个账户用来维护我们的npm包
+先去[npm官网](https://www.npmjs.com/)创建一个账户用来维护我们的npm包
 
 创建一个token,并配置读写权限，勾选绕过2FA，或者也可以使用OTP
 
