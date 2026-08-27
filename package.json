@@ -22,7 +22,7 @@
     "markdown",
     "minimal"
   ],
-  "packageManager": "pnpm@11.13.1",
+  "packageManager": "pnpm@11.24.0",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
