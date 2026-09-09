@@ -25,7 +25,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```
 
-连不上就设置环境变量`HTTP_PROXY`和`HTTPS_PROXY`使用代理
+连不上就设置代理，也能指定目录
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh -outfile 'install.ps1'
+.\install.ps1 -ScoopDir 'D:\scoop' -ScoopGlobalDir 'D:\wp-scoop' -Proxy 'http://127.0.0.1:7897'
+```
 
 ## 设置镜像源
 
