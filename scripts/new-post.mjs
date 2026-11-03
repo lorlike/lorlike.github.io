@@ -174,6 +174,7 @@ async function main() {
     category ? `category: ${category}` : '',
     tagList.length ? `tags:\n${tagList.map((t) => `  - ${t}`).join('\n')}` : '',
     description ? `description: ${description}` : '',
+    'published: true',
     '---',
   ].filter(Boolean)
 
