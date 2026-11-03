@@ -1,11 +1,26 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
 // 站点名称与描述在首页简介与导航品牌处展示，按需修改
 const siteTitle = "Lorlike's Blog"
 const siteDescription = '记录代码与生活的点点滴滴'
 const base = '/' 
 
-export default defineConfig({
+export default withMermaid({
+  // mermaid 图表渲染配置
+  mermaid: {
+    theme: 'default',
+  },
+
+  // dev 模式下预打包 mermaid，否则它内部引用的 CJS 依赖
+  // （dayjs / fastdom 等）会被当作原生 ESM 加载并报
+  // "does not provide an export named 'default'"
+  vite: {
+    optimizeDeps: {
+      include: ['mermaid'],
+    },
+  },
+
   lang: 'zh-CN',
   title: siteTitle,
   description: siteDescription,
